@@ -1,20 +1,57 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-
-const placeholders = [
-  { id: 1, color: "#ffd97d44", emoji: "🎨" },
-  { id: 2, color: "#ff6b6b33", emoji: "🌟" },
-  { id: 3, color: "#4ecdc433", emoji: "🎵" },
-  { id: 4, color: "#c084fc33", emoji: "🤸" },
-  { id: 5, color: "#86efac33", emoji: "📚" },
-  { id: 6, color: "#60a5fa33", emoji: "🏊" },
-];
+import { supabase } from "@/lib/supabase";
+import Link from "next/link";
+// IMPORTAMOS EL LIGHTBOX Y SUS ESTILOS
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
 
 export default function Galeria() {
+  const [images, setImages] = useState<{ name: string; url: string }[]>([]);
+  const [loading, setLoading] = useState(true);
+  
+  // ESTADO PARA EL LIGHTBOX
+  const [openLightbox, setOpenLightbox] = useState(false);
+  const [photoIndex, setPhotoIndex] = useState(0);
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      const { data, error } = await supabase.storage.from("galeria").list();
+      
+      if (error) {
+        console.error("Error cargando galería:", error);
+      } else if (data) {
+        const imageUrls = data.map((file) => ({
+          name: file.name,
+          url: supabase.storage.from("galeria").getPublicUrl(file.name).data.publicUrl,
+        }));
+        setImages(imageUrls);
+      }
+      setLoading(false);
+    };
+
+    fetchImages();
+  }, []);
+
+  // Lógica de limitación
+  const limit = 9;
+  const displayedImages = images.slice(0, limit);
+  const hasMore = images.length > limit;
+
+  // Preparamos las fotos para el Lightbox (solo necesitamos la URL)
+  const slides = displayedImages.map((img) => ({ src: img.url }));
+
+  const handlePhotoClick = (index: number) => {
+    setPhotoIndex(index);
+    setOpenLightbox(true);
+  };
+
   return (
-    <section id="galeria" style={{ background: "var(--color-white)" }}>
+    <section id="galeria" style={{ background: "var(--color-white)", padding: "4rem 0" }}>
       <div className="container">
+        {/* Cabecera */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -22,8 +59,7 @@ export default function Galeria() {
           transition={{ duration: 0.6 }}
           style={{ textAlign: "center", marginBottom: "3.5rem" }}
         >
-          <span
-            style={{
+          <span style={{
               display: "inline-block",
               background: "#c084fc22",
               color: "#7c3aed",
@@ -33,85 +69,92 @@ export default function Galeria() {
               padding: "0.4rem 1.2rem",
               borderRadius: "999px",
               marginBottom: "1rem",
-            }}
-          >
+            }}>
             📸 Galería
           </span>
-          <h2
-            style={{
-              fontFamily: "var(--font-fredoka)",
-              fontSize: "clamp(2rem, 4vw, 3rem)",
-              color: "var(--color-text)",
-            }}
-          >
+          <h2 style={{ fontFamily: "var(--font-fredoka)", fontSize: "clamp(2.5rem, 5vw, 3.5rem)", color: "var(--color-text)" }}>
             Momentos que nos llenan de alegría
           </h2>
-          <p
-            style={{
-              fontFamily: "var(--font-nunito)",
-              color: "var(--color-text-muted)",
-              fontSize: "1rem",
-              marginTop: "0.75rem",
-              maxWidth: "500px",
-              margin: "0.75rem auto 0",
-            }}
-          >
-            Cada día está lleno de aprendizaje, risas y momentos especiales
-          </p>
         </motion.div>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: "1.25rem",
-          }}
-        >
-          {placeholders.map((item, i) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.07 }}
-              style={{
-                background: item.color,
-                borderRadius: "var(--radius)",
-                height: "220px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "3.5rem",
-                transition: "transform 0.3s",
-                cursor: "pointer",
-              }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.transform = "scale(1.02)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.transform = "scale(1)")
-              }
-            >
-              {item.emoji}
-            </motion.div>
-          ))}
-        </div>
+        {loading ? (
+          <div style={{ textAlign: "center", fontFamily: "var(--font-nunito)", color: "var(--color-text-muted)" }}>
+            Cargando momentos felices... 🐻
+          </div>
+        ) : (
+          <>
+            {/* GRILLA FORZADA 3x3 */}
+            <div style={{
+                display: "grid",
+                // FORZAMOS 3 COLUMNAS SIEMPRE
+                gridTemplateColumns: "repeat(3, 1fr)", 
+                gap: "1.25rem",
+              }}>
+              {displayedImages.map((img, i) => (
+                <motion.div
+                  key={img.name}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  // Quitamos el delay escalonado para que no se rompa la grilla al cargar
+                  transition={{ duration: 0.4 }} 
+                  style={{
+                    borderRadius: "var(--radius)",
+                    // Mantenemos la proporción cuadrada para la grilla
+                    aspectRatio: "1/1", 
+                    overflow: "hidden",
+                    boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
+                    background: "var(--color-cream)",
+                    cursor: "pointer", // Indicamos que es clicable
+                  }}
+                  whileHover={{ scale: 1.02 }}
+                  onClick={() => handlePhotoClick(i)} // Abrimos Lightbox al hacer clic
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img 
+                    src={img.url} 
+                    alt="Actividad" 
+                    style={{ 
+                        width: "100%", 
+                        height: "100%", 
+                        objectFit: "cover", // Forzamos que llene el cuadrado
+                    }} 
+                  />
+                </motion.div>
+              ))}
+            </div>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          style={{
-            fontFamily: "var(--font-nunito)",
-            fontSize: "0.875rem",
-            color: "var(--color-text-muted)",
-            textAlign: "center",
-            marginTop: "2rem",
-          }}
-        >
-          📷 Las fotos reales se cargarán próximamente desde el panel de administración
-        </motion.p>
+            {/* COMPONENTE LIGHTBOX */}
+            <Lightbox
+                open={openLightbox}
+                close={() => setOpenLightbox(false)}
+                slides={slides}
+                index={photoIndex}
+                // Opciones para navegación
+                carousel={{ finite: slides.length <= 1 }} 
+                // Animación de entrada suave
+                animation={{ fade: 300 }} 
+            />
+
+            {/* Botón Ver Más */}
+            {hasMore && (
+              <motion.div 
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                style={{ textAlign: "center", marginTop: "3rem" }}
+              >
+                <Link href="/galeria" className="btn-primary" style={{ 
+                  textDecoration: "none",
+                  display: "inline-block",
+                  padding: "1rem 2.5rem",
+                  fontSize: "1.1rem"
+                }}>
+                  Ver galería completa ({images.length} fotos) 🐻
+                </Link>
+              </motion.div>
+            )}
+          </>
+        )}
       </div>
     </section>
   );
