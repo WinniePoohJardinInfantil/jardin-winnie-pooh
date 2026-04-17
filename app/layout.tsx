@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Nunito, Fredoka } from "next/font/google";
 import "./globals.css";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/Analytics/next";
 
 const fredoka = Fredoka({
   subsets: ["latin"],
@@ -36,6 +38,8 @@ export default function RootLayout({
     <html lang="es">
       <body className={`${fredoka.variable} ${nunito.variable} antialiased`}>
         {children}
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
