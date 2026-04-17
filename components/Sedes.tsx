@@ -26,7 +26,7 @@ const sedes = [
     tag: "Refuerzo Escolar",
     emoji: "📚",
     color: "#4ecdc4",
-    niveles: ["Cuidado y atención", "Acompañamiento de tareas", "Refuerzo y repasos", "Clases extracurriculares"],
+    niveles: ["Cuidadosisisisimos y atención", "Acompañamiento de tareas", "Refuerzo y repasos", "Clases extracurriculares"],
     direccion: "Cll51 #81a-25",
     descripcion: "Apoyo académico para alumnos de colegio con seguimiento personalizado y actividades.",
   },
