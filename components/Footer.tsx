@@ -1,7 +1,14 @@
 "use client";
 import { Camera, Mail, Phone } from "lucide-react";
+import { Dock, DockIcon } from "@/components/ui/dock";
 
 export default function Footer() {
+  const socialLinks = [
+    { icon: Phone, href: "https://wa.me/573116055332", label: "WhatsApp" },
+    { icon: Mail, href: "mailto:wpjardininfantil@hotmail.com", label: "Email" },
+    { icon: Camera, href: "https://instagram.com/wpjardininfantil", label: "Instagram" },
+  ];
+
   return (
     <footer
       style={{
@@ -83,46 +90,46 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contacto */}
-          <div>
+          {/* Contacto con MAGIC UI DOCK */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
             <h4
               style={{
                 fontFamily: "var(--font-fredoka)",
                 fontSize: "1.1rem",
                 color: "var(--color-white)",
-                marginBottom: "1rem",
               }}
             >
-              Contacto
+              Encuéntranos
             </h4>
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-              {[
-                { icon: Phone, text: "311 605 53 32", href: "https://wa.me/573116055332" },
-                { icon: Mail, text: "wpjardininfantil@hotmail.com", href: "mailto:wpjardininfantil@hotmail.com" },
-                { icon: Camera, text: "@wpjardininfantil", href: "https://instagram.com/wpjardininfantil" },
-              ].map((c) => (
-                <a
-                  key={c.text}
-                  href={c.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                    fontFamily: "var(--font-nunito)",
-                    fontSize: "0.875rem",
-                    color: "#ffffff99",
-                    textDecoration: "none",
-                    transition: "color 0.2s",
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-honey)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "#ffffff99")}
-                >
-                  <c.icon size={15} />
-                  {c.text}
-                </a>
-              ))}
+            
+            {/* Contenedor del Dock */}
+<div className="flex items-center justify-start py-2">
+  <Dock 
+    direction="middle" 
+    iconMagnification={60} // Antes era magnification
+    iconDistance={100}      // Antes era distance
+    className="bg-white/5 border border-white/10 rounded-2xl p-2"
+  >
+    {socialLinks.map((link) => (
+      <DockIcon key={link.label}>
+        <a
+          href={link.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex h-full w-full items-center justify-center rounded-full bg-white/10 text-white hover:text-honey hover:bg-white/20 transition-all"
+          aria-label={link.label}
+        >
+          <link.icon size={20} />
+        </a>
+      </DockIcon>
+    ))}
+  </Dock>
+</div>
+
+            <div style={{ marginTop: "0.5rem" }}>
+                <p style={{ fontFamily: "var(--font-nunito)", fontSize: "0.875rem", color: "#ffffff99" }}>
+                    Tel: 311 605 53 32
+                </p>
             </div>
           </div>
         </div>

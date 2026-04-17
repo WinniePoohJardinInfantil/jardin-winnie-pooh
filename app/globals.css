@@ -1,51 +1,99 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
+  /* Fuentes */
   --font-fredoka: "Fredoka", sans-serif;
   --font-nunito: "Nunito", sans-serif;
 
-  /* Paleta principal */
-  --color-cream: #fffdf7;
-  --color-white: #ffffff;
+  /* Paleta Vibrante */
+  --color-pink: #FF7893;
+  --color-orange: #EB8100;
+  --color-yellow: #FFFC01;
+  --color-green: #4FF084;
+  --color-blue: #7AC0FF;
+
+  /* Colores UI */
+  --color-cream: #ffffff;
   --color-honey: #f5a623;
-  --color-honey-light: #ffd97d;
-  --color-red: #ff6b6b;
-  --color-teal: #4ecdc4;
-  --color-purple: #c084fc;
-  --color-green: #86efac;
-  --color-blue: #60a5fa;
-
-  /* Texto */
   --color-text: #2d2d2d;
-  --color-text-muted: #7a7a7a;
-
-  /* UI */
-  --color-border: #f0e9d6;
-  --color-card: #ffffff;
-  --radius: 1.5rem;
+  --color-text-muted: #616161;
+  
+  /* Shadcn Variables - Light */
+  --background: #ffffff;
+  --foreground: #2d2d2d;
+  --card: #ffffff;
+  --card-foreground: #2d2d2d;
+  --popover: #ffffff;
+  --popover-foreground: #2d2d2d;
+  --primary: #EB8100;
+  --primary-foreground: #ffffff;
+  --secondary: #7AC0FF;
+  --secondary-foreground: #2d2d2d;
+  --muted: #f5f5f5;
+  --muted-foreground: #737373;
+  --accent: #FFFC01;
+  --accent-foreground: #2d2d2d;
+  --destructive: #ef4444;
+  --border: #e5e5e5;
+  --input: #e5e5e5;
+  --ring: #f5a623;
+  --radius: 1rem;
 }
 
+.dark {
+  --background: #121212;
+  --foreground: #f0f0f0;
+  --card: #1e1e1e;
+  --card-foreground: #f0f0f0;
+  --primary: #FF7893;
+  --secondary: #7AC0FF;
+  --border: #2d2d2d;
+  --color-cream: #121212;
+  --color-text: #f0f0f0;
+}
+
+@theme inline {
+  /* Registramos los colores para que Tailwind los reconozca */
+  --color-pink: var(--color-pink);
+  --color-orange: var(--color-orange);
+  --color-yellow: var(--color-yellow);
+  --color-green: var(--color-green);
+  --color-blue: var(--color-blue);
+  --color-honey: var(--color-honey);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-border: var(--border);
+  
+  --font-heading: var(--font-fredoka);
+  --font-sans: var(--font-nunito);
+  
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-sm: calc(var(--radius) * 0.6);
+}
+
+/* Estilos Base Manuales (Evitamos @apply conflictivos) */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
+  border-color: var(--border); /* Reemplaza el @apply border-border */
 }
 
 body {
-  background-color: var(--color-cream);
-  color: var(--color-text);
+  background-color: var(--background);
+  color: var(--foreground);
   font-family: var(--font-nunito), sans-serif;
-  overflow-x: hidden;
+  transition: background-color 0.3s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-fredoka), sans-serif;
-  font-weight: 600;
-  line-height: 1.2;
+  font-weight: 700;
 }
 
 section {
