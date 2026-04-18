@@ -179,7 +179,7 @@ export default function AdminPanel() {
           )}
           
           <a
-            href="https://winniepoohjardininfantil.com"
+            href="#inicio"
             target="_blank"
             rel="noopener noreferrer"
             style={{
