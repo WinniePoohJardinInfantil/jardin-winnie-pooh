@@ -1,41 +1,23 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Phone, Mail, Camera, MapPin, Star } from "lucide-react";
+import { Phone, Mail, MapPin, Star } from "lucide-react";
+import { PulsatingButton } from "@/components/ui/pulsating-button";
+import { BorderBeam } from "@/components/ui/border-beam";
+
+const InstagramIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+    <circle cx="12" cy="12" r="4" />
+    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+  </svg>
+);
 
 const contactos = [
-  {
-    icon: Phone,
-    label: "Teléfono",
-    valor: "311 605 53 32",
-    href: "https://wa.me/573116055332",
-    color: "var(--color-green)",
-    bg: "#86efac22",
-  },
-  {
-    icon: Mail,
-    label: "Correo",
-    valor: "wpjardininfantil@hotmail.com",
-    href: "mailto:wpjardininfantil@hotmail.com",
-    color: "var(--color-blue)",
-    bg: "#60a5fa22",
-  },
-  {
-    icon: Camera,
-    label: "Instagram",
-    valor: "@wpjardininfantil",
-    href: "https://instagram.com/wpjardininfantil",
-    color: "var(--color-purple)",
-    bg: "#c084fc22",
-  },
-  {
-    icon: Star,
-    label: "Reseñas Google",
-    valor: "Dejanos tu opinión",
-    href: "https://maps.google.com",
-    color: "var(--color-honey)",
-    bg: "#ffd97d33",
-  },
+  { icon: Phone, label: "WhatsApp", valor: "311 605 53 32", href: "https://wa.me/573116055332", color: "#4FF084", bg: "#4FF08422" },
+  { icon: Mail, label: "Correo", valor: "wpjardininfantil@hotmail.com", href: "mailto:wpjardininfantil@hotmail.com", color: "#7AC0FF", bg: "#7AC0FF22" },
+  { icon: InstagramIcon, label: "Instagram", valor: "@wpjardininfantil", href: "https://instagram.com/wpjardininfantil", color: "#FF7893", bg: "#FF789322" },
+  { icon: Star, label: "Reseñas Google", valor: "Déjanos tu opinión ⭐", href: "https://maps.google.com", color: "#FFFC01", bg: "#FFFC0122" },
 ];
 
 const sedes = [
@@ -45,7 +27,7 @@ const sedes = [
 
 export default function Contacto() {
   return (
-    <section id="contacto" style={{ background: "var(--color-cream)" }}>
+    <section id="contacto" style={{ background: "#ffffff" }}>
       <div className="container">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -54,53 +36,30 @@ export default function Contacto() {
           transition={{ duration: 0.6 }}
           style={{ textAlign: "center", marginBottom: "3.5rem" }}
         >
-          <span
-            style={{
-              display: "inline-block",
-              background: "#86efac33",
-              color: "#166534",
-              fontFamily: "var(--font-nunito)",
-              fontWeight: 700,
-              fontSize: "0.85rem",
-              padding: "0.4rem 1.2rem",
-              borderRadius: "999px",
-              marginBottom: "1rem",
-            }}
-          >
+          <span style={{
+            display: "inline-block",
+            background: "#4FF08422",
+            color: "#1a7a40",
+            fontFamily: "var(--font-nunito)",
+            fontWeight: 700,
+            fontSize: "0.82rem",
+            padding: "0.35rem 1rem",
+            borderRadius: "999px",
+            marginBottom: "1rem",
+          }}>
             💬 Contáctenos
           </span>
-          <h2
-            style={{
-              fontFamily: "var(--font-fredoka)",
-              fontSize: "clamp(2rem, 4vw, 3rem)",
-              color: "var(--color-text)",
-            }}
-          >
+          <h2 style={{ fontFamily: "var(--font-fredoka)", fontSize: "clamp(2rem, 4vw, 3rem)", color: "var(--foreground)" }}>
             Estamos para atenderle
           </h2>
-          <p
-            style={{
-              fontFamily: "var(--font-nunito)",
-              color: "var(--color-text-muted)",
-              fontSize: "1rem",
-              marginTop: "0.75rem",
-              maxWidth: "480px",
-              margin: "0.75rem auto 0",
-            }}
-          >
-            Comuníquese con nosotros y con gusto le contamos todo sobre nuestros programas
+          <p style={{ fontFamily: "var(--font-nunito)", color: "var(--muted-foreground)", fontSize: "1rem", maxWidth: "460px", margin: "0.75rem auto 0", lineHeight: 1.7 }}>
+            Comuníquese con nosotros, con gusto le contamos todo sobre nuestros programas
           </p>
         </motion.div>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "2rem",
-            alignItems: "start",
-          }}
-        >
-          {/* Tarjetas de contacto */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "2rem", alignItems: "start" }}>
+          
+          {/* Tarjetas contacto */}
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
             {contactos.map((c, i) => (
               <motion.a
@@ -116,117 +75,85 @@ export default function Contacto() {
                   display: "flex",
                   alignItems: "center",
                   gap: "1rem",
-                  background: "var(--color-white)",
-                  borderRadius: "var(--radius)",
-                  padding: "1.25rem 1.5rem",
+                  background: "#fff",
+                  border: "1.5px solid var(--border)",
+                  borderRadius: "1rem",
+                  padding: "1.1rem 1.4rem",
                   textDecoration: "none",
-                  color: "var(--color-text)",
-                  transition: "transform 0.2s, box-shadow 0.2s",
-                  border: "2px solid transparent",
+                  color: "var(--foreground)",
+                  transition: "border-color 0.2s, transform 0.2s, box-shadow 0.2s",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "translateX(4px)";
                   e.currentTarget.style.borderColor = c.color;
-                  e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,0,0,0.06)";
+                  e.currentTarget.style.transform = "translateX(5px)";
+                  e.currentTarget.style.boxShadow = `0 4px 20px ${c.color}33`;
                 }}
                 onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = "var(--border)";
                   e.currentTarget.style.transform = "translateX(0)";
-                  e.currentTarget.style.borderColor = "transparent";
                   e.currentTarget.style.boxShadow = "none";
                 }}
               >
-                <div
-                  style={{
-                    background: c.bg,
-                    borderRadius: "0.75rem",
-                    padding: "0.75rem",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                  }}
-                >
+                <div style={{ background: c.bg, borderRadius: "0.75rem", padding: "0.7rem", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: c.color }}>
                   <c.icon size={20} color={c.color} />
                 </div>
                 <div>
-                  <div
-                    style={{
-                      fontFamily: "var(--font-nunito)",
-                      fontSize: "0.75rem",
-                      color: "var(--color-text-muted)",
-                      fontWeight: 600,
-                      marginBottom: "0.1rem",
-                    }}
-                  >
+                  <div style={{ fontFamily: "var(--font-nunito)", fontSize: "0.72rem", color: "var(--muted-foreground)", fontWeight: 600, marginBottom: "0.1rem" }}>
                     {c.label}
                   </div>
-                  <div
-                    style={{
-                      fontFamily: "var(--font-nunito)",
-                      fontSize: "0.95rem",
-                      fontWeight: 700,
-                      color: "var(--color-text)",
-                    }}
-                  >
+                  <div style={{ fontFamily: "var(--font-nunito)", fontSize: "0.92rem", fontWeight: 700, color: "var(--foreground)" }}>
                     {c.valor}
                   </div>
                 </div>
               </motion.a>
             ))}
+
+            <div style={{ marginTop: "0.5rem" }}>
+              <PulsatingButton
+                pulseColor="#4FF084"
+                className="w-full"
+                onClick={() => window.open("https://wa.me/573116055332", "_blank")}
+                style={{
+                  width: "100%",
+                  fontFamily: "var(--font-nunito)",
+                  fontWeight: 700,
+                  fontSize: "1rem",
+                  padding: "0.85rem",
+                  borderRadius: "999px",
+                  background: "#4FF084",
+                  color: "#1a1a1a",
+                  border: "none",
+                  cursor: "pointer",
+                }}
+              >
+                💬 Escribir por WhatsApp ahora
+              </PulsatingButton>
+            </div>
           </div>
 
-          {/* Sedes y horario */}
+          {/* Sedes y horarios con BorderBeam */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            style={{
-              background: "var(--color-white)",
-              borderRadius: "var(--radius)",
-              padding: "2rem",
-            }}
+            style={{ position: "relative", background: "#fff", border: "1.5px solid var(--border)", borderRadius: "1.25rem", padding: "2rem", overflow: "hidden" }}
           >
-            <h3
-              style={{
-                fontFamily: "var(--font-fredoka)",
-                fontSize: "1.4rem",
-                color: "var(--color-text)",
-                marginBottom: "1.25rem",
-              }}
-            >
+            <BorderBeam size={200} duration={8} colorFrom="#FF7893" colorTo="#7AC0FF" />
+
+            <h3 style={{ fontFamily: "var(--font-fredoka)", fontSize: "1.4rem", color: "var(--foreground)", marginBottom: "1.25rem" }}>
               📍 Nuestras Ubicaciones
             </h3>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "2rem" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "1.75rem" }}>
               {sedes.map((sede) => (
-                <div
-                  key={sede.nombre}
-                  style={{
-                    display: "flex",
-                    gap: "0.75rem",
-                    alignItems: "flex-start",
-                  }}
-                >
-                  <MapPin size={18} color="var(--color-honey)" style={{ flexShrink: 0, marginTop: "2px" }} />
+                <div key={sede.nombre} style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
+                  <MapPin size={18} color="var(--color-orange)" style={{ flexShrink: 0, marginTop: "2px" }} />
                   <div>
-                    <div
-                      style={{
-                        fontFamily: "var(--font-nunito)",
-                        fontWeight: 700,
-                        fontSize: "0.95rem",
-                        color: "var(--color-text)",
-                      }}
-                    >
+                    <div style={{ fontFamily: "var(--font-nunito)", fontWeight: 700, fontSize: "0.92rem", color: "var(--foreground)" }}>
                       {sede.nombre}
                     </div>
-                    <div
-                      style={{
-                        fontFamily: "var(--font-nunito)",
-                        fontSize: "0.85rem",
-                        color: "var(--color-text-muted)",
-                      }}
-                    >
+                    <div style={{ fontFamily: "var(--font-nunito)", fontSize: "0.82rem", color: "var(--muted-foreground)" }}>
                       {sede.direccion}
                     </div>
                   </div>
@@ -234,21 +161,8 @@ export default function Contacto() {
               ))}
             </div>
 
-            <div
-              style={{
-                background: "var(--color-cream)",
-                borderRadius: "1rem",
-                padding: "1.25rem",
-              }}
-            >
-              <h4
-                style={{
-                  fontFamily: "var(--font-fredoka)",
-                  fontSize: "1.1rem",
-                  color: "var(--color-text)",
-                  marginBottom: "0.75rem",
-                }}
-              >
+            <div style={{ background: "#fafafa", borderRadius: "0.875rem", padding: "1.25rem" }}>
+              <h4 style={{ fontFamily: "var(--font-fredoka)", fontSize: "1.05rem", color: "var(--foreground)", marginBottom: "0.75rem" }}>
                 🕐 Horarios de Atención
               </h4>
               {[
@@ -257,19 +171,9 @@ export default function Contacto() {
                 { label: "Tarde", hora: "1:00pm - 5:00pm" },
                 { label: "Periodo Escolar", hora: "15 Enero - 15 Diciembre" },
               ].map((h) => (
-                <div
-                  key={h.label}
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    fontFamily: "var(--font-nunito)",
-                    fontSize: "0.875rem",
-                    padding: "0.3rem 0",
-                    borderBottom: "1px solid var(--color-border)",
-                  }}
-                >
-                  <span style={{ fontWeight: 600, color: "var(--color-text)" }}>{h.label}</span>
-                  <span style={{ color: "var(--color-text-muted)" }}>{h.hora}</span>
+                <div key={h.label} style={{ display: "flex", justifyContent: "space-between", fontFamily: "var(--font-nunito)", fontSize: "0.85rem", padding: "0.4rem 0", borderBottom: "1px solid var(--border)" }}>
+                  <span style={{ fontWeight: 600, color: "var(--foreground)" }}>{h.label}</span>
+                  <span style={{ color: "var(--muted-foreground)" }}>{h.hora}</span>
                 </div>
               ))}
             </div>

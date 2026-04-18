@@ -3,55 +3,47 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { supabase } from "@/lib/supabase";
+import { BlurFade } from "@/components/ui/blur-fade";
+import { ShimmerButton } from "@/components/ui/shimmer-button";
 import Link from "next/link";
-// IMPORTAMOS EL LIGHTBOX Y SUS ESTILOS
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 
 export default function Galeria() {
   const [images, setImages] = useState<{ name: string; url: string }[]>([]);
   const [loading, setLoading] = useState(true);
-  
-  // ESTADO PARA EL LIGHTBOX
   const [openLightbox, setOpenLightbox] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
 
   useEffect(() => {
     const fetchImages = async () => {
       const { data, error } = await supabase.storage.from("galeria").list();
-      
-      if (error) {
-        console.error("Error cargando galería:", error);
-      } else if (data) {
-        const imageUrls = data.map((file) => ({
+      if (!error && data) {
+        setImages(data.map((file) => ({
           name: file.name,
           url: supabase.storage.from("galeria").getPublicUrl(file.name).data.publicUrl,
-        }));
-        setImages(imageUrls);
+        })));
       }
       setLoading(false);
     };
-
     fetchImages();
   }, []);
 
-  // Lógica de limitación
-  const limit = 9;
-  const displayedImages = images.slice(0, limit);
-  const hasMore = images.length > limit;
-
-  // Preparamos las fotos para el Lightbox (solo necesitamos la URL)
+  const displayedImages = images.slice(0, 6);
   const slides = displayedImages.map((img) => ({ src: img.url }));
 
-  const handlePhotoClick = (index: number) => {
-    setPhotoIndex(index);
-    setOpenLightbox(true);
-  };
+  const placeholders = [
+    { color: "#FF789333", emoji: "🎨" },
+    { color: "#FFFC0133", emoji: "🌟" },
+    { color: "#4FF08433", emoji: "🎵" },
+    { color: "#7AC0FF33", emoji: "🤸" },
+    { color: "#EB810033", emoji: "📚" },
+    { color: "#FF789333", emoji: "🏊" },
+  ];
 
   return (
-    <section id="galeria" style={{ background: "var(--color-white)", padding: "4rem 0" }}>
+    <section id="galeria" style={{ background: "#fafafa" }}>
       <div className="container">
-        {/* Cabecera */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -60,99 +52,103 @@ export default function Galeria() {
           style={{ textAlign: "center", marginBottom: "3.5rem" }}
         >
           <span style={{
-              display: "inline-block",
-              background: "#c084fc22",
-              color: "#7c3aed",
-              fontFamily: "var(--font-nunito)",
-              fontWeight: 700,
-              fontSize: "0.85rem",
-              padding: "0.4rem 1.2rem",
-              borderRadius: "999px",
-              marginBottom: "1rem",
-            }}>
+            display: "inline-block",
+            background: "#7AC0FF22",
+            color: "#1a4a8a",
+            fontFamily: "var(--font-nunito)",
+            fontWeight: 700,
+            fontSize: "0.82rem",
+            padding: "0.35rem 1rem",
+            borderRadius: "999px",
+            marginBottom: "1rem",
+          }}>
             📸 Galería
           </span>
-          <h2 style={{ fontFamily: "var(--font-fredoka)", fontSize: "clamp(2.5rem, 5vw, 3.5rem)", color: "var(--color-text)" }}>
+          <h2 style={{ fontFamily: "var(--font-fredoka)", fontSize: "clamp(2rem, 4vw, 3rem)", color: "var(--foreground)" }}>
             Momentos que nos llenan de alegría
           </h2>
+          <p style={{ fontFamily: "var(--font-nunito)", color: "var(--muted-foreground)", fontSize: "1rem", maxWidth: "460px", margin: "0.75rem auto 0", lineHeight: 1.7 }}>
+            Cada día está lleno de aprendizaje, risas y momentos especiales
+          </p>
         </motion.div>
 
         {loading ? (
-          <div style={{ textAlign: "center", fontFamily: "var(--font-nunito)", color: "var(--color-text-muted)" }}>
+          <div style={{ textAlign: "center", fontFamily: "var(--font-nunito)", color: "var(--muted-foreground)", padding: "4rem 0" }}>
             Cargando momentos felices... 🐻
           </div>
         ) : (
           <>
-            {/* GRILLA FORZADA 3x3 */}
-            <div style={{
-                display: "grid",
-                // FORZAMOS 3 COLUMNAS SIEMPRE
-                gridTemplateColumns: "repeat(3, 1fr)", 
-                gap: "1.25rem",
-              }}>
-              {displayedImages.map((img, i) => (
-                <motion.div
-                  key={img.name}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  // Quitamos el delay escalonado para que no se rompa la grilla al cargar
-                  transition={{ duration: 0.4 }} 
-                  style={{
-                    borderRadius: "var(--radius)",
-                    // Mantenemos la proporción cuadrada para la grilla
-                    aspectRatio: "1/1", 
-                    overflow: "hidden",
-                    boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
-                    background: "var(--color-cream)",
-                    cursor: "pointer", // Indicamos que es clicable
-                  }}
-                  whileHover={{ scale: 1.02 }}
-                  onClick={() => handlePhotoClick(i)} // Abrimos Lightbox al hacer clic
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img 
-                    src={img.url} 
-                    alt="Actividad" 
-                    style={{ 
-                        width: "100%", 
-                        height: "100%", 
-                        objectFit: "cover", // Forzamos que llene el cuadrado
-                    }} 
-                  />
-                </motion.div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem" }}>
+              {(displayedImages.length > 0 ? displayedImages : placeholders.map((p, i) => ({ name: `placeholder-${i}`, url: "" }))).map((img, i) => (
+                <BlurFade key={img.name} delay={i * 0.07} inView>
+                  <div
+                    style={{
+                      aspectRatio: "1/1",
+                      borderRadius: "var(--radius)",
+                      overflow: "hidden",
+                      cursor: displayedImages.length > 0 ? "pointer" : "default",
+                      transition: "transform 0.3s",
+                      background: placeholders[i]?.color || "#f0f0f0",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "3rem",
+                    }}
+                    onClick={() => { if (displayedImages.length > 0) { setPhotoIndex(i); setOpenLightbox(true); } }}
+                    onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.02)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                  >
+                    {img.url ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={img.url} alt="Actividad" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    ) : (
+                      placeholders[i]?.emoji
+                    )}
+                  </div>
+                </BlurFade>
               ))}
             </div>
 
-            {/* COMPONENTE LIGHTBOX */}
             <Lightbox
-                open={openLightbox}
-                close={() => setOpenLightbox(false)}
-                slides={slides}
-                index={photoIndex}
-                // Opciones para navegación
-                carousel={{ finite: slides.length <= 1 }} 
-                // Animación de entrada suave
-                animation={{ fade: 300 }} 
+              open={openLightbox}
+              close={() => setOpenLightbox(false)}
+              slides={slides}
+              index={photoIndex}
+              animation={{ fade: 300 }}
             />
 
-            {/* Botón Ver Más */}
-            {hasMore && (
-              <motion.div 
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                style={{ textAlign: "center", marginTop: "3rem" }}
-              >
-                <Link href="/galeria" className="btn-primary" style={{ 
-                  textDecoration: "none",
-                  display: "inline-block",
-                  padding: "1rem 2.5rem",
-                  fontSize: "1.1rem"
-                }}>
-                  Ver galería completa ({images.length} fotos) 🐻
-                </Link>
-              </motion.div>
-            )}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              style={{ display: "flex", justifyContent: "center", marginTop: "3rem" }}
+            >
+              <Link href="/galeria" style={{ textDecoration: "none" }}>
+                <ShimmerButton
+                  shimmerColor="#ffffff"
+                  shimmerSize="0.1em"
+                  background="var(--foreground)" // Usa el color principal del sitio
+                  className="shadow-2xl"
+                  style={{
+                    fontFamily: "var(--font-nunito)",
+                    fontWeight: 700,
+                    fontSize: "1rem",
+                    padding: "0.85rem 2.5rem",
+                    borderRadius: "999px",
+                    color: "#ffffff",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    transition: "transform 0.2s"
+                  }}
+                >
+                  <span style={{ position: "relative", zIndex: 1 }}>
+                    🐻 Mira todas nuestras aventuras →
+                  </span>
+                </ShimmerButton>
+              </Link>
+            </motion.div>
           </>
         )}
       </div>
