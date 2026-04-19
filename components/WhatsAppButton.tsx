@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const WhatsAppIcon = () => (
@@ -11,25 +11,36 @@ const WhatsAppIcon = () => (
 
 export default function WhatsAppButton() {
   const [hovered, setHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detectamos si es móvil para ajustar el comportamiento
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   return (
     <div
+      className="whatsapp-container"
       style={{
         position: "fixed",
-        bottom: "1.75rem",
-        right: "1.75rem",
+        bottom: isMobile ? "1rem" : "1.75rem",
+        left: isMobile ? "1rem" : "1.75rem",
         zIndex: 999,
         display: "flex",
         alignItems: "center",
         gap: "0.75rem",
+        pointerEvents: "none", // Evita que el contenedor invisible bloquee clics
       }}
     >
       <AnimatePresence>
-        {hovered && (
+        {hovered && !isMobile && ( // En móvil ocultamos el texto para ahorrar espacio
           <motion.div
-            initial={{ opacity: 0, x: -10, scale: 0.9 }}
+            initial={{ opacity: 0, x: 10, scale: 0.9 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
-            exit={{ opacity: 0, x: -10, scale: 0.9 }}
+            exit={{ opacity: 0, x: 10, scale: 0.9 }}
             transition={{ duration: 0.2 }}
             style={{
               background: "#fff",
@@ -41,9 +52,10 @@ export default function WhatsAppButton() {
               color: "#1a1a1a",
               boxShadow: "0 4px 20px rgba(0,0,0,0.12)",
               whiteSpace: "nowrap",
+              pointerEvents: "auto",
             }}
           >
-            💬 ¡Escríbenos!
+            ¡Escríbenos!
           </motion.div>
         )}
       </AnimatePresence>
@@ -57,8 +69,8 @@ export default function WhatsAppButton() {
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         style={{
-          width: "58px",
-          height: "58px",
+          width: isMobile ? "52px" : "58px",
+          height: isMobile ? "52px" : "58px",
           borderRadius: "50%",
           background: "#25D366",
           display: "flex",
@@ -68,10 +80,20 @@ export default function WhatsAppButton() {
           boxShadow: "0 4px 20px #25D36655",
           textDecoration: "none",
           flexShrink: 0,
+          pointerEvents: "auto",
         }}
       >
         <WhatsAppIcon />
       </motion.a>
+
+      <style>{`
+        /* Aseguramos que el tooltip no aparezca en móviles aunque se toque accidentalmente */
+        @media (max-width: 767px) {
+          .whatsapp-container div {
+            display: none !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

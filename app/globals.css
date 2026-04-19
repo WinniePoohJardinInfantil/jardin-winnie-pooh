@@ -5,24 +5,20 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Fuentes */
   --font-fredoka: "Fredoka", sans-serif;
   --font-nunito: "Nunito", sans-serif;
 
-  /* Paleta Vibrante */
   --color-pink: #FF7893;
   --color-orange: #EB8100;
   --color-yellow: #FFFC01;
   --color-green: #4FF084;
   --color-blue: #7AC0FF;
 
-  /* Colores UI */
   --color-cream: #ffffff;
   --color-honey: #f5a623;
   --color-text: #2d2d2d;
   --color-text-muted: #616161;
 
-  /* Shadcn Variables - Light */
   --background: #ffffff;
   --foreground: #2d2d2d;
   --card: #ffffff;
@@ -42,6 +38,7 @@
   --input: #e5e5e5;
   --ring: #f5a623;
   --radius: 1rem;
+
   --color-1: oklch(66.2% 0.225 25.9);
   --color-2: oklch(60.4% 0.26 302);
   --color-3: oklch(69.6% 0.165 251);
@@ -59,15 +56,9 @@
   --border: #2d2d2d;
   --color-cream: #121212;
   --color-text: #f0f0f0;
-  --color-1: oklch(66.2% 0.225 25.9);
-  --color-2: oklch(60.4% 0.26 302);
-  --color-3: oklch(69.6% 0.165 251);
-  --color-4: oklch(80.2% 0.134 225);
-  --color-5: oklch(90.7% 0.231 133);
 }
 
 @theme inline {
-  /* Registramos los colores para que Tailwind los reconozca */
   --color-pink: var(--color-pink);
   --color-orange: var(--color-orange);
   --color-yellow: var(--color-yellow);
@@ -77,152 +68,107 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-border: var(--border);
-
   --font-heading: var(--font-fredoka);
   --font-sans: var(--font-nunito);
-
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-sm: calc(var(--radius) * 0.6);
+
   --animate-aurora: aurora 8s ease-in-out infinite alternate;
   @keyframes aurora {
-  0% {
-    background-position: 0% 50%;
-    transform: rotate(-5deg) scale(0.9);
-    }
-  25% {
-    background-position: 50% 100%;
-    transform: rotate(5deg) scale(1.1);
-    }
-  50% {
-    background-position: 100% 50%;
-    transform: rotate(-3deg) scale(0.95);
-    }
-  75% {
-    background-position: 50% 0%;
-    transform: rotate(3deg) scale(1.05);
-    }
-  100% {
-    background-position: 0% 50%;
-    transform: rotate(-5deg) scale(0.9);
-    }
+    0% { background-position: 0% 50%; transform: rotate(-5deg) scale(0.9); }
+    25% { background-position: 50% 100%; transform: rotate(5deg) scale(1.1); }
+    50% { background-position: 100% 50%; transform: rotate(-3deg) scale(0.95); }
+    75% { background-position: 50% 0%; transform: rotate(3deg) scale(1.05); }
+    100% { background-position: 0% 50%; transform: rotate(-5deg) scale(0.9); }
   }
-  --animate-rainbow: rainbow var(--speed, 2s) infinite linear;
-  --color-color-5: var(--color-5);
-  --color-color-4: var(--color-4);
-  --color-color-3: var(--color-3);
-  --color-color-2: var(--color-2);
-  --color-color-1: var(--color-1)
-;
-  @keyframes rainbow {
-  0% {
-    background-position: 0%;
-    }
-  100% {
-    background-position: 200%;
-    }
-  }
-  --animate-background-position-spin: background-position-spin 3000ms infinite alternate;
-  @keyframes background-position-spin {
-  0% {
-    background-position: top center;
-    }
-  100% {
-    background-position: bottom center;
-    }
-  }
-  --animate-marquee: marquee var(--duration) infinite linear;
-  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
-  @keyframes marquee {
-  from {
-    transform: translateX(0);
-    }
-  to {
-    transform: translateX(calc(-100% - var(--gap)));
-    }
-  }
-  @keyframes marquee-vertical {
-  from {
-    transform: translateY(0);
-    }
-  to {
-    transform: translateY(calc(-100% - var(--gap)));
-    }
-  }
-  --animate-pulse: pulse var(--duration) ease-out infinite;
-  --animate-pulse-ripple: pulse-ripple var(--duration) cubic-bezier(0.16, 1, 0.3, 1) infinite;
-  @keyframes pulse {
-  0%, 100% {
-    boxShadow: 0 0 0 0 var(--pulse-color, oklch(from var(--bg) l c h / 0.5));
-    }
-  50% {
-    boxShadow: 0 0 0 var(--distance) var(--pulse-color, oklch(from var(--bg) l c h / 0.5));
-    }
-  }
-  @keyframes pulse-ripple {
-  0% {
-    boxShadow: 0 0 0 0 oklch(from var(--pulse-color, var(--bg)) l c h / 1);
-    }
-  100% {
-    boxShadow: 0 0 0 var(--distance) oklch(from var(--pulse-color, var(--bg)) l c h / 0);
-    }
-  }
-  --animate-shine: shine var(--duration) infinite linear;
-  @keyframes shine {
-  0% {
-    background-position: 0% 0%;
-    }
-  50% {
-    background-position: 100% 100%;
-    }
-  to {
-    background-position: 0% 0%;
-    }
-  }
-  --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite alternate;
-  --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear;
-  @keyframes shimmer-slide {
-  to {
-    transform: translate(calc(100cqw - 100%), 0);
-    }
-  }
-  @keyframes spin-around {
-  0% {
-    transform: translateZ(0) rotate(0);
-    }
-  15%, 35% {
-    transform: translateZ(0) rotate(90deg);
-    }
-  65%, 85% {
-    transform: translateZ(0) rotate(270deg);
-    }
-  100% {
-    transform: translateZ(0) rotate(360deg);
-    }
-  }}
 
-/* Estilos Base Manuales (Evitamos @apply conflictivos) */
-* {
+  --animate-rainbow: rainbow var(--speed, 2s) infinite linear;
+  @keyframes rainbow {
+    0% { background-position: 0%; }
+    100% { background-position: 200%; }
+  }
+
+  --animate-marquee: marquee var(--duration) infinite linear;
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-100% - var(--gap))); }
+  }
+}
+
+/* ===== CORRECCIÓN CRÍTICA DE LA LÍNEA NEGRA ===== 
+   Tailwind v4 y Preflight añaden bordes por defecto. 
+   Aquí reseteamos TODO a 0 para que no salgan líneas fantasmas.
+*/
+*, ::before, ::after {
+  border-width: 0;
+  border-style: solid;
+  border-color: transparent;
+}
+
+/* Solo permitimos bordes a elementos que tengan explícitamente 
+   una clase de borde de Tailwind o Shadcn 
+*/
+.border {
+  border-width: 1px;
+  border-color: var(--border);
+}
+
+.border-t {
+  border-top-width: 1px;
+  border-color: var(--border);
+}
+
+.border-b {
+  border-bottom-width: 1px;
+  border-color: var(--border);
+}
+
+.border-l {
+  border-left-width: 1px;
+  border-color: var(--border);
+}
+
+.border-r {
+  border-right-width: 1px;
+  border-color: var(--border);
+}
+
+html, body {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  border-color: var(--border); /* Reemplaza el @apply border-border */
+  border: none;
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-nunito), sans-serif;
-  transition: background-color 0.3s ease;
+  overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-fredoka), sans-serif;
-  font-weight: 700;
 }
 
+/* Aseguramos que las secciones no hereden nada de bordes 
+   ni outlines de capas superiores del framework 
+*/
 section {
   padding: 5rem 1.5rem;
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+main > section,
+main > div,
+main > article {
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
 }
 
 .container {
