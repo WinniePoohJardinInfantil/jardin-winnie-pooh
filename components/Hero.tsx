@@ -2,6 +2,7 @@
 
 import React, { useRef } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image"; // Importamos el componente de optimización
 import { NumberTicker } from "@/components/ui/number-ticker";
 import { AuroraText } from "@/components/ui/aurora-text";
 import { RainbowButton } from "@/components/ui/rainbow-button";
@@ -9,7 +10,19 @@ import { BlurFade } from "@/components/ui/blur-fade";
 import { CoolMode } from "@/components/ui/cool-mode";
 import { Confetti } from "@/components/ui/confetti";
 
-// --- CONFIGURACIÓN DE DATOS ---
+// Interfaces para TypeScript (Sin 'any')
+interface ConfettiOptions {
+  particleCount?: number;
+  angle?: number;
+  spread?: number;
+  origin?: { x?: number; y?: number };
+  colors?: string[];
+}
+
+interface ConfettiRef {
+  fire: (options?: ConfettiOptions) => void;
+}
+
 const stats = [
   { value: 29, label: "Años de experiencia", emoji: "🏆", color: "#FFFC01" },
   { value: 3, label: "Sedes en Medellín", emoji: "📍", color: "#FF7893" },
@@ -26,14 +39,8 @@ const rightPhotos = [
   { src: "/images/navidad1.webp", alt: "Navidad jardín", rotate: "-5deg" },
 ];
 
-// Stickers
-const leftSticker = "/images/winnie-asomado.webp";
-const rightSticker = "/images/tigger-cafe.webp";
-const bottomLeftSticker = "/images/winnie-guino.webp";
-const bottomRightSticker = "/images/winnie-piggy.webp";
-
 export default function Hero() {
-  const confettiRef = useRef(null);
+  const confettiRef = useRef<ConfettiRef>(null);
 
   return (
     <section
@@ -50,10 +57,7 @@ export default function Hero() {
         overflow: "hidden", 
       }}
     >
-      {/* Texto SEO */}
-      <span style={{ position: "absolute", width: 1, height: 1, padding: 0, margin: -1, overflow: "hidden", clip: "rect(0,0,0,0)", border: 0 }}>
-        Jardín Infantil Winnie Pooh Medellín
-      </span>
+      <span className="sr-only">Jardín Infantil Winnie Pooh Medellín</span>
 
       {/* --- FONDO (BLOBS) --- */}
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0 }}>
@@ -64,94 +68,97 @@ export default function Hero() {
       {/* --- LADO IZQUIERDO (TAMAÑO XL) --- */}
       <div className="hidden xl:block" style={{ position: "absolute", left: "40px", top: 0, bottom: 0, width: "320px", zIndex: 5, pointerEvents: "none" }}>
         
-        {/* Foto Superior Izquierda (Más grande) */}
+        {/* Foto Superior Izquierda */}
         <motion.div
           initial={{ opacity: 0, x: -120 }}
           animate={{ opacity: 1, x: 0, y: [0, -15, 0] }}
           transition={{ duration: 0.8, y: { duration: 5, repeat: Infinity, ease: "easeInOut" } }}
           style={{ position: "absolute", top: "12%", left: "0", rotate: leftPhotos[0].rotate }}
         >
-          <div style={{ width: "280px", height: "210px", borderRadius: "2rem", border: "5px solid white", boxShadow: "0 15px 40px rgba(0,0,0,0.12)", overflow: "hidden" }}>
-            <img src={leftPhotos[0].src} alt={leftPhotos[0].alt} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          <div style={{ width: "280px", height: "210px", borderRadius: "2rem", border: "5px solid white", boxShadow: "0 15px 40px rgba(0,0,0,0.12)", overflow: "hidden", position: "relative" }}>
+            <Image src={leftPhotos[0].src} alt={leftPhotos[0].alt} fill style={{ objectFit: "cover" }} priority />
           </div>
         </motion.div>
 
-        {/* Sticker Winnie Superior (Más grande) */}
-        <motion.img 
-          src={leftSticker} 
+        {/* Sticker Winnie Superior */}
+        <motion.div 
           animate={{ rotate: [0, 8, 0], scale: [1, 1.05, 1] }}
           transition={{ duration: 3.5, repeat: Infinity }}
-          style={{ position: "absolute", top: "5%", left: "180px", width: "150px", zIndex: 6 }}
-        />
+          style={{ position: "absolute", top: "5%", left: "180px", width: "150px", height: "150px", zIndex: 6 }}
+        >
+          <Image src="/images/winnie-asomado.webp" alt="Winnie Sticker" fill style={{ objectFit: "contain" }} />
+        </motion.div>
 
-        {/* Foto Inferior Izquierda (Más grande) */}
+        {/* Foto Inferior Izquierda */}
         <motion.div
           initial={{ opacity: 0, x: -120 }}
           animate={{ opacity: 1, x: 0, y: [0, 15, 0] }}
           transition={{ duration: 0.8, delay: 0.2, y: { duration: 6, repeat: Infinity, ease: "easeInOut" } }}
           style={{ position: "absolute", bottom: "12%", left: "10px", rotate: leftPhotos[1].rotate }}
         >
-          <div style={{ width: "260px", height: "195px", borderRadius: "2rem", border: "5px solid white", boxShadow: "0 15px 40px rgba(0,0,0,0.12)", overflow: "hidden" }}>
-            <img src={leftPhotos[1].src} alt={leftPhotos[1].alt} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          <div style={{ width: "260px", height: "195px", borderRadius: "2rem", border: "5px solid white", boxShadow: "0 15px 40px rgba(0,0,0,0.12)", overflow: "hidden", position: "relative" }}>
+            <Image src={leftPhotos[1].src} alt={leftPhotos[1].alt} fill style={{ objectFit: "cover" }} />
           </div>
         </motion.div>
 
         {/* Sticker Winnie Guiño */}
-        <motion.img 
-          src={bottomLeftSticker} 
+        <motion.div 
           animate={{ y: [0, -10, 0] }}
           transition={{ duration: 4, repeat: Infinity }}
-          style={{ position: "absolute", bottom: "5%", left: "200px", width: "130px", zIndex: 6 }}
-        />
+          style={{ position: "absolute", bottom: "5%", left: "200px", width: "130px", height: "130px", zIndex: 6 }}
+        >
+          <Image src="/images/winnie-guino.webp" alt="Winnie Sticker" fill style={{ objectFit: "contain" }} />
+        </motion.div>
       </div>
 
       {/* --- LADO DERECHO (TAMAÑO XL) --- */}
       <div className="hidden xl:block" style={{ position: "absolute", right: "40px", top: 0, bottom: 0, width: "320px", zIndex: 5, pointerEvents: "none" }}>
         
-        {/* Foto Superior Derecha (Más grande) */}
+        {/* Foto Superior Derecha */}
         <motion.div
           initial={{ opacity: 0, x: 120 }}
           animate={{ opacity: 1, x: 0, y: [0, 18, 0] }}
           transition={{ duration: 0.8, delay: 0.1, y: { duration: 7, repeat: Infinity, ease: "easeInOut" } }}
           style={{ position: "absolute", top: "12%", right: "0", rotate: rightPhotos[0].rotate }}
         >
-          <div style={{ width: "280px", height: "210px", borderRadius: "2rem", border: "5px solid white", boxShadow: "0 15px 40px rgba(0,0,0,0.12)", overflow: "hidden" }}>
-            <img src={rightPhotos[0].src} alt={rightPhotos[0].alt} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          <div style={{ width: "280px", height: "210px", borderRadius: "2rem", border: "5px solid white", boxShadow: "0 15px 40px rgba(0,0,0,0.12)", overflow: "hidden", position: "relative" }}>
+            <Image src={rightPhotos[0].src} alt={rightPhotos[0].alt} fill style={{ objectFit: "cover" }} priority />
           </div>
         </motion.div>
 
-        {/* Sticker Tigger (Más grande) */}
-        <motion.img 
-          src={rightSticker} 
+        {/* Sticker Tigger */}
+        <motion.div 
           animate={{ x: [0, 10, 0], y: [0, -10, 0] }}
           transition={{ duration: 4.5, repeat: Infinity }}
-          style={{ position: "absolute", top: "4%", right: "200px", width: "140px", zIndex: 6 }}
-        />
+          style={{ position: "absolute", top: "4%", right: "200px", width: "140px", height: "140px", zIndex: 6 }}
+        >
+          <Image src="/images/tigger-cafe.webp" alt="Tigger Sticker" fill style={{ objectFit: "contain" }} />
+        </motion.div>
 
-        {/* Foto Inferior Derecha (Más grande) */}
+        {/* Foto Inferior Derecha */}
         <motion.div
           initial={{ opacity: 0, x: 120 }}
           animate={{ opacity: 1, x: 0, y: [0, -18, 0] }}
           transition={{ duration: 0.8, delay: 0.3, y: { duration: 5.5, repeat: Infinity, ease: "easeInOut" } }}
           style={{ position: "absolute", bottom: "12%", right: "10px", rotate: rightPhotos[1].rotate }}
         >
-          <div style={{ width: "270px", height: "200px", borderRadius: "2rem", border: "5px solid white", boxShadow: "0 15px 40px rgba(0,0,0,0.12)", overflow: "hidden" }}>
-            <img src={rightPhotos[1].src} alt={rightPhotos[1].alt} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          <div style={{ width: "270px", height: "200px", borderRadius: "2rem", border: "5px solid white", boxShadow: "0 15px 40px rgba(0,0,0,0.12)", overflow: "hidden", position: "relative" }}>
+            <Image src={rightPhotos[1].src} alt={rightPhotos[1].alt} fill style={{ objectFit: "cover" }} />
           </div>
         </motion.div>
 
         {/* Sticker Piggy */}
-        <motion.img 
-          src={bottomRightSticker} 
+        <motion.div 
           animate={{ scale: [1, 1.1, 1], rotate: [0, -5, 0] }}
           transition={{ duration: 5, repeat: Infinity }}
-          style={{ position: "absolute", bottom: "5%", right: "210px", width: "125px", zIndex: 6 }}
-        />
+          style={{ position: "absolute", bottom: "5%", right: "210px", width: "125px", height: "125px", zIndex: 6 }}
+        >
+          <Image src="/images/winnie-piggy.webp" alt="Piglet Sticker" fill style={{ objectFit: "contain" }} />
+        </motion.div>
       </div>
 
       {/* --- BLOQUE CENTRAL --- */}
       <div style={{ flex: 1, maxWidth: "680px", textAlign: "center", position: "relative", zIndex: 10 }}>
-        
         <BlurFade delay={0.1} inView>
           <span style={{
             display: "inline-flex", alignItems: "center", gap: "0.5rem",
@@ -182,12 +189,10 @@ export default function Hero() {
             fontFamily: "var(--font-nunito)", fontSize: "clamp(1.1rem, 2vw, 1.25rem)",
             color: "#555", lineHeight: 1.6, maxWidth: "550px", margin: "0 auto 3rem",
           }}>
-            Guardería y jardín infantil en Medellín con atención integral, estimulación temprana
-            y programas en 7 idiomas.
+            Guardería y jardín infantil en Medellín con atención integral, estimulación temprana y programas en 7 idiomas.
           </p>
         </BlurFade>
 
-        {/* Botones */}
         <BlurFade delay={0.4} inView>
           <div style={{ display: "flex", gap: "1.2rem", justifyContent: "center", flexWrap: "wrap", alignItems: "center", marginBottom: "4rem" }}>
             <Confetti
@@ -211,7 +216,6 @@ export default function Hero() {
           </div>
         </BlurFade>
 
-        {/* Stats */}
         <BlurFade delay={0.5} inView>
           <div style={{ display: "flex", gap: "1.5rem", justifyContent: "center", flexWrap: "wrap" }}>
             {stats.map((stat) => (
