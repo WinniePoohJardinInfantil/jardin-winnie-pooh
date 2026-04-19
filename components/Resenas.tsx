@@ -55,6 +55,8 @@ const resenas = [
   },
 ];
 
+const withAlpha = (hex: string, alpha: string) => `${hex}${alpha}`;
+
 const ResenaCard = ({ nombre, rol, resena, color }: typeof resenas[0]) => (
   <div
     className="relative mx-3 flex-shrink-0 group"
@@ -62,15 +64,16 @@ const ResenaCard = ({ nombre, rol, resena, color }: typeof resenas[0]) => (
   >
     {/* Borde animado al hover */}
     <div
-      className="absolute -inset-[1px] rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+      className="absolute -inset-[1px] rounded-2xl opacity-100 transition-all duration-500 group-hover:opacity-100"
       style={{
-        background: `linear-gradient(135deg, ${color}, #FF7893, #7AC0FF)`,
-        filter: "blur(2px)",
+        background: `linear-gradient(135deg, ${withAlpha(color, "F2")}, ${withAlpha(color, "8A")})`,
+        filter: "blur(6px)",
         borderRadius: "1rem",
       }}
     />
 
     <div
+      className="transition-all duration-300 group-hover:-translate-y-1"
       style={{
         position: "relative",
         borderRadius: "1rem",
@@ -79,8 +82,18 @@ const ResenaCard = ({ nombre, rol, resena, color }: typeof resenas[0]) => (
         display: "flex",
         flexDirection: "column",
         gap: "0.75rem",
-        border: "1.5px solid #f0f0f0",
+        minHeight: "242px",
+        border: `1.5px solid ${withAlpha(color, "55")}`,
+        boxShadow: `0 12px 28px ${withAlpha(color, "20")}`,
         overflow: "hidden",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = withAlpha(color, "BB");
+        e.currentTarget.style.boxShadow = `0 18px 38px ${withAlpha(color, "34")}`;
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = withAlpha(color, "55");
+        e.currentTarget.style.boxShadow = `0 12px 28px ${withAlpha(color, "20")}`;
       }}
     >
       {/* Línea top de color */}
@@ -92,7 +105,7 @@ const ResenaCard = ({ nombre, rol, resena, color }: typeof resenas[0]) => (
           right: "1.5rem",
           height: "3px",
           borderRadius: "999px",
-          background: `linear-gradient(90deg, ${color}, #FF789388)`,
+          background: `linear-gradient(90deg, ${color}, ${withAlpha(color, "88")})`,
         }}
       />
 
@@ -110,6 +123,7 @@ const ResenaCard = ({ nombre, rol, resena, color }: typeof resenas[0]) => (
           color: "#555",
           lineHeight: 1.65,
           fontStyle: "italic",
+          minHeight: "112px",
         }}
       >
         &ldquo;{resena}&rdquo;
@@ -119,7 +133,7 @@ const ResenaCard = ({ nombre, rol, resena, color }: typeof resenas[0]) => (
         style={{
           marginTop: "auto",
           paddingTop: "0.75rem",
-          borderTop: "1px solid #f0f0f0",
+          borderTop: `1px solid ${withAlpha(color, "24")}`,
         }}
       >
         <p style={{ fontFamily: "var(--font-nunito)", fontWeight: 700, fontSize: "0.875rem", color: "#1a1a1a" }}>
