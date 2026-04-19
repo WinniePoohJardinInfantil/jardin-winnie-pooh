@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 import { BlurFade } from "@/components/ui/blur-fade";
+import { Backlight } from "@/components/ui/backlight";
 import Lightbox from "yet-another-react-lightbox";
 import Video from "yet-another-react-lightbox/plugins/video";
 import "yet-another-react-lightbox/styles.css";
@@ -79,8 +80,7 @@ export default function PaginaGaleriaCompleta() {
                 display: "inline-flex", alignItems: "center", gap: "0.4rem",
                 fontFamily: "var(--font-nunito)", fontWeight: 700, fontSize: "0.875rem",
                 color: "var(--muted-foreground)", textDecoration: "none",
-                marginBottom: "1.5rem",
-                transition: "color 0.2s",
+                marginBottom: "1.5rem", transition: "color 0.2s",
               }}
               onMouseEnter={(e) => (e.currentTarget.style.color = "var(--foreground)")}
               onMouseLeave={(e) => (e.currentTarget.style.color = "var(--muted-foreground)")}
@@ -98,7 +98,11 @@ export default function PaginaGaleriaCompleta() {
                 }}>
                   📸 Galería completa
                 </span>
-                <h1 style={{ fontFamily: "var(--font-fredoka)", fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "var(--foreground)", lineHeight: 1.1 }}>
+                <h1 style={{
+                  fontFamily: "var(--font-fredoka)",
+                  fontSize: "clamp(2rem, 4vw, 3.5rem)",
+                  color: "var(--foreground)", lineHeight: 1.1,
+                }}>
                   Toda nuestra aventura 🐻
                 </h1>
               </div>
@@ -129,42 +133,47 @@ export default function PaginaGaleriaCompleta() {
             }}>
               {items.map((item, i) => (
                 <BlurFade key={item.name} delay={i * 0.03} inView>
-                  <motion.div
-                    style={{
-                      breakInside: "avoid",
-                      marginBottom: "1rem",
-                      borderRadius: "1rem",
-                      overflow: "hidden",
-                      background: "#fff",
-                      boxShadow: "0 4px 16px rgba(0,0,0,0.06)",
-                      cursor: "pointer",
-                      position: "relative",
-                    }}
-                    whileHover={{ scale: 1.02 }}
-                    onClick={() => { setPhotoIndex(i); setOpenLightbox(true); }}
-                  >
-                    {item.type === "video" ? (
-                      <>
-                        <video
-                          src={item.url}
-                          style={{ width: "100%", height: "auto", display: "block" }}
-                          muted playsInline
-                        />
-                        <div style={{
-                          position: "absolute", bottom: "0.5rem", right: "0.5rem",
-                          background: "rgba(0,0,0,0.6)", borderRadius: "999px",
-                          padding: "0.25rem 0.6rem",
-                          fontFamily: "var(--font-nunito)", fontSize: "0.72rem",
-                          color: "#fff", fontWeight: 700,
-                        }}>
-                          🎥 Video
-                        </div>
-                      </>
-                    ) : (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={item.url} alt="Galería" style={{ width: "100%", height: "auto", display: "block" }} />
-                    )}
-                  </motion.div>
+                  <div style={{ breakInside: "avoid", marginBottom: "1rem" }}>
+                    <Backlight className="rounded-2xl">
+                      <motion.div
+                        style={{
+                          borderRadius: "1rem",
+                          overflow: "hidden",
+                          background: "#fff",
+                          cursor: "pointer",
+                          position: "relative",
+                        }}
+                        whileHover={{ scale: 1.02 }}
+                        onClick={() => { setPhotoIndex(i); setOpenLightbox(true); }}
+                      >
+                        {item.type === "video" ? (
+                          <>
+                            <video
+                              src={item.url}
+                              style={{ width: "100%", height: "auto", display: "block" }}
+                              muted playsInline
+                            />
+                            <div style={{
+                              position: "absolute", bottom: "0.5rem", right: "0.5rem",
+                              background: "rgba(0,0,0,0.6)", borderRadius: "999px",
+                              padding: "0.25rem 0.6rem",
+                              fontFamily: "var(--font-nunito)", fontSize: "0.72rem",
+                              color: "#fff", fontWeight: 700,
+                            }}>
+                              🎥 Video
+                            </div>
+                          </>
+                        ) : (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={item.url}
+                            alt="Galería"
+                            style={{ width: "100%", height: "auto", display: "block" }}
+                          />
+                        )}
+                      </motion.div>
+                    </Backlight>
+                  </div>
                 </BlurFade>
               ))}
             </div>

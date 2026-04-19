@@ -9,6 +9,7 @@ const links = [
   { label: "Sedes", href: "#sedes" },
   { label: "Servicios", href: "#servicios" },
   { label: "Galería", href: "#galeria" },
+  { label: "Reseñas", href: "#resenas"},
   { label: "Contacto", href: "#contacto" },
 ];
 
@@ -83,7 +84,7 @@ export default function Navbar() {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="images/logo.webp"
+              src="/images/logo.webp"
               alt="Logo Winnie Pooh"
               style={{
                 width: "100%",
@@ -141,6 +142,7 @@ export default function Navbar() {
               "var(--color-green)",
               "var(--color-blue)",
               "var(--color-pink)",
+              "var(--color-green",
             ];
 
             return (
@@ -272,6 +274,7 @@ export default function Navbar() {
                 "#4FF08422",
                 "#7AC0FF22",
                 "#FF789322",
+                "#4FF08422",
               ];
 
               return (
