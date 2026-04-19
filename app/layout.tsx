@@ -30,6 +30,11 @@ export const metadata: Metadata = {
     "after class Medellín",
     "estimulación temprana",
   ],
+  // AÑADE ESTO:
+  icons: {
+    icon: "images/logo.webp", // O "/icon.png" si usas un PNG
+    apple: "images/logo.webp", // Opcional, para cuando guardan la web en iPhone
+  },
 };
 
 export default function RootLayout({

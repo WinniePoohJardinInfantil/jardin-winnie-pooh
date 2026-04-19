@@ -86,7 +86,7 @@ export default function Hero() {
           transition={{ duration: 3.5, repeat: Infinity }}
           style={{ position: "absolute", top: "5%", left: "180px", width: "150px", height: "150px", zIndex: 6 }}
         >
-          <Image src="/images/winnie-asomado.webp" alt="Winnie Sticker" fill style={{ objectFit: "contain" }} />
+          <Image src="/images/winnie-baile.webp" alt="Winnie Sticker" fill style={{ objectFit: "contain" }} />
         </motion.div>
 
         {/* Foto Inferior Izquierda */}
