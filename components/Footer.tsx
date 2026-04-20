@@ -1,22 +1,13 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Dock, DockIcon } from "@/components/ui/dock";
-import { Mail } from "lucide-react";
-import { ShineBorder } from "@/components/ui/shine-border";
-
-const shineColors: string[] = ["#4FF084", "#7AC0FF"];
+import { Mail, MapPin } from "lucide-react";
+import { Marquee } from "@/components/ui/marquee";
+import { NumberTicker } from "@/components/ui/number-ticker";
 
 const InstagramIcon = () => (
-  <svg
-    width="18"
-    height="18"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
     <circle cx="12" cy="12" r="4" />
     <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
@@ -35,310 +26,178 @@ const socialLinks = [
   { icon: InstagramIcon, href: "https://instagram.com/wpjardininfantil", label: "Instagram", color: "#FF7893" },
 ];
 
-const navLinks = [
-  { label: "Inicio", href: "#inicio" },
-  { label: "Sedes", href: "#sedes" },
-  { label: "Servicios", href: "#servicios" },
-  { label: "Galería", href: "#galeria" },
-  { label: "Reseñas", href: "#resenas" },
-  { label: "Contacto", href: "#contacto" },
+const marqueeItems = [
+  "🐻 29 Años de Experiencia",
+  "🍼 Winnie Pooh Babies",
+  "📚 After Class",
+  "🌍 7 Idiomas",
+  "🎵 Música",
+  "🏊 Natación",
+  "🤸 Gimnasia",
+  "⭐ Bebé Políglota",
+  "🎒 Salidas Pedagógicas",
+  "❤️ Formación Integral",
+];
+
+const stats = [
+  { value: 29, label: "Años", color: "#FFFC01", emoji: "🏆" },
+  { value: 3, label: "Sedes", color: "#FF7893", emoji: "📍" },
+  { value: 7, label: "Idiomas", color: "#7AC0FF", emoji: "🌍" },
 ];
 
 export default function Footer() {
   return (
-    <footer style={{ background: "#111111", color: "#ffffff", padding: "4rem 1.5rem 2rem" }}>
-      <div className="container">
-        <div
-          className="footer-grid"
-          style={{ display: "grid", gap: "3rem", marginBottom: "3rem" }}
-        >
+    <footer style={{ background: "#080808", color: "#ffffff", overflow: "hidden" }}>
+      
+      {/* Marquee superior (más sutil) */}
+      <div style={{ borderBottom: "1px solid #ffffff08", padding: "1rem 0" }}>
+        <Marquee pauseOnHover className="[--duration:30s]">
+          {marqueeItems.concat(marqueeItems).map((item, i) => (
+            <span key={i} style={{ fontFamily: "var(--font-fredoka)", fontSize: "0.85rem", color: "#ffffff22", marginRight: "3rem" }}>
+              {item}
+            </span>
+          ))}
+        </Marquee>
+      </div>
+
+      <div className="container" style={{ padding: "3rem 1.5rem" }}>
+        
+        {/* Sección Superior: Logo + Stats Mejorados */}
+        <div style={{ 
+          display: "flex", 
+          justifyContent: "space-between", 
+          alignItems: "center", 
+          flexWrap: "wrap",
+          gap: "2rem",
+          marginBottom: "3rem" 
+        }}>
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.25rem" }}>
-              <div
-                style={{
-                  width: "44px",
-                  height: "44px",
-                  borderRadius: "50%",
-                  background: "linear-gradient(135deg, #FFFC01, #EB8100)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "1.4rem",
-                  flexShrink: 0,
-                }}
+            <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+              <motion.div
+                animate={{ rotate: [0, 5, -5, 0] }}
+                transition={{ duration: 4, repeat: Infinity }}
+                style={{ width: "50px", height: "50px", borderRadius: "50%", overflow: "hidden", background: "#FFFC01" }}
               >
-                🐻
-              </div>
+                <img src="/images/logo.webp" alt="Logo" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              </motion.div>
               <div>
-                <div
-                  style={{
-                    fontFamily: "var(--font-fredoka)",
-                    fontSize: "1.25rem",
-                    fontWeight: 700,
-                    color: "#FFFC01",
-                    lineHeight: 1,
-                  }}
-                >
-                  Winnie Pooh
-                </div>
-                <div
-                  style={{
-                    fontFamily: "var(--font-nunito)",
-                    fontSize: "0.62rem",
-                    color: "#ffffff55",
-                    letterSpacing: "0.1em",
-                  }}
-                >
-                  JARDÍN INFANTIL · MEDELLÍN
-                </div>
+                <h3 style={{ fontFamily: "var(--font-fredoka)", fontSize: "1.4rem", color: "#FFFC01", margin: 0 }}>Winnie Pooh</h3>
+                <p style={{ fontSize: "0.6rem", color: "#ffffff44", letterSpacing: "1px" }}>JARDÍN INFANTIL · MEDELLÍN</p>
               </div>
             </div>
+          </div>
 
-            <p
-              style={{
-                fontFamily: "var(--font-nunito)",
-                fontSize: "0.85rem",
-                color: "#ffffff77",
-                lineHeight: 1.8,
-                maxWidth: "260px",
-                marginBottom: "1.5rem",
-              }}
-            >
-              Somos el comienzo de una vida plena para sus hijos. 29 años formando niños felices en Medellín.
-            </p>
+          {/* Stats con Texto Blanco/Color para legibilidad */}
+          <div style={{ display: "flex", gap: "2rem" }}>
+            {stats.map((stat) => (
+              <div key={stat.label} style={{ textAlign: "center" }}>
+                <div style={{ 
+                  fontFamily: "var(--font-fredoka)", 
+                  fontSize: "2rem", 
+                  fontWeight: 800,  
+                  color: "#ffffff",  // <-- Pon "#ffffff" si los quieres blancos, o deja "stat.color" si los quieres de colores
+                  lineHeight: 1 
+                }}>
+                  {/* AQUÍ ESTÁ LA MAGIA: className="text-inherit" */}
+                  <NumberTicker value={stat.value} className="text-inherit" />
+                </div>
+                <div style={{ 
+                  fontSize: "0.75rem", 
+                  color: stat.color, 
+                  fontWeight: 700, 
+                  textTransform: "uppercase",
+                  marginTop: "0.4rem"
+                }}>
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+</div>
 
-            <Dock
-              direction="middle"
-              iconMagnification={52}
-              iconDistance={85}
-              className="!bg-white/5 !border-white/10 !justify-start !w-fit !px-3 !py-2"
-            >
+        {/* Grid Principal Alineado Verticalmente */}
+        <div style={{ 
+          display: "grid", 
+          gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", 
+          gap: "3rem",
+          borderTop: "1px solid #ffffff08",
+          paddingTop: "2rem"
+        }}>
+          
+          {/* Columna 1: Sedes */}
+          <div>
+            <h4 style={{ fontFamily: "var(--font-fredoka)", fontSize: "1rem", color: "#ffffff", marginBottom: "1.5rem" }}>Nuestras Sedes</h4>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.2rem" }}>
+              {[
+                { nombre: "Jardín Infantil", dir: "Cll51 #81a-25", color: "#FFFC01" },
+                { nombre: "Winnie Pooh Babies", dir: "Cra81 #52-58", color: "#FF7893" },
+                { nombre: "After Class", dir: "Cll51 #81a-25", color: "#7AC0FF" },
+              ].map((sede) => (
+                <div key={sede.nombre} style={{ display: "flex", gap: "0.8rem" }}>
+                  <MapPin size={16} color={sede.color} style={{ flexShrink: 0, marginTop: "3px" }} />
+                  <div>
+                    <div style={{ fontSize: "0.9rem", fontWeight: 700, color: "#fff" }}>{sede.nombre}</div>
+                    <div style={{ fontSize: "0.8rem", color: "#ffffff55" }}>{sede.dir}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Columna 2: Contacto Directo */}
+          <div>
+            <h4 style={{ fontFamily: "var(--font-fredoka)", fontSize: "1rem", color: "#ffffff", marginBottom: "1.5rem" }}>Contáctenos</h4>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <a href="https://wa.me/573116055332" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: "0.8rem" }}>
+                <div style={{ padding: "8px", borderRadius: "8px", background: "#4FF08415", color: "#4FF084" }}>
+                  <WhatsAppIcon />
+                </div>
+                <span style={{ color: "#ffffff99", fontSize: "0.9rem" }}>311 605 53 32</span>
+              </a>
+              <a href="mailto:wpjardininfantil@hotmail.com" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: "0.8rem" }}>
+                <div style={{ padding: "8px", borderRadius: "8px", background: "#7AC0FF15", color: "#7AC0FF" }}>
+                  <Mail size={18} />
+                </div>
+                <span style={{ color: "#ffffff99", fontSize: "0.85rem" }}>wpjardininfantil@hotmail.com</span>
+              </a>
+            </div>
+          </div>
+
+          {/* Columna 3: Síguenos (Dock) */}
+          <div>
+            <h4 style={{ fontFamily: "var(--font-fredoka)", fontSize: "1rem", color: "#ffffff", marginBottom: "1.5rem" }}>Síguenos</h4>
+            <Dock direction="middle" className="!bg-white/5 !border-white/10 !justify-start !w-fit !px-2">
               {socialLinks.map((link) => (
                 <DockIcon key={link.label}>
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={link.label}
-                    style={{
-                      display: "flex",
-                      width: "100%",
-                      height: "100%",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      borderRadius: "50%",
-                      background: link.color + "22",
-                      color: link.color,
-                      transition: "background 0.2s",
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = link.color + "44")}
-                    onMouseLeave={(e) => (e.currentTarget.style.background = link.color + "22")}
-                  >
-                    <link.icon size={18} />
+                  <a href={link.href} target="_blank" rel="noopener noreferrer" style={{ color: link.color }}>
+                    <link.icon size={20} />
                   </a>
                 </DockIcon>
               ))}
             </Dock>
           </div>
 
-          <div>
-            <h4
-              style={{
-                fontFamily: "var(--font-fredoka)",
-                fontSize: "1rem",
-                color: "#ffffff",
-                marginBottom: "1.25rem",
-                letterSpacing: "0.05em",
-              }}
-            >
-              Navegación
-            </h4>
-
-            <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    style={{
-                      fontFamily: "var(--font-nunito)",
-                      fontSize: "0.875rem",
-                      color: "#ffffff66",
-                      textDecoration: "none",
-                      transition: "color 0.2s",
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = "#ffffff")}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = "#ffffff66")}
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4
-              style={{
-                fontFamily: "var(--font-fredoka)",
-                fontSize: "1rem",
-                color: "#ffffff",
-                marginBottom: "1.25rem",
-                letterSpacing: "0.05em",
-              }}
-            >
-              Contáctenos
-            </h4>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
-              <div style={{ position: "relative", borderRadius: "0.75rem" }}>
-                <ShineBorder className="rounded-xl" shineColor={shineColors} />
-                <a
-                  href="https://wa.me/573116055332"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    position: "relative",
-                    zIndex: 1,
-                    display: "block",
-                    padding: "0.75rem 1.1rem",
-                    background: "#1a1a1a",
-                    borderRadius: "0.75rem",
-                    textDecoration: "none",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontFamily: "var(--font-nunito)",
-                      fontSize: "0.72rem",
-                      color: "#ffffff55",
-                      marginBottom: "0.1rem",
-                    }}
-                  >
-                    WhatsApp
-                  </div>
-                  <div
-                    style={{
-                      fontFamily: "var(--font-nunito)",
-                      fontSize: "0.92rem",
-                      fontWeight: 700,
-                      color: "#4FF084",
-                    }}
-                  >
-                    311 605 53 32
-                  </div>
-                </a>
-              </div>
-
-              <div
-                style={{
-                  padding: "0.75rem 1.1rem",
-                  background: "#1a1a1a",
-                  borderRadius: "0.875rem",
-                  border: "1px solid #ffffff11",
-                }}
-              >
-                <div
-                  style={{
-                    fontFamily: "var(--font-nunito)",
-                    fontSize: "0.72rem",
-                    color: "#ffffff55",
-                    marginBottom: "0.1rem",
-                  }}
-                >
-                  Correo
-                </div>
-                <div
-                  style={{
-                    fontFamily: "var(--font-nunito)",
-                    fontSize: "0.82rem",
-                    fontWeight: 600,
-                    color: "#7AC0FF",
-                  }}
-                >
-                  wpjardininfantil@hotmail.com
-                </div>
-              </div>
-
-              <div
-                style={{
-                  padding: "0.75rem 1.1rem",
-                  background: "#1a1a1a",
-                  borderRadius: "0.875rem",
-                  border: "1px solid #ffffff11",
-                }}
-              >
-                <div
-                  style={{
-                    fontFamily: "var(--font-nunito)",
-                    fontSize: "0.72rem",
-                    color: "#ffffff55",
-                    marginBottom: "0.25rem",
-                  }}
-                >
-                  Sedes
-                </div>
-                <div
-                  style={{
-                    fontFamily: "var(--font-nunito)",
-                    fontSize: "0.8rem",
-                    color: "#ffffff88",
-                    lineHeight: 1.7,
-                  }}
-                >
-                  Jardín & After Class: Cll51 #81a-25
-                  <br />
-                  Babies: Cra81 #52-58
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
-        <div
-          className="footer-bottom"
-          style={{
-            borderTop: "1px solid #ffffff11",
-            paddingTop: "1.5rem",
-            display: "flex",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: "1rem",
-          }}
-        >
-          <p style={{ fontFamily: "var(--font-nunito)", fontSize: "0.78rem", color: "#ffffff33" }}>
-            © 2026 Jardín Infantil Winnie Pooh. Todos los derechos reservados.
-          </p>
-          <p style={{ fontFamily: "var(--font-nunito)", fontSize: "0.78rem", color: "#ffffff33" }}>
-            Desarrollado por{" "}
-            <a
-              href="https://serstack.vercel.app"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "#FFFC01", textDecoration: "none", fontWeight: 700 }}
-            >
-              SerStack
-            </a>
-          </p>
+        {/* Footer Bottom */}
+        <div style={{ 
+          marginTop: "4rem", 
+          paddingTop: "1.5rem", 
+          borderTop: "1px solid #ffffff08",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexWrap: "wrap",
+          gap: "1rem"
+        }}>
+          <p style={{ fontSize: "0.75rem", color: "#ffffff22" }}>© 2026 Winnie Pooh. Medellín, CO.</p>
+          <div style={{ display: "flex", gap: "1.5rem" }}>
+            {["Inicio", "Nosotros", "Servicios", "Contacto"].map(item => (
+              <a key={item} href={`#${item.toLowerCase()}`} style={{ fontSize: "0.75rem", color: "#ffffff44", textDecoration: "none" }}>{item}</a>
+            ))}
+          </div>
         </div>
       </div>
-
-      <style>{`
-        @media (min-width: 768px) {
-          .footer-grid {
-            grid-template-columns: 1.5fr 1fr 1fr;
-          }
-        }
-        @media (max-width: 767px) {
-          .footer-grid {
-            grid-template-columns: 1fr;
-            gap: 2.5rem !important;
-          }
-          .footer-bottom {
-            flex-direction: column;
-            text-align: center;
-          }
-        }
-      `}</style>
     </footer>
   );
 }

@@ -28,6 +28,7 @@ import Video from "yet-another-react-lightbox/plugins/video";
 import "yet-another-react-lightbox/styles.css";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { NumberTicker } from "@/components/ui/number-ticker";
+import Link from "next/link";
 
 interface MediaItem {
   name: string;
