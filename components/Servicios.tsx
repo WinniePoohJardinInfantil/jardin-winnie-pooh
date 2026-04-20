@@ -2,23 +2,25 @@
 
 import { motion } from "framer-motion";
 import { NeonGradientCard } from "@/components/ui/neon-gradient-card";
+import Image from "next/image";
 
 const servicios = [
-  { emoji: "🎵", titulo: "Música", desc: "Desarrollo auditivo y expresión artística desde temprana edad.", color1: "#FF86A8", color2: "#FFD0DB" },
-  { emoji: "🌍", titulo: "Inglés", desc: "Aprendizaje del idioma de manera lúdica y natural.", color1: "#79B6FF", color2: "#D9EBFF" },
-  { emoji: "🤸", titulo: "Gimnasia", desc: "Desarrollo motor y coordinación con actividades recreativas.", color1: "#79DDA3", color2: "#D9F6E4" },
-  { emoji: "🗣️", titulo: "Bebé Políglota", desc: "Programación neurolingüística en 7 idiomas.", color1: "#E8D36E", color2: "#FFF4BE" },
-  { emoji: "🏊", titulo: "Natación", desc: "Clases acuáticas para fortalecer el cuerpo y ganar confianza.", color1: "#FFBE7E", color2: "#FFE6CC" },
-  { emoji: "🎒", titulo: "Salidas Pedagógicas", desc: "Experiencias fuera del aula para vivenciar los proyectos del mes.", color1: "#F29BC7", color2: "#FFDDF0" },
-  { emoji: "🗨️", titulo: "Fonoaudiología", desc: "Apoyo especializado en el desarrollo del lenguaje y la comunicación.", color1: "#8CCEFF", color2: "#E0F1FF" },
-  { emoji: "⭐", titulo: "Ahorro Escolar", desc: "Los niños aprenden el valor del trabajo y la autoestima productiva.", color1: "#8AE0A8", color2: "#DDF7E7" },
-  { emoji: "📚", titulo: "Proyectos Mensuales", desc: "Adaptación escolar, Vocales, Cuerpo Humano y mucho más.", color1: "#FFD97A", color2: "#FFF2C4" },
-  { emoji: "🏫", titulo: "Programa M.E.N", desc: "Educación según el Ministerio de Educación Nacional.", color1: "#FFC28F", color2: "#FFE6D2" },
+  { img: "/icons/musica.png", titulo: "Música", desc: "Desarrollo auditivo y expresión artística desde temprana edad.", color1: "#FF86A8", color2: "#FFD0DB" },
+  { img: "/icons/ingles.png", titulo: "Inglés", desc: "Aprendizaje del idioma de manera lúdica y natural.", color1: "#79B6FF", color2: "#D9EBFF" },
+  { img: "/icons/gimnasia.png", titulo: "Gimnasia", desc: "Desarrollo motor y coordinación con actividades recreativas.", color1: "#79DDA3", color2: "#D9F6E4" },
+  { img: "/icons/bebe-poliglota.png", titulo: "Bebé Políglota", desc: "Programación neurolingüística en 7 idiomas.", color1: "#E8D36E", color2: "#FFF4BE" },
+  { img: "/icons/natacion.png", titulo: "Natación", desc: "Clases acuáticas para fortalecer el cuerpo y ganar confianza.", color1: "#FFBE7E", color2: "#FFE6CC" },
+  { img: "/icons/salidas.png", titulo: "Salidas Pedagógicas", desc: "Experiencias fuera del aula para vivenciar los proyectos del mes.", color1: "#F29BC7", color2: "#FFDDF0" },
+  { img: "/icons/fonoaudiologia.png", titulo: "Fonoaudiología", desc: "Apoyo especializado en el desarrollo del lenguaje y la comunicación.", color1: "#8CCEFF", color2: "#E0F1FF" },
+  { img: "/icons/ahorro.png", titulo: "Ahorro Escolar", desc: "Los niños aprenden el valor del trabajo y la autoestima productiva.", color1: "#8AE0A8", color2: "#DDF7E7" },
+  { img: "/icons/proyectos.png", titulo: "Proyectos Mensuales", desc: "Adaptación escolar, Vocales, Cuerpo Humano y mucho más.", color1: "#FFD97A", color2: "#FFF2C4" },
+  { img: "/icons/programa.png", titulo: "Programa M.E.N", desc: "Educación según el Ministerio de Educación Nacional.", color1: "#FFC28F", color2: "#FFE6D2" },
 ];
 
 export default function Servicios() {
   return (
     <section id="servicios" className="relative -mt-8 overflow-hidden bg-white pt-18 pb-20">
+      {/* Capas de fondo decorativas */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 h-28"
@@ -27,28 +29,7 @@ export default function Servicios() {
             "linear-gradient(180deg, rgba(255,255,255,0.995) 0%, rgba(255,255,255,0.94) 42%, rgba(255,255,255,0.72) 68%, rgba(255,255,255,0) 100%)",
         }}
       />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute left-[24%] top-12 h-20 w-56 -translate-x-1/2 rounded-full blur-3xl"
-        style={{
-          background: "radial-gradient(circle, rgba(255,252,1,0.05) 0%, rgba(255,252,1,0.02) 48%, rgba(255,252,1,0) 76%)",
-        }}
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-12 h-20 w-56 -translate-x-1/2 rounded-full blur-3xl"
-        style={{
-          background: "radial-gradient(circle, rgba(255,120,147,0.05) 0%, rgba(255,120,147,0.02) 48%, rgba(255,120,147,0) 76%)",
-        }}
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute left-[76%] top-12 h-20 w-56 -translate-x-1/2 rounded-full blur-3xl"
-        style={{
-          background: "radial-gradient(circle, rgba(122,192,255,0.05) 0%, rgba(122,192,255,0.02) 48%, rgba(122,192,255,0) 76%)",
-        }}
-      />
-
+      
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -72,7 +53,8 @@ export default function Servicios() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-5">
+        {/* CAMBIO PRINCIPAL AQUÍ: Usamos flex-wrap y justify-center para centrar las sobrantes */}
+        <div className="flex flex-wrap justify-center gap-6">
           {servicios.map((s, i) => (
             <motion.div
               key={s.titulo}
@@ -80,7 +62,8 @@ export default function Servicios() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
-              className="flex"
+              /* Calculamos el ancho exacto para mantener columnas pero permitiendo el centrado */
+              className="flex w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] xl:w-[calc(25%-18px)]"
             >
               <NeonGradientCard
                 className="h-full w-full"
@@ -88,13 +71,30 @@ export default function Servicios() {
                 borderRadius={22}
                 neonColors={{ firstColor: s.color1, secondColor: s.color2 }}
               >
-                <div className="flex h-full flex-col items-center rounded-[20px] bg-white/95 p-6 text-center">
-                  <div className="mb-4 text-4xl">{s.emoji}</div>
-                  <div className="mb-2 flex h-[2.5rem] items-center justify-center">
+                <div className="flex h-full flex-col items-center justify-start rounded-[20px] bg-white/95 p-6 text-center">
+                  
+                  {/* IMAGEN DE ANCHO COMPLETO CON BACKLIGHT */}
+                  <div className="relative mb-6 h-48 w-full">
+                    {/* El resplandor (Backlight) expandido por detrás */}
+                    <div 
+                      className="absolute inset-0 scale-105 rounded-2xl opacity-40 blur-xl"
+                      style={{ backgroundColor: s.color1 }}
+                    />
+                    {/* La imagen optimizada ocupando todo el contenedor con bordes redondeados */}
+                    <Image
+                      src={s.img}
+                      alt={s.titulo}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="relative z-10 rounded-2xl object-cover drop-shadow-md"
+                    />
+                  </div>
+
+                  <div className="mb-3 flex min-h-[3rem] items-center justify-center">
                     <h3
                       style={{
                         fontFamily: "var(--font-fredoka)",
-                        fontSize: "1.15rem",
+                        fontSize: "1.35rem",
                         color: "#1e293b",
                         lineHeight: "1.2",
                         ...(s.titulo === "Fonoaudiología" && {
@@ -107,7 +107,8 @@ export default function Servicios() {
                       {s.titulo}
                     </h3>
                   </div>
-                  <p className="font-sans text-[0.75rem] font-medium leading-relaxed text-slate-500">
+                  
+                  <p className="font-sans text-sm font-medium leading-relaxed text-slate-500">
                     {s.desc}
                   </p>
                 </div>

@@ -2,15 +2,15 @@
 
 import React, { useRef } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image"; // Importamos el componente de optimización
+import Image from "next/image";
 import { NumberTicker } from "@/components/ui/number-ticker";
 import { AuroraText } from "@/components/ui/aurora-text";
 import { RainbowButton } from "@/components/ui/rainbow-button";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { CoolMode } from "@/components/ui/cool-mode";
 import { Confetti } from "@/components/ui/confetti";
+import { SparklesText } from "@/components/ui/sparkles-text"; // Importamos SparklesText
 
-// Interfaces para TypeScript (Sin 'any')
 interface ConfettiOptions {
   particleCount?: number;
   angle?: number;
@@ -54,7 +54,7 @@ export default function Hero() {
         alignItems: "center",
         justifyContent: "center",
         padding: "100px 40px",
-        overflow: "hidden", 
+        overflow: "hidden",
       }}
     >
       <span className="sr-only">Jardín Infantil Winnie Pooh Medellín</span>
@@ -67,8 +67,6 @@ export default function Hero() {
 
       {/* --- LADO IZQUIERDO (TAMAÑO XL) --- */}
       <div className="hidden xl:block" style={{ position: "absolute", left: "40px", top: 0, bottom: 0, width: "320px", zIndex: 5, pointerEvents: "none" }}>
-        
-        {/* Foto Superior Izquierda */}
         <motion.div
           initial={{ opacity: 0, x: -120 }}
           animate={{ opacity: 1, x: 0, y: [0, -15, 0] }}
@@ -80,7 +78,6 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Sticker Winnie Superior */}
         <motion.div 
           animate={{ rotate: [0, 8, 0], scale: [1, 1.05, 1] }}
           transition={{ duration: 3.5, repeat: Infinity }}
@@ -89,7 +86,6 @@ export default function Hero() {
           <Image src="/images/winnie-baile.webp" alt="Winnie Sticker" fill style={{ objectFit: "contain" }} />
         </motion.div>
 
-        {/* Foto Inferior Izquierda */}
         <motion.div
           initial={{ opacity: 0, x: -120 }}
           animate={{ opacity: 1, x: 0, y: [0, 15, 0] }}
@@ -101,7 +97,6 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Sticker Winnie Guiño */}
         <motion.div 
           animate={{ y: [0, -10, 0] }}
           transition={{ duration: 4, repeat: Infinity }}
@@ -113,8 +108,6 @@ export default function Hero() {
 
       {/* --- LADO DERECHO (TAMAÑO XL) --- */}
       <div className="hidden xl:block" style={{ position: "absolute", right: "40px", top: 0, bottom: 0, width: "320px", zIndex: 5, pointerEvents: "none" }}>
-        
-        {/* Foto Superior Derecha */}
         <motion.div
           initial={{ opacity: 0, x: 120 }}
           animate={{ opacity: 1, x: 0, y: [0, 18, 0] }}
@@ -126,7 +119,6 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Sticker Tigger */}
         <motion.div 
           animate={{ x: [0, 10, 0], y: [0, -10, 0] }}
           transition={{ duration: 4.5, repeat: Infinity }}
@@ -135,7 +127,6 @@ export default function Hero() {
           <Image src="/images/tigger-cafe.webp" alt="Tigger Sticker" fill style={{ objectFit: "contain" }} />
         </motion.div>
 
-        {/* Foto Inferior Derecha */}
         <motion.div
           initial={{ opacity: 0, x: 120 }}
           animate={{ opacity: 1, x: 0, y: [0, -18, 0] }}
@@ -147,7 +138,6 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Sticker Piggy */}
         <motion.div 
           animate={{ scale: [1, 1.1, 1], rotate: [0, -5, 0] }}
           transition={{ duration: 5, repeat: Infinity }}
@@ -158,7 +148,7 @@ export default function Hero() {
       </div>
 
       {/* --- BLOQUE CENTRAL --- */}
-      <div style={{ flex: 1, maxWidth: "680px", textAlign: "center", position: "relative", zIndex: 10 }}>
+      <div style={{ flex: 1, maxWidth: "780px", textAlign: "center", position: "relative", zIndex: 10 }}>
         <BlurFade delay={0.1} inView>
           <span style={{
             display: "inline-flex", alignItems: "center", gap: "0.5rem",
@@ -172,22 +162,39 @@ export default function Hero() {
         </BlurFade>
 
         <BlurFade delay={0.2} inView>
-          <h1 style={{
-            fontFamily: "var(--font-fredoka)", fontSize: "clamp(2.8rem, 6vw, 4.5rem)",
-            fontWeight: 800, lineHeight: 0.95, color: "#1a1a1a", marginBottom: "1.5rem",
-          }}>
-            Somos el comienzo de{" "}
-            <AuroraText colors={["#00f7ff", "#ff4167", "#3cff01", "#7AC0FF", "#4FF084"]}>
-              una vida plena
-            </AuroraText>{" "}
-            para sus hijos
-          </h1>
-        </BlurFade>
+  <div style={{
+    fontFamily: "var(--font-fredoka)", 
+    fontSize: "clamp(2.5rem, 6vw, 4.2rem)",
+    fontWeight: 800, 
+    lineHeight: 1.0, 
+    color: "#334155", 
+    marginBottom: "1.5rem",
+  }}>
+    {/* Corregido: El texto va dentro de las etiquetas, no en una prop 'text' */}
+    <SparklesText 
+      sparklesCount={8}
+      className="inline text-[#334155]"
+    >
+      Somos el comienzo de{" "}
+    </SparklesText>
+
+    <AuroraText colors={["#00f7ff", "#ff4167", "#3cff01", "#7AC0FF", "#4FF084"]}>
+      una vida plena
+    </AuroraText>{" "}
+
+    <SparklesText 
+      sparklesCount={8}
+      className="inline text-[#334155]"
+    >
+      para sus hijos
+    </SparklesText>
+  </div>
+</BlurFade>
 
         <BlurFade delay={0.3} inView>
           <p style={{
             fontFamily: "var(--font-nunito)", fontSize: "clamp(1.1rem, 2vw, 1.25rem)",
-            color: "#555", lineHeight: 1.6, maxWidth: "550px", margin: "0 auto 3rem",
+            color: "#64748b", lineHeight: 1.6, maxWidth: "550px", margin: "0 auto 3rem",
           }}>
             Guardería y jardín infantil en Medellín con atención integral, estimulación temprana y programas en 7 idiomas.
           </p>

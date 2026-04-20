@@ -35,6 +35,26 @@ const sedesData: Record<string, SedeDetalle> = {
     servicios: ["Estimulación temprana", "Sala de lactancia", "Personal especializado", "Nutrición guiada"],
     fotos: ["/images/diadepayasos.jpg", "/images/papelitos.webp", "/images/clases.webp"],
   },
+  "jardin": {
+    nombre: "Winnie Pooh Jardín",
+    color: "#FFFC01", // Amarillo característico
+    descripcion: "Un espacio de crecimiento y aprendizaje para niños en etapa preescolar, fomentando la curiosidad y la socialización.",
+    direccion: "Calle Ficticia #123, Medellín", // Ajusta la dirección real
+    mapaUrl: "URL_DEL_MAPA_SEDE_JARDIN", 
+    edades: ["3 años (Pre-jardín)", "4 años (Jardín)", "5 años (Transición)"],
+    servicios: ["Iniciación al inglés", "Huerta escolar", "Expresión corporal", "Psicomotricidad"],
+    fotos: ["/images/winnie-baile.webp", "/images/winnie-feliz.webp"], // Usa las nuevas fotos que subiste
+  },
+  "after-class": {
+    nombre: "After Class Winnie",
+    color: "#4ADE80", // Un verde vibrante para actividades extra
+    descripcion: "El complemento perfecto para la jornada escolar con refuerzo académico, talleres creativos y mucha diversión.",
+    direccion: "Carrera 81 #52 - 60, Medellín", // Ajusta la dirección real
+    mapaUrl: "URL_DEL_MAPA_AFTER_CLASS", 
+    edades: ["6 a 10 años"],
+    servicios: ["Tareas dirigidas", "Taller de artes", "Clases de música", "Recreación"],
+    fotos: ["/images/salidadecampo.jpg", "/images/juegos-de-pelotas.webp"],
+  },
 };
 export default function SedePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
