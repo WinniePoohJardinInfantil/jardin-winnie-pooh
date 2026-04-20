@@ -27,13 +27,32 @@ const sedesData: Record<string, SedeDetalle> = {
   "babies": {
     nombre: "Winnie Pooh Babies",
     color: "#FF7893",
-    descripcion: "Atención especializada para los más pequeños con mucho amor. Nuestro enfoque se basa en la estimulación temprana y el cuidado integral en un ambiente seguro y diseñado especialmente para bebés y caminadores.",
+    descripcion: "Atención especializada para los más pequeños con mucho amor. Nuestro enfoque se basa en la estimulación temprana y el cuidado integral.",
     direccion: "Carrera 81 #52 - 58, Medellín",
-    // Se extrajo únicamente el src del iframe proporcionado
     mapaUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.9836957953403!2d-75.59968552432062!3d6.265874126102123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e442914b6d07a2f%3A0x95ae8ad74ec1103e!2sCra.%2081%20%2352-58%2C%20Calasanz%20Parte%20Alta%2C%20Medell%C3%ADn%2C%20La%20Am%C3%A9rica%2C%20Medell%C3%ADn%2C%20Antioquia!5e0!3m2!1ses-419!2sco!4v1776620538250!5m2!1ses-419!2sco", 
     edades: ["3 meses a 12 meses", "1 año (Maternal)", "2 años (Párvulos)"],
     servicios: ["Estimulación temprana", "Sala de lactancia", "Personal especializado", "Nutrición guiada"],
     fotos: ["/images/diadepayasos.jpg", "/images/papelitos.webp", "/images/clases.webp"],
+  },
+  "jardin": {
+    nombre: "Winnie Pooh Jardín",
+    color: "#FFFC01", // Amarillo característico
+    descripcion: "Un espacio de crecimiento y aprendizaje para niños en etapa preescolar, fomentando la curiosidad y la socialización.",
+    direccion: "Calle Ficticia #123, Medellín", // Ajusta la dirección real
+    mapaUrl: "URL_DEL_MAPA_SEDE_JARDIN", 
+    edades: ["3 años (Pre-jardín)", "4 años (Jardín)", "5 años (Transición)"],
+    servicios: ["Iniciación al inglés", "Huerta escolar", "Expresión corporal", "Psicomotricidad"],
+    fotos: ["/images/winnie-baile.webp", "/images/winnie-feliz.webp"], // Usa las nuevas fotos que subiste
+  },
+  "after-class": {
+    nombre: "After Class Winnie",
+    color: "#4ADE80", // Un verde vibrante para actividades extra
+    descripcion: "El complemento perfecto para la jornada escolar con refuerzo académico, talleres creativos y mucha diversión.",
+    direccion: "Carrera 81 #52 - 60, Medellín", // Ajusta la dirección real
+    mapaUrl: "URL_DEL_MAPA_AFTER_CLASS", 
+    edades: ["6 a 10 años"],
+    servicios: ["Tareas dirigidas", "Taller de artes", "Clases de música", "Recreación"],
+    fotos: ["/images/salidadecampo.jpg", "/images/juegos-de-pelotas.webp"],
   },
 };
 export default function SedePage({ params }: { params: Promise<{ slug: string }> }) {

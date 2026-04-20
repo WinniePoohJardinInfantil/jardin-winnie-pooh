@@ -2,15 +2,16 @@
 
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import Link from "next/link";
 
 const links = [
-  { label: "Inicio", href: "#inicio" },
-  { label: "Nosotros", href: "#nosotros" },
-  { label: "Sedes", href: "#sedes" },
-  { label: "Servicios", href: "#servicios" },
-  { label: "Galería", href: "#galeria" },
-  { label: "Reseñas", href: "#resenas"},
-  { label: "Contacto", href: "#contacto" },
+  { label: "Inicio", href: "/#inicio" },
+  { label: "Nosotros", href: "/#nosotros" },
+  { label: "Sedes", href: "/#sedes" },
+  { label: "Servicios", href: "/#servicios" },
+  { label: "Galería", href: "/#galeria" },
+  { label: "Reseñas", href: "/#resenas"},
+  { label: "Contacto", href: "/#contacto" },
 ];
 
 export default function Navbar() {
@@ -53,8 +54,8 @@ export default function Navbar() {
           paddingRight: "1rem",
         }}
       >
-        <a
-          href="#inicio"
+        <Link
+          href="/" // Esto te llevará siempre a la landing
           className="navbar-brand"
           style={{
             display: "flex",
@@ -65,7 +66,7 @@ export default function Navbar() {
             minWidth: 0,
             flexShrink: 1,
           }}
-        >
+>
           <div
             style={{
               width: "42px",
@@ -122,7 +123,7 @@ export default function Navbar() {
               JARDÍN INFANTIL
             </div>
           </div>
-        </a>
+        </Link>
 
         <ul
           className="nav-links-desktop"
