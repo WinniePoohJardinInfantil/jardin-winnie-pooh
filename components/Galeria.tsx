@@ -79,9 +79,7 @@ export default function Galeria() {
           transition={{ duration: 0.6 }}
           style={{ textAlign: "center", marginBottom: "3.5rem" }}
         >
-          <span style={{ display: "inline-block", background: "#7AC0FF22", color: "#1a4a8a", fontFamily: "var(--font-nunito)", fontWeight: 700, fontSize: "0.82rem", padding: "0.35rem 1rem", borderRadius: "999px", marginBottom: "1rem" }}>
-            📸 Galería
-          </span>
+          
           <h2 style={{ fontFamily: "var(--font-fredoka)", fontSize: "clamp(2rem, 4vw, 3rem)", color: "var(--foreground)" }}>
             Momentos que nos llenan de alegría
           </h2>

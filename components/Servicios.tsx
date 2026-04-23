@@ -5,16 +5,19 @@ import { NeonGradientCard } from "@/components/ui/neon-gradient-card";
 import Image from "next/image";
 
 const servicios = [
-  { img: "/icons/musica.png", titulo: "Música", desc: "Desarrollo auditivo y expresión artística desde temprana edad.", color1: "#FF86A8", color2: "#FFD0DB" },
-  { img: "/icons/ingles.png", titulo: "Inglés", desc: "Aprendizaje del idioma de manera lúdica y natural.", color1: "#79B6FF", color2: "#D9EBFF" },
-  { img: "/icons/gimnasia.png", titulo: "Gimnasia", desc: "Desarrollo motor y coordinación con actividades recreativas.", color1: "#79DDA3", color2: "#D9F6E4" },
   { img: "/icons/bebe-poliglota.png", titulo: "Bebé Políglota", desc: "Programación neurolingüística en 7 idiomas.", color1: "#E8D36E", color2: "#FFF4BE" },
-  { img: "/icons/natacion.png", titulo: "Natación", desc: "Clases acuáticas para fortalecer el cuerpo y ganar confianza.", color1: "#FFBE7E", color2: "#FFE6CC" },
-  { img: "/icons/salidas.png", titulo: "Salidas Pedagógicas", desc: "Experiencias fuera del aula para vivenciar los proyectos del mes.", color1: "#F29BC7", color2: "#FFDDF0" },
-  { img: "/icons/fonoaudiologia.png", titulo: "Fonoaudiología", desc: "Apoyo especializado en el desarrollo del lenguaje y la comunicación.", color1: "#8CCEFF", color2: "#E0F1FF" },
-  { img: "/icons/ahorro.png", titulo: "Ahorro Escolar", desc: "Los niños aprenden el valor del trabajo y la autoestima productiva.", color1: "#8AE0A8", color2: "#DDF7E7" },
   { img: "/icons/proyectos.png", titulo: "Proyectos Mensuales", desc: "Adaptación escolar, Vocales, Cuerpo Humano y mucho más.", color1: "#FFD97A", color2: "#FFF2C4" },
+  { img: "/icons/ingles.png", titulo: "Inglés", desc: "Aprendizaje del idioma de manera lúdica y natural.", color1: "#79B6FF", color2: "#D9EBFF" },
+  { img: "/icons/salidas.png", titulo: "Salidas Pedagógicas", desc: "Experiencias fuera del aula para vivenciar los proyectos del mes.", color1: "#F29BC7", color2: "#FFDDF0" },
+  { img: "/icons/musica.png", titulo: "Sensibilización Musical", desc: "Desarrollo auditivo y expresión artística desde temprana edad.", color1: "#FF86A8", color2: "#FFD0DB" },
+  { img: "/icons/gimnasia.png", titulo: "Gimnasia", desc: "Desarrollo motor y coordinación con actividades recreativas.", color1: "#79DDA3", color2: "#D9F6E4" },
+  { img: "/icons/natacion.png", titulo: "Natación", desc: "Clases acuáticas para fortalecer el cuerpo y ganar confianza.", color1: "#FFBE7E", color2: "#FFE6CC" },
+  { img: "/icons/fonoaudiologia.png", titulo: "Fonoaudiología", desc: "Apoyo especializado en el desarrollo del lenguaje y la comunicación.", color1: "#8CCEFF", color2: "#E0F1FF" },
+  { img: "/icons/pintura.png", titulo: "Pintura", desc: "Aprendizaje del idioma de manera lúdica y natural.", color1: "#79B6FF", color2: "#D9EBFF" },
+  { img: "/icons/baile.png", titulo: "Baile", desc: "Aprendizaje del idioma de manera lúdica y natural.", color1: "#79B6FF", color2: "#D9EBFF" },
+  { img: "/icons/ahorro.png", titulo: "Ahorro Escolar", desc: "Los niños aprenden el valor del trabajo y la autoestima productiva.", color1: "#8AE0A8", color2: "#DDF7E7" },
   { img: "/icons/programa.png", titulo: "Programa M.E.N", desc: "Educación según el Ministerio de Educación Nacional.", color1: "#FFC28F", color2: "#FFE6D2" },
+  
 ];
 
 export default function Servicios() {
@@ -37,9 +40,7 @@ export default function Servicios() {
           viewport={{ once: true }}
           className="mx-auto mb-14 max-w-3xl text-center"
         >
-          <span className="inline-flex items-center rounded-full bg-[#fff6d8] px-4 py-1.5 text-[0.72rem] font-bold uppercase tracking-[0.18em] text-[#a88516]">
-            Nuestros Servicios
-          </span>
+          
           <h2
             className="mt-5 font-heading text-4xl text-slate-900 md:text-5xl"
             style={{ lineHeight: 1.08 }}

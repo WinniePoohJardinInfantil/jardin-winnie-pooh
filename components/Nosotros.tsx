@@ -31,19 +31,7 @@ export default function Nosotros() {
         {/* Header */}
         <BlurFade delay={0.1} inView>
           <div style={{ textAlign: "center", marginBottom: "3.5rem" }}>
-            <span style={{
-              display: "inline-block",
-              background: "#FF789322",
-              color: "#c0004e",
-              fontFamily: "var(--font-nunito)",
-              fontWeight: 700,
-              fontSize: "0.82rem",
-              padding: "0.35rem 1rem",
-              borderRadius: "999px",
-              marginBottom: "1.25rem",
-            }}>
-              🐻 Quiénes Somos
-            </span>
+            
 
             <div style={{ 
                 marginBottom: "1rem",
@@ -56,7 +44,7 @@ export default function Nosotros() {
                 <SparklesText
                     colors={{ first: "#FF7893", second: "#7AC0FF" }}
                 >
-                    Nuestra Misión y Filosofía
+                    Nuestra Misión
                 </SparklesText>
             </div>
 
@@ -68,7 +56,7 @@ export default function Nosotros() {
               margin: "0 auto",
               lineHeight: 1.75,
             }}>
-              Más de <strong style={{ color: "#EB8100" }}>29 años</strong> formando niños y niñas
+              Más de <strong style={{ color: "#EB8100" }}>30 años</strong> formando niños y niñas
               con amor, dedicación y una visión integral del ser humano en Medellín.
             </p>
           </div>

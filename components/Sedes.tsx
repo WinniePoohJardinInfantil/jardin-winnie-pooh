@@ -7,22 +7,18 @@ import { Check } from "lucide-react";
 
 const sedes = [
   {
-    nombre: "Jardín Infantil",
+    nombre: "Winnie Pooh Jardín Infantil",
     tag: "Sede Principal",
     emoji: "🏫",
     color: "#FFFC01",
     slug: "jardin",
     niveles: ["Pre-Jardín (3 años)", "Jardín (4 años)"],
     direccion: "Calle 51 #81A - 25",
-    descripcion: "Nuestra sede principal con más de 29 años formando niños felices.",
+    descripcion: "Nuestra sede principal con más de 30 años formando niños felices.",
     btnClass: "bg-gradient-to-r from-yellow-400 to-yellow-500 shadow-yellow-200",
-    stickers: [
-      { src: "/images/winnie-baile.webp", top: "-36px", left: "-24px", size: 88, animate: { x: [0, 6, 0], y: [0, -6, 0] }, duration: 5 },
-      { src: "/images/elefante-corriendo.webp", bottom: "-36px", right: "-24px", size: 88, animate: { rotate: [0, 8, 0], scale: [1, 1.06, 1] }, duration: 4.2 },
-    ],
   },
   {
-    nombre: "Winnie Pooh Babies",
+    nombre: "Winnie Pooh Babys",
     tag: "Bebés y Maternal",
     emoji: "🍼",
     color: "#FF7893",
@@ -31,13 +27,9 @@ const sedes = [
     direccion: "Carrera 81 #52 - 58",
     descripcion: "Atención especializada para los más pequeños con mucho amor.",
     btnClass: "bg-gradient-to-r from-pink-400 to-pink-500 shadow-pink-200",
-    stickers: [
-      { src: "/images/winnie-piggy.webp", top: "-38px", left: "-28px", size: 95, animate: { scale: [1, 1.08, 1], rotate: [0, -5, 0] }, duration: 4.5 },
-      { src: "/images/tigger-cafe.webp", bottom: "-38px", right: "-22px", size: 90, animate: { y: [0, -8, 0], rotate: [0, 6, 0] }, duration: 3.8 },
-    ],
   },
   {
-    nombre: "After Class",
+    nombre: "Winnie Pooh After Class",
     tag: "Refuerzo Escolar",
     emoji: "📚",
     color: "#7AC0FF",
@@ -46,10 +38,6 @@ const sedes = [
     direccion: "Calle 51 #81A - 25",
     descripcion: "Apoyo académico con seguimiento personalizado.",
     btnClass: "bg-gradient-to-r from-blue-400 to-blue-500 shadow-blue-200",
-    stickers: [
-      { src: "/images/winnie-asomado.webp", top: "-36px", left: "-24px", size: 88, animate: { x: [0, 6, 0], y: [0, -6, 0] }, duration: 5 },
-      { src: "/images/winnie-guino.webp", bottom: "-36px", right: "-24px", size: 88, animate: { rotate: [0, 8, 0], scale: [1, 1.06, 1] }, duration: 4.2 },
-    ],
   },
 ];
 
@@ -77,14 +65,7 @@ export default function Sedes() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span style={{
-            display: "inline-block",
-            background: "#FF789322", color: "#c0004e",
-            fontFamily: "var(--font-nunito)", fontWeight: 700, fontSize: "0.85rem",
-            padding: "0.35rem 1rem", borderRadius: "999px", marginBottom: "1.25rem",
-          }}>
-            📍 Nuestras Sedes
-          </span>
+          
           <h2 style={{
             fontFamily: "var(--font-fredoka)",
             fontSize: "clamp(2.5rem, 5vw, 3.5rem)",
@@ -117,32 +98,7 @@ export default function Sedes() {
               style={{ position: "relative" }}
             >
               {/* Stickers animados en esquinas */}
-              {sede.stickers.map((sticker, si) => (
-                <motion.div
-                  key={si}
-                  animate={sticker.animate}
-                  transition={{ duration: sticker.duration, repeat: Infinity, ease: "easeInOut" }}
-                  style={{
-                    position: "absolute",
-                    top: sticker.top,
-                    bottom: sticker.bottom,
-                    left: sticker.left,
-                    right: sticker.right,
-                    width: sticker.size,
-                    height: sticker.size,
-                    zIndex: 10,
-                    pointerEvents: "none",
-                  }}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={sticker.src}
-                    alt="sticker"
-                    style={{ width: "100%", height: "100%", objectFit: "contain" }}
-                  />
-                </motion.div>
-              ))}
-
+              
               <MagicCard
                 className="flex w-full flex-col overflow-visible rounded-[3rem] border-none shadow-2xl shadow-slate-100/50"
                 gradientColor={sede.color + "15"}

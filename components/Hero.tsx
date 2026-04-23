@@ -24,7 +24,7 @@ interface ConfettiRef {
 }
 
 const stats = [
-  { value: 29, label: "Años de experiencia", emoji: "🏆", color: "#FFFC01" },
+  { value: 30, label: "Años de experiencia", emoji: "🏆", color: "#FFFC01" },
   { value: 3, label: "Sedes en Medellín", emoji: "📍", color: "#FF7893" },
   { value: 7, label: "Idiomas", emoji: "🌍", color: "#7AC0FF" },
 ];
@@ -57,7 +57,6 @@ export default function Hero() {
         overflow: "hidden",
       }}
     >
-      <span className="sr-only">Jardín Infantil Winnie Pooh Medellín</span>
 
       {/* --- FONDO (BLOBS) --- */}
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0 }}>
@@ -149,17 +148,6 @@ export default function Hero() {
 
       {/* --- BLOQUE CENTRAL --- */}
       <div style={{ flex: 1, maxWidth: "780px", textAlign: "center", position: "relative", zIndex: 10 }}>
-        <BlurFade delay={0.1} inView>
-          <span style={{
-            display: "inline-flex", alignItems: "center", gap: "0.5rem",
-            background: "linear-gradient(90deg, #FFFC0144, #4FF08433)",
-            border: "1px solid #FFFC0188", color: "#7a6000",
-            fontFamily: "var(--font-nunito)", fontWeight: 800, fontSize: "0.9rem",
-            padding: "0.6rem 1.5rem", borderRadius: "999px", marginBottom: "2rem",
-          }}>
-            🌟 Jardín infantil en Medellín · 29 años de experiencia
-          </span>
-        </BlurFade>
 
         <BlurFade delay={0.2} inView>
   <div style={{
@@ -174,19 +162,25 @@ export default function Hero() {
     <SparklesText 
       sparklesCount={8}
       className="inline text-[#334155]"
-    >
-      Somos el comienzo de{" "}
-    </SparklesText>
-
-    <AuroraText colors={["#00f7ff", "#ff4167", "#3cff01", "#7AC0FF", "#4FF084"]}>
-      una vida plena
+    ><AuroraText colors={["#6B4DA3", "#E94E89", "#FFC815", "#00A99D", "#1D71B8"]}>
+      Somos el Comienzo de
     </AuroraText>{" "}
+    </SparklesText>
 
     <SparklesText 
       sparklesCount={8}
       className="inline text-[#334155]"
-    >
-      para sus hijos
+      ><AuroraText colors={["#00f7ff", "#ff4167", "#3cff01", "#7AC0FF", "#4FF084"]}>
+      una vida plena 
+    </AuroraText>{" "}
+    </SparklesText>
+
+    <SparklesText 
+      sparklesCount={8}
+      className="inline text-[#334155]"
+      ><AuroraText colors={["#1D71B8", "#00A99D", "#FFC815", "#E94E89", "#4FF084"]}>
+      para tus hijos
+    </AuroraText>{" "}
     </SparklesText>
   </div>
 </BlurFade>
@@ -196,7 +190,7 @@ export default function Hero() {
             fontFamily: "var(--font-nunito)", fontSize: "clamp(1.1rem, 2vw, 1.25rem)",
             color: "#64748b", lineHeight: 1.6, maxWidth: "550px", margin: "0 auto 3rem",
           }}>
-            Guardería y jardín infantil en Medellín con atención integral, estimulación temprana y programas en 7 idiomas.
+            Guardería y jardín infantil con 3 sedes en Medellín con atención integral, estimulación temprana y programas en 7 idiomas.
           </p>
         </BlurFade>
 
@@ -216,7 +210,7 @@ export default function Hero() {
                   }}
                   onClick={() => setTimeout(() => (window.location.href = "#contacto"), 500)}
                 >
-                  🎉 ¡Matricule a su hijo!
+                  🎉 ¡Matricula a tu hijo!
                 </RainbowButton>
               </div>
             </CoolMode>

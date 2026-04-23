@@ -35,13 +35,23 @@ const socialLinks = [
   { icon: InstagramIcon, href: "https://instagram.com/wpjardininfantil", label: "Instagram", color: "#FF7893" },
 ];
 
-const navLinks = [
-  { label: "Inicio", href: "#inicio" },
-  { label: "Sedes", href: "#sedes" },
-  { label: "Servicios", href: "#servicios" },
-  { label: "Galería", href: "#galeria" },
-  { label: "Reseñas", href: "#resenas" },
-  { label: "Contacto", href: "#contacto" },
+const marqueeItems = [
+  "🐻 30 Años de Experiencia",
+  "🍼 Winnie Pooh Babies",
+  "📚 After Class",
+  "🌍 7 Idiomas",
+  "🎵 Música",
+  "🏊 Natación",
+  "🤸 Gimnasia",
+  "⭐ Bebé Políglota",
+  "🎒 Salidas Pedagógicas",
+  "❤️ Formación Integral",
+];
+
+const stats = [
+  { value: 30, label: "Años", color: "#FFFC01", emoji: "🏆" },
+  { value: 3, label: "Sedes", color: "#FF7893", emoji: "📍" },
+  { value: 7, label: "Idiomas", color: "#7AC0FF", emoji: "🌍" },
 ];
 
 export default function Footer() {
