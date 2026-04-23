@@ -1,15 +1,69 @@
 "use client";
 
+import React from "react";
 import { motion } from "framer-motion";
 import { MagicCard } from "@/components/ui/magic-card";
 import Link from "next/link";
 import { Check } from "lucide-react";
+import Image from "next/image";
+import { AuroraText } from "@/components/ui/aurora-text";
+import { BlurFade } from "@/components/ui/blur-fade";
+import { SparklesText } from "@/components/ui/sparkles-text";
+
+// --- ETIQUETA SHIMMER REFINADA ---
+const ShinyBadge = ({ children, color }: { children: React.ReactNode; color: string }) => {
+  return (
+    <div className="flex justify-center mb-10">
+      <div 
+        className="relative overflow-hidden px-5 py-1.5 rounded-full border shadow-md"
+        style={{
+          background: "rgba(255, 255, 255, 0.7)", // Más opaco para resaltar sobre el fondo nuevo
+          backdropFilter: "blur(8px)",
+          borderColor: `${color}40`,
+        }}
+      >
+        <motion.div
+          initial={{ x: "-150%" }}
+          animate={{ x: "150%" }}
+          transition={{ repeat: Infinity, duration: 3, ease: "linear", repeatDelay: 2 }}
+          className="absolute inset-0 z-0"
+          style={{
+            background: `linear-gradient(90deg, transparent, ${color}30, transparent)`,
+            width: "60%",
+          }}
+        />
+        <span 
+          className="relative z-10 font-nunito font-black text-[0.7rem] uppercase tracking-[0.15em]"
+          style={{ color: color === "#FFFC01" ? "#857a00" : color }}
+        >
+          {children}
+        </span>
+      </div>
+    </div>
+  );
+};
+
+const HighLight = ({ children, color = "#FFB40033", type = "box" }: { children: React.ReactNode; color?: string; type?: "box" | "underline" }) => (
+  <span style={{ position: "relative", display: "inline-block", zIndex: 1 }}>
+    <span style={{
+      position: "absolute",
+      left: "-2px", right: "-2px", bottom: type === "underline" ? "4px" : "0",
+      height: type === "underline" ? "8px" : "100%",
+      backgroundColor: color,
+      zIndex: -1,
+      borderRadius: type === "underline" ? "0" : "8px",
+      transform: "rotate(-1deg)",
+    }} />
+    {children}
+  </span>
+);
 
 const sedes = [
   {
-    nombre: "Winnie Pooh Jardín Infantil",
+    titulo: "Winnie Pooh",
+    subtitulo: "Jardín Infantil",
     tag: "Sede Principal",
-    emoji: "🏫",
+    imagen: "/logos/jardin-infantil.png", 
     color: "#FFFC01",
     slug: "jardin",
     niveles: ["Pre-Jardín (3 años)", "Jardín (4 años)"],
@@ -18,9 +72,10 @@ const sedes = [
     btnClass: "bg-gradient-to-r from-yellow-400 to-yellow-500 shadow-yellow-200",
   },
   {
-    nombre: "Winnie Pooh Babys",
+    titulo: "Winnie Pooh",
+    subtitulo: "Babys",
     tag: "Bebés y Maternal",
-    emoji: "🍼",
+    imagen: "/logos/babys.jpeg",
     color: "#FF7893",
     slug: "babies",
     niveles: ["Cunas (meses - 1 año)", "Maternal (1 año)", "Párvulos (2 años)"],
@@ -29,9 +84,10 @@ const sedes = [
     btnClass: "bg-gradient-to-r from-pink-400 to-pink-500 shadow-pink-200",
   },
   {
-    nombre: "Winnie Pooh After Class",
+    titulo: "Winnie Pooh",
+    subtitulo: "After Class",
     tag: "Refuerzo Escolar",
-    emoji: "📚",
+    imagen: "/logos/after-class.png",
     color: "#7AC0FF",
     slug: "after-class",
     niveles: ["Cuidado y atención", "Acompañamiento de tareas", "Refuerzo y repasos", "Clases extracurriculares"],
@@ -43,170 +99,132 @@ const sedes = [
 
 export default function Sedes() {
   return (
-    <section id="sedes" className="relative bg-transparent pt-8 pb-32 overflow-x-clip">
-      {/* Blobs de fondo */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-40"
-        style={{ background: "linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.82) 35%, #ffffff 100%)" }}
-      />
-      <div aria-hidden="true" className="pointer-events-none absolute left-[22%] bottom-[-6.6rem] h-36 w-[20rem] -translate-x-1/2 rounded-full blur-3xl"
-        style={{ background: "radial-gradient(circle, rgba(255,252,1,0.18) 0%, rgba(255,252,1,0.08) 40%, rgba(255,252,1,0) 72%)" }}
-      />
-      <div aria-hidden="true" className="pointer-events-none absolute left-1/2 bottom-[-6.4rem] h-36 w-[20rem] -translate-x-1/2 rounded-full blur-3xl"
-        style={{ background: "radial-gradient(circle, rgba(255,120,147,0.17) 0%, rgba(255,120,147,0.08) 40%, rgba(255,120,147,0) 72%)" }}
-      />
-      <div aria-hidden="true" className="pointer-events-none absolute left-[78%] bottom-[-6.6rem] h-36 w-[20rem] -translate-x-1/2 rounded-full blur-3xl"
-        style={{ background: "radial-gradient(circle, rgba(122,192,255,0.17) 0%, rgba(122,192,255,0.08) 40%, rgba(122,192,255,0) 72%)" }}
-      />
-
-      <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
+    <section 
+      id="sedes" 
+      className="relative bg-white pt-24 pb-32 overflow-hidden"
+    >
+      {/* --- FONDO CON DOBLE DESVANECIDO (ESTILO HERO) --- */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div 
+          className="w-full h-full relative"
+          style={{
+            // Desvanecido arriba (0-20%) y abajo (80-100%)
+            maskImage: "linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)",
+            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)",
+          }}
         >
-          
-          <h2 style={{
-            fontFamily: "var(--font-fredoka)",
-            fontSize: "clamp(2.5rem, 5vw, 3.5rem)",
-            color: "var(--foreground)",
-            marginBottom: "0.75rem",
-          }}>
-            Tres sedes para cada etapa
-          </h2>
-          <p style={{
-            fontFamily: "var(--font-nunito)",
-            fontSize: "1.15rem",
-            color: "var(--muted-foreground)",
-            maxWidth: "500px",
-            margin: "0 auto",
-            lineHeight: 1.7,
-          }}>
-            Cada sede está diseñada para las necesidades específicas de su hijo.
-          </p>
-        </motion.div>
+          <Image
+            src="/images/sedes-bg.png" // Asegúrate de subir esta imagen
+            alt="Fondo decorativo infantil"
+            fill
+            className="object-cover object-center opacity-40" // Opacidad suave para no distraer del contenido
+            priority
+          />
+        </div>
+        {/* Overlay para suavizar el fondo y mejorar contraste */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white opacity-80" />
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-stretch">
+      <div className="container mx-auto px-4 relative z-10">
+        
+        {/* --- CABECERA --- */}
+        <div className="text-center mb-24">
+          <BlurFade delay={0.1} inView>
+            <h2 className="font-fredoka font-black leading-[1.1] mb-6 text-black" style={{ fontSize: "clamp(3rem, 6vw, 4.5rem)" }}>
+              <SparklesText sparklesCount={8} className="inline">
+                <AuroraText colors={["#FF1F6D", "#FFB400", "#7E3AF2", "#00C2FF", "#22C55E"]}>
+                  Tres sedes para
+                </AuroraText>
+              </SparklesText>
+              <br />
+              <SparklesText sparklesCount={8} className="inline">
+                <AuroraText colors={["#00D1FF", "#4ADE80", "#FACC15"]}>
+                  cada etapa
+                </AuroraText>
+              </SparklesText>
+            </h2>
+          </BlurFade>
+
+          <BlurFade delay={0.2} inView>
+            <p className="font-nunito font-extrabold text-[#334155] leading-relaxed mx-auto max-w-[800px]" style={{ fontSize: "clamp(1.2rem, 2.5vw, 1.45rem)" }}>
+              Cada sede está diseñada para las{" "}
+              <HighLight color="#00c3ff33">necesidades específicas</HighLight> de su hijo, brindando el{" "}
+              <HighLight color="#ff1f6d22" type="underline">mejor cuidado</HighLight> en cada paso.
+            </p>
+          </BlurFade>
+        </div>
+
+        {/* --- GRID --- */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-stretch">
           {sedes.map((sede, i) => (
-            <motion.div
-              key={sede.nombre}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="flex"
-              style={{ position: "relative" }}
-            >
-              {/* Stickers animados en esquinas */}
-              
-              <MagicCard
-                className="flex w-full flex-col overflow-visible rounded-[3rem] border-none shadow-2xl shadow-slate-100/50"
-                gradientColor={sede.color + "15"}
-              >
-                <div
-                  className="flex flex-col h-full p-10 pt-12 text-center"
-                  style={{ background: `linear-gradient(180deg, ${sede.color}08 0%, #ffffff 100%)`, borderRadius: "3rem" }}
+            <BlurFade key={sede.slug} delay={0.3 + i * 0.1} inView>
+              <div className="flex h-full">
+                <MagicCard
+                  className="flex w-full flex-col overflow-visible rounded-[3.5rem] border-none shadow-2xl"
+                  gradientColor={sede.color + "20"}
                 >
-                  <div className="mb-6">
-                    <span
-                      className="inline-block uppercase tracking-widest px-4 py-1.5 rounded-full mb-8"
-                      style={{
-                        background: sede.color + "25",
-                        color: sede.color === "#FFFC01" ? "#857a00" : sede.color,
-                        fontFamily: "var(--font-nunito)",
-                        fontWeight: 800,
-                        fontSize: "0.72rem",
-                        letterSpacing: "0.1em",
-                      }}
-                    >
-                      {sede.tag}
-                    </span>
+                  <div
+                    className="flex flex-col h-full p-12 pt-14 text-center relative"
+                    style={{ 
+                      background: "rgba(255, 255, 255, 0.85)", // Fondo de tarjeta semi-transparente para ver el wallpaper
+                      backdropFilter: "blur(12px)",
+                      borderRadius: "3.5rem",
+                      boxShadow: `0 30px 70px -20px ${sede.color}45`,
+                    }}
+                  >
+                    <div className="mb-8">
+                      <ShinyBadge color={sede.color}>
+                        {sede.tag}
+                      </ShinyBadge>
 
-                    <div className="w-16 h-16 bg-white shadow-sm border border-slate-50 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-6">
-                      {sede.emoji}
+                      <div className="relative w-full h-32 mx-auto mb-12">
+                        <Image src={sede.imagen} alt={sede.titulo} fill className="object-contain" />
+                      </div>
+
+                      <h3 className="font-fredoka text-[2rem] leading-none mb-6 flex flex-col justify-center min-h-[5rem]">
+                        <span className="block opacity-60 text-[1.2rem] mb-1">Winnie Pooh</span>
+                        <span style={{ color: sede.color === "#FFFC01" ? "#b5a700" : sede.color }}>
+                          {sede.subtitulo}
+                        </span>
+                      </h3>
+
+                      <p className="font-nunito text-[1.15rem] text-[#475569] font-bold leading-relaxed px-2 mb-10 min-h-[100px] flex items-center justify-center">
+                        {sede.descripcion}
+                      </p>
                     </div>
 
-                    <h3 style={{
-                      fontFamily: "var(--font-fredoka)",
-                      fontSize: "1.9rem",
-                      color: "var(--foreground)",
-                      marginBottom: "0.75rem",
-                    }}>
-                      {sede.nombre}
-                    </h3>
+                    <ul className="flex flex-col gap-5 text-left w-full mb-12 min-h-[200px]">
+                      {sede.niveles.map((nivel) => (
+                        <li key={nivel} className="flex items-start gap-4">
+                          <div
+                            className="mt-1 flex-shrink-0 w-[26px] h-[26px] rounded-lg flex items-center justify-center shadow-sm"
+                            style={{ background: sede.color + "30", color: sede.color === "#FFFC01" ? "#857a00" : sede.color }}
+                          >
+                            <Check size={16} strokeWidth={4} />
+                          </div>
+                          <span className="font-nunito text-[1.1rem] font-black text-[#1e293b]">
+                            {nivel}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
 
-                    <p style={{
-                      fontFamily: "var(--font-nunito)",
-                      fontSize: "1rem",
-                      color: "var(--muted-foreground)",
-                      lineHeight: 1.65,
-                      padding: "0 0.5rem",
-                      marginBottom: "2rem",
-                      minHeight: "60px",
-                    }}>
-                      {sede.descripcion}
-                    </p>
+                    <div className="mt-auto pt-10 border-t border-slate-100">
+                      <p className="font-nunito text-[0.85rem] font-black text-slate-400 mb-8 tracking-[0.1em] uppercase flex items-center justify-center gap-2">
+                        <span className="text-lg">📍</span> {sede.direccion}
+                      </p>
+
+                      <Link
+                        href={`/sedes/${sede.slug}`}
+                        className={`inline-flex w-full items-center justify-center rounded-2xl text-white font-black transition-all hover:scale-[1.05] active:scale-[0.95] shadow-xl py-5 text-[1.2rem] font-nunito ${sede.btnClass}`}
+                      >
+                        Ver más información →
+                      </Link>
+                    </div>
                   </div>
-
-                  <ul style={{ display: "flex", flexDirection: "column", gap: "0.75rem", textAlign: "left", width: "fit-content", margin: "0 auto", minHeight: "160px" }}>
-                    {sede.niveles.map((nivel) => (
-                      <li key={nivel} style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
-                        <div
-                          style={{
-                            marginTop: "2px", flexShrink: 0,
-                            width: "22px", height: "22px",
-                            borderRadius: "6px",
-                            display: "flex", alignItems: "center", justifyContent: "center",
-                            background: sede.color + "25",
-                            color: sede.color === "#FFFC01" ? "#857a00" : sede.color,
-                          }}
-                        >
-                          <Check size={13} strokeWidth={4} />
-                        </div>
-                        <span style={{
-                          fontFamily: "var(--font-nunito)",
-                          fontSize: "1rem",
-                          fontWeight: 600,
-                          color: "var(--foreground)",
-                          lineHeight: 1.4,
-                        }}>
-                          {nivel}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div style={{ flex: 1 }} />
-
-                  <div style={{ paddingTop: "2rem" }}>
-                    <p style={{
-                      fontFamily: "var(--font-nunito)",
-                      fontSize: "0.78rem",
-                      fontWeight: 700,
-                      color: "var(--muted-foreground)",
-                      marginBottom: "1.25rem",
-                      letterSpacing: "0.08em",
-                      textTransform: "uppercase",
-                    }}>
-                      📍 {sede.direccion}
-                    </p>
-
-                    <Link
-                      href={`/sedes/${sede.slug}`}
-                      className={`inline-flex w-full items-center justify-center rounded-2xl text-white font-bold transition-all hover:scale-[1.02] active:scale-[0.98] shadow-xl ${sede.btnClass}`}
-                      style={{
-                        fontFamily: "var(--font-nunito)",
-                        fontWeight: 800,
-                        fontSize: "1.05rem",
-                        padding: "1rem 1.5rem",
-                      }}
-                    >
-                      Ver más información →
-                    </Link>
-                  </div>
-                </div>
-              </MagicCard>
-            </motion.div>
+                </MagicCard>
+              </div>
+            </BlurFade>
           ))}
         </div>
       </div>
