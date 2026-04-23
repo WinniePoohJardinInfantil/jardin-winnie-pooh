@@ -1,247 +1,244 @@
 "use client";
 
-import React, { useRef } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { NumberTicker } from "@/components/ui/number-ticker";
 import { AuroraText } from "@/components/ui/aurora-text";
-import { RainbowButton } from "@/components/ui/rainbow-button";
 import { BlurFade } from "@/components/ui/blur-fade";
-import { CoolMode } from "@/components/ui/cool-mode";
-import { Confetti } from "@/components/ui/confetti";
-import { SparklesText } from "@/components/ui/sparkles-text"; // Importamos SparklesText
+import { SparklesText } from "@/components/ui/sparkles-text";
 
-interface ConfettiOptions {
-  particleCount?: number;
-  angle?: number;
-  spread?: number;
-  origin?: { x?: number; y?: number };
-  colors?: string[];
+// Asumiendo que tienes un componente similar al de Magic UI o usas uno custom
+interface HighLightProps {
+  children: React.ReactNode;
+  color?: string;
+  type?: "box" | "underline";
 }
 
-interface ConfettiRef {
-  fire: (options?: ConfettiOptions) => void;
-}
+const HighLight = ({ children, color = "#FFB40033", type = "box" }: HighLightProps) => (
+  <span style={{ position: "relative", display: "inline-block", zIndex: 1 }}>
+    <span style={{
+      position: "absolute",
+      left: "-2px",
+      right: "-2px",
+      bottom: type === "underline" ? "4px" : "0",
+      height: type === "underline" ? "8px" : "100%",
+      backgroundColor: color,
+      zIndex: -1,
+      borderRadius: type === "underline" ? "0" : "8px",
+      transform: "rotate(-1deg)",
+    }} />
+    {children}
+  </span>
+);
 
 const stats = [
-  { value: 30, label: "Años de experiencia", emoji: "🏆", color: "#FFFC01" },
-  { value: 3, label: "Sedes en Medellín", emoji: "📍", color: "#FF7893" },
-  { value: 7, label: "Idiomas", emoji: "🌍", color: "#7AC0FF" },
-];
-
-const leftPhotos = [
-  { src: "/images/clases.webp", alt: "Niños en jardín infantil", rotate: "-6deg" },
-  { src: "/images/diadepayasos.jpg", alt: "Día de payasos", rotate: "5deg" },
-];
-
-const rightPhotos = [
-  { src: "/images/salidadecampo.jpg", alt: "Salida de campo", rotate: "6deg" },
-  { src: "/images/navidad1.webp", alt: "Navidad jardín", rotate: "-5deg" },
+  { value: 30, label: "Años de experiencia", src: "/images/winnie-estrellas.webp", color: "#FF1F6D" },
+  { value: 3, label: "Sedes en Medellín", src: "/images/tigger-cafe.webp", color: "#FFB400" },
+  { value: 7, label: "Idiomas", src: "/images/winnie-guino.webp", color: "#00C2FF" },
 ];
 
 export default function Hero() {
-  const confettiRef = useRef<ConfettiRef>(null);
-
   return (
     <section
       id="inicio"
       style={{
         minHeight: "100vh",
         width: "100%",
-        backgroundColor: "#ffffff",
         position: "relative",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: "100px 40px",
+        padding: "100px 20px 150px",
         overflow: "hidden",
+        backgroundColor: "#fff"
       }}
     >
-
-      {/* --- FONDO (BLOBS) --- */}
-      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0 }}>
-        <div style={{ position: "absolute", width: 700, height: 700, top: -250, left: -250, borderRadius: "50%", background: "#FF789312", filter: "blur(120px)" }} />
-        <div style={{ position: "absolute", width: 600, height: 600, bottom: -200, right: -150, borderRadius: "50%", background: "#7AC0FF12", filter: "blur(120px)" }} />
+      {/* --- FONDO CON MÁSCARA --- */}
+      <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+        <div style={{
+          width: "100%",
+          height: "100%",
+          position: "relative",
+          maskImage: "linear-gradient(to bottom, black 80%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, black 80%, transparent 100%)",
+        }}>
+          <Image
+            src="/images/hero-bg.png" 
+            alt="Winnie Pooh Jardin Infantil y Guarderia - Portada"
+            fill
+            style={{ objectFit: "cover", objectPosition: "center" }}
+            priority
+          />
+        </div>
+        <div style={{
+          position: "absolute",
+          inset: 0,
+          background: "radial-gradient(circle, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.0) 100%)", 
+        }} />
       </div>
 
-      {/* --- LADO IZQUIERDO (TAMAÑO XL) --- */}
-      <div className="hidden xl:block" style={{ position: "absolute", left: "40px", top: 0, bottom: 0, width: "320px", zIndex: 5, pointerEvents: "none" }}>
-        <motion.div
-          initial={{ opacity: 0, x: -120 }}
-          animate={{ opacity: 1, x: 0, y: [0, -15, 0] }}
-          transition={{ duration: 0.8, y: { duration: 5, repeat: Infinity, ease: "easeInOut" } }}
-          style={{ position: "absolute", top: "12%", left: "0", rotate: leftPhotos[0].rotate }}
-        >
-          <div style={{ width: "280px", height: "210px", borderRadius: "2rem", border: "5px solid white", boxShadow: "0 15px 40px rgba(0,0,0,0.12)", overflow: "hidden", position: "relative" }}>
-            <Image src={leftPhotos[0].src} alt={leftPhotos[0].alt} fill style={{ objectFit: "cover" }} priority />
-          </div>
-        </motion.div>
-
-        <motion.div 
-          animate={{ rotate: [0, 8, 0], scale: [1, 1.05, 1] }}
-          transition={{ duration: 3.5, repeat: Infinity }}
-          style={{ position: "absolute", top: "5%", left: "180px", width: "150px", height: "150px", zIndex: 6 }}
-        >
-          <Image src="/images/winnie-baile.webp" alt="Winnie Sticker" fill style={{ objectFit: "contain" }} />
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, x: -120 }}
-          animate={{ opacity: 1, x: 0, y: [0, 15, 0] }}
-          transition={{ duration: 0.8, delay: 0.2, y: { duration: 6, repeat: Infinity, ease: "easeInOut" } }}
-          style={{ position: "absolute", bottom: "12%", left: "10px", rotate: leftPhotos[1].rotate }}
-        >
-          <div style={{ width: "260px", height: "195px", borderRadius: "2rem", border: "5px solid white", boxShadow: "0 15px 40px rgba(0,0,0,0.12)", overflow: "hidden", position: "relative" }}>
-            <Image src={leftPhotos[1].src} alt={leftPhotos[1].alt} fill style={{ objectFit: "cover" }} />
-          </div>
-        </motion.div>
-
-        <motion.div 
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 4, repeat: Infinity }}
-          style={{ position: "absolute", bottom: "5%", left: "200px", width: "130px", height: "130px", zIndex: 6 }}
-        >
-          <Image src="/images/winnie-guino.webp" alt="Winnie Sticker" fill style={{ objectFit: "contain" }} />
-        </motion.div>
-      </div>
-
-      {/* --- LADO DERECHO (TAMAÑO XL) --- */}
-      <div className="hidden xl:block" style={{ position: "absolute", right: "40px", top: 0, bottom: 0, width: "320px", zIndex: 5, pointerEvents: "none" }}>
-        <motion.div
-          initial={{ opacity: 0, x: 120 }}
-          animate={{ opacity: 1, x: 0, y: [0, 18, 0] }}
-          transition={{ duration: 0.8, delay: 0.1, y: { duration: 7, repeat: Infinity, ease: "easeInOut" } }}
-          style={{ position: "absolute", top: "12%", right: "0", rotate: rightPhotos[0].rotate }}
-        >
-          <div style={{ width: "280px", height: "210px", borderRadius: "2rem", border: "5px solid white", boxShadow: "0 15px 40px rgba(0,0,0,0.12)", overflow: "hidden", position: "relative" }}>
-            <Image src={rightPhotos[0].src} alt={rightPhotos[0].alt} fill style={{ objectFit: "cover" }} priority />
-          </div>
-        </motion.div>
-
-        <motion.div 
-          animate={{ x: [0, 10, 0], y: [0, -10, 0] }}
-          transition={{ duration: 4.5, repeat: Infinity }}
-          style={{ position: "absolute", top: "4%", right: "200px", width: "140px", height: "140px", zIndex: 6 }}
-        >
-          <Image src="/images/tigger-cafe.webp" alt="Tigger Sticker" fill style={{ objectFit: "contain" }} />
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, x: 120 }}
-          animate={{ opacity: 1, x: 0, y: [0, -18, 0] }}
-          transition={{ duration: 0.8, delay: 0.3, y: { duration: 5.5, repeat: Infinity, ease: "easeInOut" } }}
-          style={{ position: "absolute", bottom: "12%", right: "10px", rotate: rightPhotos[1].rotate }}
-        >
-          <div style={{ width: "270px", height: "200px", borderRadius: "2rem", border: "5px solid white", boxShadow: "0 15px 40px rgba(0,0,0,0.12)", overflow: "hidden", position: "relative" }}>
-            <Image src={rightPhotos[1].src} alt={rightPhotos[1].alt} fill style={{ objectFit: "cover" }} />
-          </div>
-        </motion.div>
-
-        <motion.div 
-          animate={{ scale: [1, 1.1, 1], rotate: [0, -5, 0] }}
-          transition={{ duration: 5, repeat: Infinity }}
-          style={{ position: "absolute", bottom: "5%", right: "210px", width: "125px", height: "125px", zIndex: 6 }}
-        >
-          <Image src="/images/winnie-piggy.webp" alt="Piglet Sticker" fill style={{ objectFit: "contain" }} />
-        </motion.div>
-      </div>
-
-      {/* --- BLOQUE CENTRAL --- */}
-      <div style={{ flex: 1, maxWidth: "780px", textAlign: "center", position: "relative", zIndex: 10 }}>
-
+      <div style={{
+        position: "relative",
+        zIndex: 10,
+        maxWidth: "950px", 
+        textAlign: "center",
+      }}>
+        
+        {/* --- TÍTULO GIGANTE --- */}
         <BlurFade delay={0.2} inView>
-  <div style={{
-    fontFamily: "var(--font-fredoka)", 
-    fontSize: "clamp(2.5rem, 6vw, 4.2rem)",
-    fontWeight: 800, 
-    lineHeight: 1.0, 
-    color: "#334155", 
-    marginBottom: "1.5rem",
-  }}>
-    {/* Corregido: El texto va dentro de las etiquetas, no en una prop 'text' */}
-    <SparklesText 
-      sparklesCount={8}
-      className="inline text-[#334155]"
-    ><AuroraText colors={["#6B4DA3", "#E94E89", "#FFC815", "#00A99D", "#1D71B8"]}>
-      Somos el Comienzo de
-    </AuroraText>{" "}
-    </SparklesText>
+          <div style={{
+            fontFamily: "var(--font-fredoka)",
+            fontSize: "clamp(3.5rem, 8vw, 6rem)", 
+            fontWeight: 900,
+            lineHeight: 1.1,
+            marginBottom: "2rem",
+            textShadow: "0 0 20px rgba(255, 255, 255, 1)",
+          }}>
+            <SparklesText sparklesCount={10} className="inline">
+              <AuroraText colors={["#FF1F6D", "#FFB400", "#7E3AF2", "#00C2FF", "#22C55E"]}>
+                Somos el Comienzo de
+              </AuroraText>
+            </SparklesText>
+            <br />
+            <SparklesText sparklesCount={12} className="inline">
+              <AuroraText colors={["#00D1FF", "#FF2E63", "#4ADE80", "#60A5FA", "#FACC15"]}>
+                una vida plena
+              </AuroraText>
+            </SparklesText>
+            <br />
+            <SparklesText sparklesCount={10} className="inline">
+              <AuroraText colors={["#2563EB", "#059669", "#D97706", "#DB2777", "#4ADE80"]}>
+                para tus hijos
+              </AuroraText>
+            </SparklesText>
+          </div>
+        </BlurFade>
 
-    <SparklesText 
-      sparklesCount={8}
-      className="inline text-[#334155]"
-      ><AuroraText colors={["#00f7ff", "#ff4167", "#3cff01", "#7AC0FF", "#4FF084"]}>
-      una vida plena 
-    </AuroraText>{" "}
-    </SparklesText>
-
-    <SparklesText 
-      sparklesCount={8}
-      className="inline text-[#334155]"
-      ><AuroraText colors={["#1D71B8", "#00A99D", "#FFC815", "#E94E89", "#4FF084"]}>
-      para tus hijos
-    </AuroraText>{" "}
-    </SparklesText>
-  </div>
-</BlurFade>
-
+        {/* --- DESCRIPCIÓN CON HIGHLIGHTS --- */}
         <BlurFade delay={0.3} inView>
           <p style={{
-            fontFamily: "var(--font-nunito)", fontSize: "clamp(1.1rem, 2vw, 1.25rem)",
-            color: "#64748b", lineHeight: 1.6, maxWidth: "550px", margin: "0 auto 3rem",
+            fontFamily: "var(--font-nunito)",
+            fontSize: "clamp(1.2rem, 2.5vw, 1.5rem)",
+            color: "#334155", 
+            fontWeight: 800,
+            lineHeight: 1.6,
+            maxWidth: "800px",
+            margin: "0 auto 3rem",
+            textShadow: "0 0 10px rgba(255,255,255,0.8)" 
           }}>
-            Guardería y jardín infantil con 3 sedes en Medellín con atención integral, estimulación temprana y programas en 7 idiomas.
+            Guardería y Jardín infantil con atención integral, programas en{" "}
+            <HighLight color="#00c3ff56">7 idiomas</HighLight>, enfocados en el{" "}
+            <HighLight color="#22c55e56" type="underline">aprendizaje</HighLight> y la{" "}
+            <HighLight color="#ff1f6d52" type="underline">felicidad de tu hijo</HighLight>!
           </p>
         </BlurFade>
 
+        {/* --- BOTONES --- */}
         <BlurFade delay={0.4} inView>
-          <div style={{ display: "flex", gap: "1.2rem", justifyContent: "center", flexWrap: "wrap", alignItems: "center", marginBottom: "4rem" }}>
-            <Confetti
-              ref={confettiRef}
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-              options={{ particleCount: 150, spread: 130, origin: { y: 0.5 } }}
-            />
-            <CoolMode>
-              <div onClick={() => confettiRef.current?.fire()}>
-                <RainbowButton
-                  style={{
-                    fontFamily: "var(--font-nunito)", fontWeight: 800, fontSize: "1.2rem",
-                    height: "64px", padding: "0 3rem", color: "#ffffff", borderRadius: "999px"
-                  }}
-                  onClick={() => setTimeout(() => (window.location.href = "#contacto"), 500)}
-                >
-                  🎉 ¡Matricula a tu hijo!
-                </RainbowButton>
-              </div>
-            </CoolMode>
-          </div>
-        </BlurFade>
+  <div style={{ display: "flex", gap: "1.5rem", justifyContent: "center", marginBottom: "4rem", flexWrap: "wrap" }}>
+    
+    {/* Botón de Matrícula (puedes apuntarlo a contacto o un formulario) */}
+    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+      <a href="#contacto" style={{ textDecoration: 'none' }}>
+        <button style={{
+          background: "#00C2FF",
+          color: "white",
+          fontFamily: "var(--font-nunito)",
+          fontWeight: 900,
+          fontSize: "1.2rem",
+          padding: "0 2rem",
+          height: "60px",
+          borderRadius: "999px",
+          border: "none",
+          boxShadow: "0 10px 20px rgba(0, 194, 255, 0.3)",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          gap: "10px"
+        }}>
+          ¡Matricula a tu Hijo! 🎉
+        </button>
+      </a>
+    </motion.div>
 
+    {/* Botón que redirige a SEDES */}
+    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+      <a href="#sedes" style={{ textDecoration: 'none' }}>
+        <button style={{
+          background: "#FF1F6D",
+          color: "white",
+          fontFamily: "var(--font-nunito)",
+          fontWeight: 900,
+          fontSize: "1.2rem",
+          padding: "0 2rem",
+          height: "60px",
+          borderRadius: "999px",
+          border: "none",
+          boxShadow: "0 10px 20px rgba(255, 31, 109, 0.3)",
+          cursor: "pointer"
+        }}>
+          Ver Nuestras Sedes
+        </button>
+      </a>
+    </motion.div>
+  </div>
+</BlurFade>
+        {/* --- STATS --- */}
         <BlurFade delay={0.5} inView>
-          <div style={{ display: "flex", gap: "1.5rem", justifyContent: "center", flexWrap: "wrap" }}>
-            {stats.map((stat) => (
-              <motion.div
-                key={stat.label}
-                whileHover={{ y: -8, scale: 1.05 }}
-                style={{
-                  background: "#fff", border: "2px solid #f3f4f6",
-                  borderRadius: "1.5rem", width: "160px", height: "140px",
-                  display: "flex", flexDirection: "column",
-                  alignItems: "center", justifyContent: "center", 
-                  boxShadow: "0 4px 15px rgba(0,0,0,0.03)",
-                }}
-              >
-                <span style={{ fontSize: "1.8rem", marginBottom: "6px" }}>{stat.emoji}</span>
-                <div style={{ fontFamily: "var(--font-fredoka)", fontSize: "2.2rem", fontWeight: 700, color: stat.color, lineHeight: 1 }}>
-                  <NumberTicker value={stat.value} />
-                </div>
-                <span style={{ fontFamily: "var(--font-nunito)", fontSize: "0.85rem", color: "#6b7280", fontWeight: 800, marginTop: "6px" }}>
-                  {stat.label}
-                </span>
-              </motion.div>
-            ))}
-          </div>
-        </BlurFade>
+  <div style={{ display: "flex", gap: "2rem", justifyContent: "center", flexWrap: "wrap" }}>
+    {stats.map((stat, index) => (
+      <motion.div
+        key={stat.label}
+        whileHover={{ y: -10, scale: 1.05 }}
+        style={{
+          background: "rgba(255, 255, 255, 0.95)",
+          border: `3px solid ${stat.color}33`,
+          borderRadius: "2.5rem", 
+          // Aumentamos el tamaño del contenedor para dar aire a la letra más grande
+          width: "220px", 
+          height: "200px", 
+          display: "flex", flexDirection: "column",
+          alignItems: "center", justifyContent: "center",
+          boxShadow: `0 15px 35px ${stat.color}15`, 
+          backdropFilter: "blur(10px)",
+          padding: "1rem"
+        }}
+      >
+        <motion.div
+          animate={{ y: [0, -8, 0] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: index * 0.2 }}
+          style={{ width: "70px", height: "70px", position: "relative", marginBottom: "10px" }}
+        >
+          <Image src={stat.src} alt={stat.label} fill style={{ objectFit: "contain" }} />
+        </motion.div>
+
+        {/* NÚMERO: Subimos de 2.3rem a 3.2rem */}
+        <div style={{ 
+          fontFamily: "var(--font-fredoka)", 
+          fontSize: "3.2rem", 
+          fontWeight: 900, 
+          color: stat.color, 
+          lineHeight: 1 
+        }}>
+          <NumberTicker value={stat.value} />
+        </div>
+
+        {/* ETIQUETA: Subimos de 0.85rem a 1.1rem */}
+        <span style={{ 
+          fontFamily: "var(--font-nunito)", 
+          fontSize: "1.1rem", 
+          color: stat.color, 
+          fontWeight: 800, 
+          marginTop: "8px",
+          textAlign: "center"
+        }}>
+          {stat.label}
+        </span>
+      </motion.div>
+    ))}
+  </div>
+</BlurFade>
       </div>
     </section>
   );

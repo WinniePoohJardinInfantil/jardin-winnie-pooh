@@ -55,7 +55,7 @@ export default function Navbar() {
         }}
       >
         <Link
-          href="/" // Esto te llevará siempre a la landing
+          href="/#inicio" // Esto te llevará siempre a la landing
           className="navbar-brand"
           style={{
             display: "flex",
