@@ -32,7 +32,7 @@ const resenas = [
   {
     nombre: "Paola Martínez",
     rol: "Mamá de Isabella · Medellín",
-    resena: "29 años de experiencia se notan en cada detalle. Los profes son pacientes, amorosos y muy comprometidos.",
+    resena: "30 años de experiencia se notan en cada detalle. Los profes son pacientes, amorosos y muy comprometidos.",
     color: "#FF7893",
   },
   {
@@ -161,24 +161,12 @@ export default function Resenas() {
           transition={{ duration: 0.6 }}
           style={{ textAlign: "center" }}
         >
-          <span style={{
-            display: "inline-block",
-            background: "#FFFC0133",
-            color: "#7a6000",
-            fontFamily: "var(--font-nunito)",
-            fontWeight: 700,
-            fontSize: "0.82rem",
-            padding: "0.35rem 1rem",
-            borderRadius: "999px",
-            marginBottom: "1rem",
-          }}>
-            ⭐ Reseñas
-          </span>
+          
           <h2 style={{ fontFamily: "var(--font-fredoka)", fontSize: "clamp(2rem, 4vw, 3rem)", color: "var(--foreground)" }}>
             Lo que dicen las familias
           </h2>
           <p style={{ fontFamily: "var(--font-nunito)", color: "var(--muted-foreground)", fontSize: "1rem", maxWidth: "480px", margin: "0.75rem auto 0", lineHeight: 1.7 }}>
-            Más de 29 años construyendo confianza con cientos de familias en Medellín
+            Más de 30 años construyendo confianza con cientos de familias en Medellín
           </p>
         </motion.div>
       </div>
