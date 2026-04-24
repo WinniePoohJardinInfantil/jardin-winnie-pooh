@@ -80,7 +80,7 @@ export default function Contacto() {
           WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
         }}>
           <Image
-            src="/images/contact-bg.jpg" 
+            src="/logos/contact-bg.jpg" 
             alt="Winnie Pooh Contacto Fondo"
             fill
             style={{ objectFit: "cover", objectPosition: "center" }}
