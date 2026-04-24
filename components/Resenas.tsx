@@ -112,7 +112,7 @@ const resenasAbajo = [
 const withAlpha = (hex: string, alpha: string) => `${hex}${alpha}`;
 
 const ResenaCard = ({ nombre, rol, resena, color }: typeof resenasArriba[0]) => (
-  <div className="relative mx-3 flex-shrink-0 group" style={{ width: "300px" }}>
+  <div className="relative mx-3 flex-shrink-0 group h-full" style={{ width: "300px" }}>
     <div
       className="absolute -inset-[1px] rounded-2xl opacity-100 transition-all duration-500 group-hover:opacity-100"
       style={{
@@ -132,7 +132,7 @@ const ResenaCard = ({ nombre, rol, resena, color }: typeof resenasArriba[0]) => 
         display: "flex",
         flexDirection: "column",
         gap: "0.75rem",
-        minHeight: "242px",
+        height: "100%",
         border: `1.5px solid ${withAlpha(color, "55")}`,
         boxShadow: `0 12px 28px ${withAlpha(color, "20")}`,
         overflow: "hidden",
@@ -233,13 +233,13 @@ export default function Resenas() {
       </div>
 
       <div style={{ position: "relative" }}>
-        <Marquee pauseOnHover className="[--duration:40s]">
+        <Marquee pauseOnHover className="[--duration:40s] items-stretch">
           {resenasArriba.map((r, i) => (
             <ResenaCard key={`rev-${r.nombre}-${i}`} {...r} />
           ))}
         </Marquee>
 
-        <Marquee reverse pauseOnHover className="[--duration:35s] mt-8">
+        <Marquee reverse pauseOnHover className="[--duration:35s] mt-8 items-stretch">
           {resenasAbajo.map((r, i) => (
             <ResenaCard key={`rev-${r.nombre}-${i}`} {...r} />
           ))}
