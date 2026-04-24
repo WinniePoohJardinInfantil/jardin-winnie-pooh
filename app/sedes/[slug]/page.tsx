@@ -3,19 +3,43 @@
 import { use, useState } from "react";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion"; // Necesario para la animación
-import { Check, MessageCircle, ChevronLeft, ChevronRight, MapPin } from "lucide-react";
-import { RainbowButton } from "@/components/ui/rainbow-button";
+import { motion, AnimatePresence } from "framer-motion";
+import { Check, MessageCircle, ChevronLeft, ChevronRight, MapPin, Star } from "lucide-react";
 import { NeonGradientCard } from "@/components/ui/neon-gradient-card";
 import { BlurFade } from "@/components/ui/blur-fade";
+import { AuroraText } from "@/components/ui/aurora-text";
+import { SparklesText } from "@/components/ui/sparkles-text";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer"; // Importamos tu Footer
+import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+
+// --- COMPONENTE HIGHLIGHT (Inspirado en tu Hero) ---
+const HighLight = ({ children, color = "#FFB40033", type = "box" }: { 
+  children: React.ReactNode; 
+  color?: string; 
+  type?: "box" | "underline" 
+}) => (
+  <span className="relative inline-block z-10 mx-1">
+    <span 
+      className="absolute inset-x-[-4px] z-[-1] transition-transform"
+      style={{
+        bottom: type === "underline" ? "4px" : "0",
+        height: type === "underline" ? "8px" : "100%",
+        backgroundColor: color,
+        borderRadius: type === "underline" ? "0" : "12px",
+        transform: "rotate(-1.5deg)",
+      }} 
+    />
+    {children}
+  </span>
+);
 
 interface SedeDetalle {
   nombre: string;
+  subtitulo: string;
   color: string;
   descripcion: string;
+  resaltado: string;
   direccion: string;
   mapaUrl: string;
   edades: string[];
@@ -25,42 +49,48 @@ interface SedeDetalle {
 
 const sedesData: Record<string, SedeDetalle> = {
   "babys": {
-    nombre: "Winnie Pooh Baby's",
+    nombre: "Winnie Pooh",
+    subtitulo: "Baby's",
     color: "#FF7893",
-    descripcion: "Atención especializada para los más pequeños con mucho amor. Nuestro enfoque se basa en la estimulación temprana y el cuidado integral en un ambiente seguro y diseñado especialmente para bebés y caminadores.",
+    descripcion: "Atención especializada para los más pequeños con mucho amor. Nuestro enfoque se basa en la ",
+    resaltado: "estimulación temprana",
     direccion: "Carrera 81 #52 - 58, Medellín",
-    // Se extrajo únicamente el src del iframe proporcionado
-    mapaUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.9836957953403!2d-75.59968552432062!3d6.265874126102123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e442914b6d07a2f%3A0x95ae8ad74ec1103e!2sCra.%2081%20%2352-58%2C%20Calasanz%20Parte%20Alta%2C%20Medell%C3%ADn%2C%20La%20Am%C3%A9rica%2C%20Medell%C3%ADn%2C%20Antioquia!5e0!3m2!1ses-419!2sco!4v1776620538250!5m2!1ses-419!2sco", 
+    mapaUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.023243171329!2d-75.601!3d6.26!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTUnMzYuMCJOIDc1wrAzNicwMy42Ilc!5e0!3m2!1ses!2sco!4v1640000000000", 
     edades: ["3 meses a 12 meses", "1 año (Maternal)", "2 años (Párvulos)"],
     servicios: ["Estimulación temprana", "Sala de lactancia", "Personal especializado", "Nutrición guiada"],
     fotos: ["/images/diadepayasos.jpg", "/images/papelitos.webp", "/images/clases.webp"],
   },
   "jardin": {
-    nombre: "Winnie Pooh Jardín Infantil",
-    color: "#FFFC01", // Amarillo característico
-    descripcion: "Un espacio de crecimiento y aprendizaje para niños en etapa preescolar, fomentando la curiosidad y la socialización.",
-    direccion: "Calle 51 #81a-25, Medellín", // Ajusta la dirección real
-    mapaUrl: "URL_DEL_MAPA_SEDE_JARDIN", 
+    nombre: "Winnie Pooh",
+    subtitulo: "Jardín Infantil",
+    color: "#FFFC01", 
+    descripcion: "Un espacio de crecimiento y aprendizaje donde fomentamos la ",
+    resaltado: "curiosidad y socialización",
+    direccion: "Calle 51 #81a-25, Medellín",  
+    mapaUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.995347919616!2d-75.5985903!3d6.264340799999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e44296ca4709197%3A0xc6ecd1171e549337!2sCl.%2051%20%23%2081A-25%2C%20Calasanz%20Parte%20Alta%2C%20Medell%C3%ADn%2C%20La%20Am%C3%A9rica%2C%20Medell%C3%ADn%2C%20Antioquia!5e0!3m2!1ses-419!2sco!4v1777045128704!5m2!1ses-419!2sco",    
     edades: ["3 años (Pre-jardín)", "4 años (Jardín)", "5 años (Transición)"],
     servicios: ["Iniciación al inglés", "Huerta escolar", "Expresión corporal", "Psicomotricidad"],
-    fotos: ["/images/winnie-baile.webp", "/images/winnie-feliz.webp"], // Usa las nuevas fotos que subiste
+    fotos: ["/images/winnie-baile.webp", "/images/winnie-feliz.webp"],
   },
   "after-class": {
-    nombre: "Winnie Pooh After Class",
-    color: "#4ADE80", // Un verde vibrante para actividades extra
-    descripcion: "El complemento perfecto para la jornada escolar con refuerzo académico, talleres creativos y mucha diversión.",
-    direccion: "Calle 51 #81a-25, Medellín", // Ajusta la dirección real
-    mapaUrl: "URL_DEL_MAPA_AFTER_CLASS", 
+    nombre: "Winnie Pooh",
+    subtitulo: "After Class",
+    color: "#4ADE80", 
+    descripcion: "El complemento perfecto para la jornada con ",
+    resaltado: "refuerzo académico y diversión",
+    direccion: "Calle 51 #81a-25, Medellín",  
+    mapaUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.995347919616!2d-75.5985903!3d6.264340799999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e44296ca4709197%3A0xc6ecd1171e549337!2sCl.%2051%20%23%2081A-25%2C%20Calasanz%20Parte%20Alta%2C%20Medell%C3%ADn%2C%20La%20Am%C3%A9rica%2C%20Medell%C3%ADn%2C%20Antioquia!5e0!3m2!1ses-419!2sco!4v1777045128704!5m2!1ses-419!2sco",    
     edades: ["6 a 10 años"],
     servicios: ["Tareas dirigidas", "Taller de artes", "Clases de música", "Recreación"],
     fotos: ["/images/salidadecampo.jpg", "/images/juegos-de-pelotas.webp"],
   },
 };
+
 export default function SedePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
   const sede = sedesData[slug];
   const [fotoActual, setFotoActual] = useState(0);
-  const [direccion, setDireccion] = useState(1); // Para saber hacia dónde animar
+  const [direccion, setDireccion] = useState(1);
 
   if (!sede) notFound();
 
@@ -75,65 +105,98 @@ export default function SedePage({ params }: { params: Promise<{ slug: string }>
   };
 
   const sedeColorBrand = sede.color === "#FFFC01" ? "#D4C500" : sede.color;
-  const whatsappLink = `https://wa.me/573116055332?text=Hola!%20Info%20de%20la%20sede%20${encodeURIComponent(sede.nombre)}`;
-
-  // Variantes para la animación de desplazamiento
-  const variants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 500 : -500,
-      opacity: 0
-    }),
-    center: {
-      x: 0,
-      opacity: 1
-    },
-    exit: (direction: number) => ({
-      x: direction < 0 ? 500 : -500,
-      opacity: 0
-    })
-  };
+  const whatsappLink = `https://wa.me/573116055332?text=Hola!%20Info%20de%20la%20sede%20${encodeURIComponent(sede.subtitulo)}`;
 
   return (
-    <main className="min-h-screen bg-white font-nunito">
+    <main className="min-h-screen bg-white font-nunito overflow-x-hidden relative">
       <Navbar />
 
-      <div className="container mx-auto px-4 pt-32 pb-20">
+      {/* --- FONDO CON MÁSCARA (Estilo Hero) --- */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="relative w-full h-full opacity-40" style={{
+          maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
+        }}>
+          <Image
+            src="/images/white.jpg" 
+            alt="Background"
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-white" />
+      </div>
+
+      <div className="relative z-10 container mx-auto px-4 pt-32 pb-20">
+        
+        {/* --- CABECERA GIGANTE --- */}
         <BlurFade delay={0.1}>
           <div className="text-center mb-16">
-            <h1 className="text-5xl md:text-7xl font-bold font-fredoka mb-6" style={{ color: sedeColorBrand }}>
-              {sede.nombre}
+            <h1 className="font-fredoka tracking-tighter leading-[0.9]">
+              <span className="block text-slate-400 text-2xl md:text-3xl font-black mb-4 uppercase tracking-[0.2em]">
+                {sede.nombre}
+              </span>
+              <div className="text-6xl md:text-8xl font-black py-4">
+                <SparklesText 
+                  sparklesCount={12}
+                  colors={{ first: sede.color, second: "#FFB400" }}
+                  className="inline-block"
+                >
+                  <AuroraText colors={[sede.color, "#FFB400", "#7E3AF2", "#00C2FF", "#22C55E"]}>
+                    {sede.subtitulo}
+                  </AuroraText>
+                </SparklesText>
+              </div>
             </h1>
-            <p className="text-xl text-slate-500 max-w-4xl mx-auto leading-relaxed italic">
+            <p className="text-xl md:text-2xl text-slate-500 max-w-4xl mx-auto mt-8 font-extrabold leading-relaxed">
               {sede.descripcion}
+              <HighLight color={`${sede.color}33`}>{sede.resaltado}</HighLight>.
+              ¡En el corazón de Medellín!
             </p>
           </div>
         </BlurFade>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
-          {/* 1. Información */}
+          {/* 1. Tarjeta de Información con Glow Dinámico */}
           <div className="lg:col-span-3 flex">
-            <div className="bg-slate-50 p-8 rounded-[3rem] border border-slate-100 w-full flex flex-col justify-between shadow-sm">
-              <div className="space-y-8">
-                <h3 className="text-2xl font-fredoka text-slate-800">Información</h3>
+            <div 
+              className="bg-white/80 backdrop-blur-xl p-8 rounded-[3.5rem] border-4 border-white w-full flex flex-col justify-between shadow-2xl relative overflow-hidden group"
+              style={{ boxShadow: `0 30px 60px -15px ${sede.color}25` }}
+            >
+              {/* Decoración de resplandor interno */}
+              <div 
+                className="absolute -top-24 -right-24 w-48 h-48 blur-[80px] rounded-full opacity-50 transition-colors"
+                style={{ backgroundColor: sede.color }}
+              />
+
+              <div className="space-y-8 relative z-10">
+                <div className="flex items-center gap-3">
+                    <div className="bg-slate-100 p-3 rounded-2xl">
+                        <Star className="text-amber-400 fill-amber-400" size={20} />
+                    </div>
+                    <h3 className="text-2xl font-black font-fredoka text-slate-800 tracking-tight">Detalles</h3>
+                </div>
+
                 <div className="space-y-6">
                   <div>
                     <p className="text-[10px] uppercase font-black text-slate-400 tracking-widest mb-3">Edades</p>
                     <div className="flex flex-wrap gap-2">
                       {sede.edades.map(e => (
-                        <span key={e} className="bg-white border border-slate-200 px-3 py-1 rounded-full text-[11px] font-bold text-slate-600">
+                        <span key={e} className="bg-white border-2 border-slate-50 px-4 py-2 rounded-2xl text-[12px] font-black text-slate-600 shadow-sm">
                           {e}
                         </span>
                       ))}
                     </div>
                   </div>
                   <div>
-                    <p className="text-[10px] uppercase font-black text-slate-400 tracking-widest mb-3">Servicios</p>
+                    <p className="text-[10px] uppercase font-black text-slate-400 tracking-widest mb-3">Servicios Incluidos</p>
                     <ul className="space-y-4">
                       {sede.servicios.map(s => (
                         <li key={s} className="flex items-center gap-3 text-sm font-bold text-slate-700">
-                          <div className="bg-green-500 p-1 rounded-full">
-                            <Check size={12} className="text-white" strokeWidth={4} />
+                          <div className="p-1 rounded-lg" style={{ backgroundColor: `${sede.color}20`, color: sedeColorBrand }}>
+                            <Check size={14} strokeWidth={4} />
                           </div>
                           {s}
                         </li>
@@ -143,32 +206,88 @@ export default function SedePage({ params }: { params: Promise<{ slug: string }>
                 </div>
               </div>
 
-              <div className="mt-8 pt-6 border-t border-slate-200">
-                <p className="text-xs text-slate-500 mb-6 font-bold flex items-start gap-2">
-                  <MapPin size={16} className="text-pink-500" /> {sede.direccion}
-                </p>
-                <RainbowButton className="w-full h-14 rounded-2xl text-white font-bold" onClick={() => window.open(whatsappLink)}>
-                  <MessageCircle className="mr-2" size={20} /> Preguntar
-                </RainbowButton>
+              {/* --- BOTÓN AURORA ANIMADO (CORREGIDO) --- */}
+              <div className="mt-8 pt-6 border-t border-slate-100 relative z-10">
+                <div className="flex items-start gap-2 mb-6">
+                    <MapPin size={20} className="mt-1" style={{ color: sedeColorBrand }} />
+                    <p className="text-sm text-slate-500 font-bold leading-tight">{sede.direccion}</p>
+                </div>
+                
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => window.open(whatsappLink)}
+                  style={{
+                    position: "relative",
+                    width: "100%",
+                    padding: "18px 24px",
+                    borderRadius: "999px",
+                    border: "none",
+                    cursor: "pointer",
+                    overflow: "hidden",
+                    background: "linear-gradient(135deg, #FF1F6D, #FFB400, #00C2FF, #22C55E)",
+                    backgroundSize: "300% 300%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
+                  }}
+                  animate={{
+                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                  }}
+                  transition={{
+                    duration: 5,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                >
+                  {/* Capa de brillo interna para suavizar el color */}
+                  <div style={{
+                    position: "absolute",
+                    inset: "2px",
+                    background: "rgba(255, 255, 255, 0.1)",
+                    borderRadius: "999px",
+                    backdropFilter: "blur(4px)",
+                    zIndex: 1
+                  }} />
+
+                  <div style={{ position: "relative", zIndex: 2, display: "flex", alignItems: "center", gap: "10px" }}>
+                    <MessageCircle size={24} fill="currentColor" color="#ffffff" />
+                    <span style={{ 
+                      fontFamily: "var(--font-fredoka)", 
+                      fontWeight: 700, 
+                      fontSize: "1.1rem", 
+                      color: "#ffffff",
+                      letterSpacing: "0.5px",
+                      textShadow: "0 2px 4px rgba(0,0,0,0.2)"
+                    }}>
+                      ¡Preguntar Ahora!
+                    </span>
+                  </div>
+                </motion.button>
               </div>
             </div>
           </div>
-
-          {/* 2. Carrusel con Animación de Desplazamiento */}
+          {/* 2. Carrusel con estilo "Sticker" (Borde grueso y rotación) */}
           <div className="lg:col-span-6 flex">
-            <div className="relative w-full aspect-square lg:aspect-auto rounded-[3.5rem] overflow-hidden shadow-2xl border-[10px] border-white group bg-slate-100">
+            <motion.div 
+              whileHover={{ rotate: 0 }}
+              initial={{ rotate: 1 }}
+              className="relative w-full aspect-square lg:aspect-auto rounded-[4rem] overflow-hidden shadow-2xl border-[12px] border-white group bg-slate-100 transition-transform duration-500"
+            >
               <AnimatePresence initial={false} custom={direccion} mode="popLayout">
                 <motion.div
                   key={fotoActual}
                   custom={direccion}
-                  variants={variants}
+                  variants={{
+                    enter: (d: number) => ({ x: d > 0 ? 800 : -800, opacity: 0 }),
+                    center: { x: 0, opacity: 1 },
+                    exit: (d: number) => ({ x: d < 0 ? 800 : -800, opacity: 0 })
+                  }}
                   initial="enter"
                   animate="center"
                   exit="exit"
-                  transition={{
-                    x: { type: "spring", stiffness: 300, damping: 30 },
-                    opacity: { duration: 0.2 }
-                  }}
+                  transition={{ type: "spring", stiffness: 200, damping: 25 }}
                   className="absolute inset-0 w-full h-full"
                 >
                   <Image 
@@ -181,39 +300,57 @@ export default function SedePage({ params }: { params: Promise<{ slug: string }>
                 </motion.div>
               </AnimatePresence>
               
-              {/* Controles del Carrusel */}
-              <button onClick={fotoAnterior} className="absolute left-6 top-1/2 -translate-y-1/2 bg-white/90 p-3 rounded-full shadow-xl z-20 hover:scale-110 transition-transform active:scale-90">
-                <ChevronLeft size={28} />
+              <button onClick={fotoAnterior} className="absolute left-6 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-md p-4 rounded-3xl shadow-2xl z-20 hover:scale-110 transition-all text-slate-800">
+                <ChevronLeft size={32} strokeWidth={3} />
               </button>
-              <button onClick={proximaFoto} className="absolute right-6 top-1/2 -translate-y-1/2 bg-white/90 p-3 rounded-full shadow-xl z-20 hover:scale-110 transition-transform active:scale-90">
-                <ChevronRight size={28} />
+              <button onClick={proximaFoto} className="absolute right-6 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-md p-4 rounded-3xl shadow-2xl z-20 hover:scale-110 transition-all text-slate-800">
+                <ChevronRight size={32} strokeWidth={3} />
               </button>
-            </div>
+
+              <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-3 z-20 bg-black/20 backdrop-blur-xl p-3 rounded-full">
+                {sede.fotos.map((_, i) => (
+                  <button 
+                    key={i} 
+                    onClick={() => setFotoActual(i)}
+                    className={`h-3 rounded-full transition-all duration-500 ${fotoActual === i ? "w-10 bg-white" : "w-3 bg-white/50"}`} 
+                  />
+                ))}
+              </div>
+            </motion.div>
           </div>
 
-          {/* 3. Neon Gradient Card con Mapa */}
+          {/* 3. Mapa con Neon Gradient */}
           <div className="lg:col-span-3 flex flex-col">
-             <NeonGradientCard 
-                className="items-center justify-center text-center flex-1"
-                neonColors={{ firstColor: sedeColorBrand, secondColor: "#ffffff" }}
-             >
-                <div className="w-full h-[450px] lg:h-full min-h-[400px] rounded-2xl overflow-hidden">
-                   <iframe
-                      src={sede.mapaUrl}
-                      width="100%"
-                      height="100%"
-                      style={{ border: 0 }}
-                      allowFullScreen
-                      loading="lazy"
-                   />
-                </div>
-             </NeonGradientCard>
+              <motion.div 
+                initial={{ rotate: -1 }}
+                whileHover={{ rotate: 0 }}
+                className="flex-1 transition-transform duration-500"
+              >
+                <NeonGradientCard 
+                    className="h-full"
+                    neonColors={{ firstColor: sede.color, secondColor: "#ffffff" }}
+                    borderRadius={56}
+                >
+                    <div className="w-full h-full min-h-[400px] rounded-[2.5rem] overflow-hidden border-4 border-white bg-slate-50">
+                        <iframe
+                            src={sede.mapaUrl}
+                            width="100%"
+                            height="100%"
+                            style={{ border: 0, filter: "contrast(1.1) brightness(1.05)" }}
+                            allowFullScreen
+                            loading="lazy"
+                        />
+                    </div>
+                </NeonGradientCard>
+              </motion.div>
           </div>
         </div>
       </div>
+{/* --- FOOTER (Capa 20 - Tapa todo) --- */}
+      <div className="relative z-20 bg-white shadow-[0_-20px_50px_-15px_rgba(0,0,0,0.05)]">
+        <Footer />
+      </div>
 
-      {/* Componentes adicionales */}
-      <Footer />
       <WhatsAppButton />
     </main>
   );

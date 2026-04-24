@@ -12,6 +12,7 @@ import "yet-another-react-lightbox/styles.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import { AuroraText } from "@/components/ui/aurora-text";
 
 interface MediaItem {
   name: string;
@@ -74,36 +75,43 @@ export default function PaginaGaleriaCompleta() {
             transition={{ duration: 0.6 }}
             style={{ marginBottom: "3rem" }}
           >
-            <Link
-              href="/#galeria"
-              style={{
-                display: "inline-flex", alignItems: "center", gap: "0.4rem",
-                fontFamily: "var(--font-nunito)", fontWeight: 700, fontSize: "0.875rem",
-                color: "var(--muted-foreground)", textDecoration: "none",
-                marginBottom: "1.5rem", transition: "color 0.2s",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--foreground)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--muted-foreground)")}
-            >
-              ← Volver al inicio
+            {/* BOTÓN DE VOLVER COLORIDO */}
+            <Link href="/#galeria" style={{ textDecoration: "none" }}>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  padding: "10px 24px",
+                  borderRadius: "999px",
+                  background: "linear-gradient(135deg, #FF1F6D, #FFB400, #00C2FF, #22C55E)",
+                  backgroundSize: "300% 300%",
+                  fontFamily: "var(--font-nunito)",
+                  fontWeight: 800,
+                  fontSize: "0.9rem",
+                  color: "#fff",
+                  marginBottom: "2rem",
+                  boxShadow: "0 10px 20px rgba(0,0,0,0.1)",
+                }}
+              >
+                ← Volver al inicio
+              </motion.div>
             </Link>
 
             <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
               <div>
-                <span style={{
-                  display: "inline-block",
-                  background: "#7AC0FF22", color: "#1a4a8a",
-                  fontFamily: "var(--font-nunito)", fontWeight: 700, fontSize: "0.82rem",
-                  padding: "0.35rem 1rem", borderRadius: "999px", marginBottom: "0.75rem",
-                }}>
-                  📸 Galería completa
-                </span>
+                
+                {/* TÍTULO CAMBIADO A MOMENTOS MÁGICOS */}
                 <h1 style={{
                   fontFamily: "var(--font-fredoka)",
                   fontSize: "clamp(2rem, 4vw, 3.5rem)",
                   color: "var(--foreground)", lineHeight: 1.1,
                 }}>
-                  Toda nuestra aventura 🐻
+                  <AuroraText>Nuestros Momentos Mágicos</AuroraText> 
                 </h1>
               </div>
               <div style={{
@@ -116,7 +124,6 @@ export default function PaginaGaleriaCompleta() {
               </div>
             </div>
           </motion.div>
-
           {loading ? (
             <div style={{ textAlign: "center", padding: "6rem", fontFamily: "var(--font-nunito)", color: "var(--muted-foreground)" }}>
               <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🐻</div>
