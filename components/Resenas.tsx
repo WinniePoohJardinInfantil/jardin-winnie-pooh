@@ -247,18 +247,86 @@ export default function Resenas() {
       </div>
 
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        style={{ 
-          textAlign: "center", 
-          marginTop: "5rem",
-          padding: "10px" 
-        }}
-      >
-        {/* botón intacto */}
-      </motion.div>
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.5 }}
+  style={{ 
+    textAlign: "center", 
+    marginTop: "5rem", // Un poco más de aire
+    padding: "10px" 
+  }}
+>
+  <a 
+    href="https://www.google.com/search?q=guarder%C3%ADa+Winnie+Pooh&oq=guar&gs_lcrp=EgZjaHJvbWUqDggAEEUYJxg7GIAEGIoFMg4IABBFGCcYOxiABBiKBTIGCAEQRRg5MggIAhBFGCcYOzIGCAMQRRg7MhIIBBAAGEMYgwEYsQMYgAQYigUyBggFEEUYPTIGCAYQRRg9MgYIBxBFGDzSAQc5MTFqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8&sei=nZPrady4NICMwbkPuaHtwAI#lrd=0x8e44296d603c323f:0x9631e4010bb6c0a1,1,,,,"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="group"
+    style={{
+      position: "relative",
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "2px", // Grosor del borde animado
+      borderRadius: "999px",
+      textDecoration: "none",
+      background: "linear-gradient(90deg, #FF1F6D, #FFB400, #7E3AF2, #00C2FF, #FF1F6D)",
+      backgroundSize: "300% 100%",
+      animation: "borderRotate 4s linear infinite", // Animación de rotación de color
+    }}
+  >
+    {/* El botón real encima del borde */}
+    <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "0.75rem",
+      background: "#fff",
+      borderRadius: "999px",
+      padding: "1rem 2.8rem",
+      fontFamily: "var(--font-nunito)",
+      fontWeight: 900,
+      fontSize: "1.1rem",
+      color: "#1a1a1a",
+      transition: "all 0.3s ease",
+      position: "relative",
+      zIndex: 2
+    }}>
+      <span style={{ fontSize: "1.3rem" }}>⭐</span>
+      Compártenos tu reseña en Google
+      
+      {/* Reflejo de brillo interno al pasar el mouse */}
+      <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{
+          background: "linear-gradient(120deg, transparent, rgba(255,255,255,0.6), transparent)",
+          transform: "translateX(-100%)",
+          animation: "shimmer 2s infinite"
+        }} 
+      />
+    </div>
+
+    {/* Efecto de resplandor (Glow) detrás del botón */}
+    <div style={{
+      position: "absolute",
+      inset: "-5px",
+      background: "inherit",
+      borderRadius: "999px",
+      filter: "blur(15px)",
+      opacity: 0.4,
+      zIndex: 1
+    }} />
+  </a>
+
+  {/* Estilos CSS necesarios para las animaciones del botón */}
+  <style jsx>{`
+    @keyframes borderRotate {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    @keyframes shimmer {
+      100% { transform: translateX(100%); }
+    }
+  `}</style>
+</motion.div>
     </section>
   );
 }
