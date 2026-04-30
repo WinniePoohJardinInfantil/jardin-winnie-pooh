@@ -8,25 +8,26 @@ import { BlurFade } from "@/components/ui/blur-fade";
 import { SparklesText } from "@/components/ui/sparkles-text";
 import { Lens } from "@/components/ui/lens";
 
-const BASE_PALETTE = ["#FF7893", "#7AC0FF", "#7E3AF2", "#FFFC01", "#4FF084", "#EB8100"];
+const Site_Palette = ["#FF7893", "#7AC0FF", "#7E3AF2", "#FFFC01", "#4FF084", "#EB8100"];
+const BASE_PALETTE = Site_Palette;
 const AURORA_PALETTES = Array.from({ length: 12 }, (_, i) => {
   const shift = i % BASE_PALETTE.length;
   return [...BASE_PALETTE.slice(shift), ...BASE_PALETTE.slice(0, shift)];
 });
 
 const servicios = [
-  { img: "/icons/programa.png", titulo: "Programa M.E.N", desc: "Educación según el Ministerio de Educación Nacional.", color1: "#FFC28F", color2: "#FFE6D2" },
-  { img: "/icons/proyectos.png", titulo: "Proyectos Mensuales", desc: "Adaptación escolar, Vocales, Cuerpo Humano y mucho más.", color1: "#FFD97A", color2: "#FFF2C4" },
-  { img: "/icons/bebe-poliglota.png", titulo: "Bebé Políglota", desc: "Programación neurolingüística en 7 idiomas.", color1: "#E8D36E", color2: "#FFF4BE" },
-  { img: "/icons/musica.png", titulo: "Sensibilización Musical", desc: "Desarrollo auditivo y expresión artística desde temprana edad.", color1: "#FF86A8", color2: "#FFD0DB" },
-  { img: "/icons/ingles.png", titulo: "Iniciación al Inglés", desc: "Aprendizaje del idioma de manera lúdica y natural.", color1: "#79B6FF", color2: "#D9EBFF" },
-  { img: "/icons/gimnasia.png", titulo: "Gimnasia Infantil", desc: "Desarrollo motor y coordinación con actividades recreativas.", color1: "#79DDA3", color2: "#D9F6E4" },
-  { img: "/icons/fonoaudiologia.png", titulo: "Fonoaudiología", desc: "Apoyo especializado en el desarrollo del lenguaje y la comunicación.", color1: "#8CCEFF", color2: "#E0F1FF" },
-  { img: "/icons/salidas.png", titulo: "Salidas Pedagógicas", desc: "Experiencias fuera del aula para vivenciar los proyectos del mes.", color1: "#F29BC7", color2: "#FFDDF0" },
-  { img: "/icons/natacion.png", titulo: "Natación", desc: "Clases acuáticas para fortalecer el cuerpo y ganar confianza.", color1: "#FFBE7E", color2: "#FFE6CC" },
-  { img: "/icons/pintura.png", titulo: "Pintura", desc: "Aprendizaje del idioma de manera lúdica y natural.", color1: "#79B6FF", color2: "#D9EBFF" },
-  { img: "/icons/baile.png", titulo: "Baile", desc: "Aprendizaje del idioma de manera lúdica y natural.", color1: "#79B6FF", color2: "#D9EBFF" },
-  { img: "/icons/ahorro.png", titulo: "Ahorro Escolar", desc: "Los niños aprenden el valor del trabajo y la autoestima productiva.", color1: "#8AE0A8", color2: "#DDF7E7" },
+  { img: "/icons/programa.png", titulo: "Programa M.E.N", desc: "Educación según el Ministerio de Educación Nacional.", highlight: "Ministerio de Educación Nacional" },
+  { img: "/icons/proyectos.png", titulo: "Proyectos Mensuales", desc: "Adaptación escolar, Vocales, Cuerpo Humano y mucho más.", highlight: "Cuerpo Humano" },
+  { img: "/icons/bebe-poliglota.png", titulo: "Bebé Políglota", desc: "Programación neurolingüística en 7 idiomas.", highlight: "7 idiomas" },
+  { img: "/icons/musica.png", titulo: "Sensibilización Musical", desc: "Desarrollo auditivo y expresión artística desde temprana edad.", highlight: "expresión artística" },
+  { img: "/icons/ingles.png", titulo: "Iniciación al Inglés", desc: "Aprendizaje del idioma de manera lúdica y natural.", highlight: "lúdica y natural" },
+  { img: "/icons/gimnasia.png", titulo: "Gimnasia Infantil", desc: "Desarrollo motor y coordinación con actividades recreativas.", highlight: "actividades recreativas" },
+  { img: "/icons/fonoaudiologia.png", titulo: "Fonoaudiología", desc: "Apoyo especializado en el desarrollo del lenguaje y la comunicación.", highlight: "lenguaje y la comunicación" },
+  { img: "/icons/salidas.png", titulo: "Salidas Pedagógicas", desc: "Experiencias fuera del aula para vivenciar los proyectos del mes.", highlight: "proyectos del mes" },
+  { img: "/icons/natacion.png", titulo: "Natación", desc: "Clases acuáticas para fortalecer el cuerpo y ganar confianza.", highlight: "ganar confianza" },
+  { img: "/icons/pintura.png", titulo: "Pintura", desc: "Aprendizaje del idioma de manera lúdica y natural.", highlight: "lúdica y natural" },
+  { img: "/icons/baile.png", titulo: "Baile", desc: "Aprendizaje del idioma de manera lúdica y natural.", highlight: "lúdica y natural" },
+  { img: "/icons/ahorro.png", titulo: "Ahorro Escolar", desc: "Los niños aprenden el valor del trabajo y la autoestima productiva.", highlight: "autoestima productiva" },
 ];
 
 export default function Servicios() {
@@ -111,16 +112,19 @@ export default function Servicios() {
             >
               <NeonGradientCard
                 className="h-full w-full"
-                borderSize={1}
+                borderSize={2}
                 borderRadius={22}
-                neonColors={{ firstColor: s.color1, secondColor: s.color2 }}
+                neonColors={{
+                  firstColor: Site_Palette[i % 6],
+                  secondColor: Site_Palette[(i + 1) % 6],
+                }}
               >
-                <div className="flex h-full flex-col items-center justify-start rounded-[20px] p-6 text-center" style={{ background: s.color2 + "99" }}>
+                <div className="flex h-full flex-col items-center justify-start rounded-[20px] p-6 text-center" style={{ background: "rgba(255,255,255,0.85)" }}>
                   
-                  <div className="relative mb-6 w-full overflow-hidden rounded-xl" style={{ border: `2px solid ${s.color1}`, borderRadius: "12px" }}>
+                  <div className="relative mb-6 w-full overflow-hidden rounded-xl" style={{ border: `2px solid ${Site_Palette[i % 6]}`, borderRadius: "12px" }}>
                     <div 
                       className="absolute inset-0 scale-110 opacity-30 blur-2xl"
-                      style={{ backgroundColor: s.color1 }}
+                      style={{ backgroundColor: Site_Palette[i % 6] }}
                     />
                     <Lens>
                       <div className="relative h-48 w-full"> {/* Subimos un poco la altura para que luzca el Lens */}
@@ -152,13 +156,23 @@ export default function Servicios() {
                   <p 
                     style={{
                       fontFamily: "var(--font-nunito)",
-                      fontSize: "1.05rem", // Agrandamos la descripción (estaba en 0.85rem)
-                      fontWeight: 600,
+                      fontSize: "1.05rem",
+                      fontWeight: 700,
                       lineHeight: "1.5",
-                      color: "#475569" // Un tono más oscuro para mejor lectura
+                      color: "#1e293b",
                     }}
                   >
-                    {s.desc}
+                    {(() => {
+                      const parts = s.desc.split(s.highlight);
+                      if (parts.length < 2) return s.desc;
+                      return (
+                        <>
+                          {parts[0]}
+                          <span style={{ color: Site_Palette[i % 6], fontWeight: 700 }}>{s.highlight}</span>
+                          {parts[1]}
+                        </>
+                      );
+                    })()}
                   </p>
                 </div>
               </NeonGradientCard>

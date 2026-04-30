@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useState } from "react";
+import { use, useState, useRef } from "react";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -58,7 +58,7 @@ const sedesData: Record<string, SedeDetalle> = {
     mapaUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.023243171329!2d-75.601!3d6.26!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTUnMzYuMCJOIDc1wrAzNicwMy42Ilc!5e0!3m2!1ses!2sco!4v1640000000000", 
     edades: ["3 meses a 12 meses", "1 año (Maternal)", "2 años (Párvulos)"],
     servicios: ["Estimulación temprana", "Personal Especializado", "Metodo Bebe Poliglotas", "Horarios Flexibles"],
-    fotos: ["/images/diadepayasos.jpg", "/images/papelitos.webp", "/images/clases.webp"],
+    fotos: ["/sedes/babys/sede_babys.mp4"],
   },
   "jardin": {
     nombre: "Winnie Pooh",
@@ -70,7 +70,7 @@ const sedesData: Record<string, SedeDetalle> = {
     mapaUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.995347919616!2d-75.5985903!3d6.264340799999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e44296ca4709197%3A0xc6ecd1171e549337!2sCl.%2051%20%23%2081A-25%2C%20Calasanz%20Parte%20Alta%2C%20Medell%C3%ADn%2C%20La%20Am%C3%A9rica%2C%20Medell%C3%ADn%2C%20Antioquia!5e0!3m2!1ses-419!2sco!4v1777045128704!5m2!1ses-419!2sco",    
     edades: ["3 años (Pre-jardín)", "4 años (Jardín)"],
     servicios: ["Iniciación al inglés", "Estimulación Musical", "Gimnasia Infantil", "Metodo de Políglotas (7 idiomas)"],
-    fotos: ["/images/winnie-baile.webp", "/images/winnie-feliz.webp"],
+    fotos: Array.from({ length: 34 }, (_, i) => `/sedes/jardininfantil/fotojardininfantil${i + 1}.jpeg`),
   },
   "after-class": {
     nombre: "Winnie Pooh",
@@ -87,6 +87,127 @@ const sedesData: Record<string, SedeDetalle> = {
 };
 
 const isVideo = (src: string) => /\.(mp4|webm)$/i.test(src);
+
+// --- COMPONENTE VIDEO PLAYER PARA BABY'S ---
+function PlayIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <polygon points="5,3 19,12 5,21" />
+    </svg>
+  );
+}
+
+function PauseIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <rect x="6" y="4" width="4" height="16" />
+      <rect x="14" y="4" width="4" height="16" />
+    </svg>
+  );
+}
+
+function VolumeIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <polygon points="11,5 6,9 2,9 2,15 6,15 11,19" />
+      <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+    </svg>
+  );
+}
+
+function BabysVideoPlayer({ src }: { src: string }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [playing, setPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [volume, setVolume] = useState(1);
+
+  const togglePlay = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (playing) {
+      v.pause();
+    } else {
+      v.play();
+    }
+    setPlaying(!playing);
+  };
+
+  const handleTimeUpdate = () => {
+    setCurrentTime(videoRef.current?.currentTime ?? 0);
+  };
+
+  const handleLoadedMetadata = () => {
+    setDuration(videoRef.current?.duration ?? 0);
+  };
+
+  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const t = Number(e.target.value);
+    if (videoRef.current) videoRef.current.currentTime = t;
+    setCurrentTime(t);
+  };
+
+  const handleVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const v = Number(e.target.value);
+    if (videoRef.current) videoRef.current.volume = v;
+    setVolume(v);
+  };
+
+  const fmt = (s: number) => {
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return `${m}:${sec.toString().padStart(2, "0")}`;
+  };
+
+  return (
+    <div className="flex flex-col items-center w-full">
+      <video
+        ref={videoRef}
+        src={src}
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={handleLoadedMetadata}
+        onEnded={() => setPlaying(false)}
+        playsInline
+        className="w-full rounded-[3rem] shadow-2xl border-[12px] border-white"
+        style={{ maxHeight: "70vh" }}
+      />
+      <div className="mt-4 w-full max-w-sm flex flex-col gap-3 bg-white/80 backdrop-blur-md rounded-2xl p-4 shadow-lg">
+        <div className="flex items-center gap-3">
+          <button
+            onClick={togglePlay}
+            className="bg-slate-100 hover:bg-slate-200 p-3 rounded-xl transition-all"
+          >
+            {playing ? <PauseIcon /> : <PlayIcon />}
+          </button>
+          <span className="text-sm font-bold text-slate-600 tabular-nums">
+            {fmt(currentTime)} / {fmt(duration)}
+          </span>
+        </div>
+        <input
+          type="range"
+          min={0}
+          max={duration || 0}
+          step={0.1}
+          value={currentTime}
+          onChange={handleSeek}
+          className="w-full accent-pink-400"
+        />
+        <div className="flex items-center gap-2">
+          <VolumeIcon />
+          <input
+            type="range"
+            min={0}
+            max={1}
+            step={0.05}
+            value={volume}
+            onChange={handleVolume}
+            className="w-full accent-pink-400"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function SedePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
@@ -269,66 +390,72 @@ export default function SedePage({ params }: { params: Promise<{ slug: string }>
               </div>
             </div>
           </div>
-          {/* 2. Carrusel con estilo "Sticker" (Borde grueso y rotación) */}
+          {/* 2. Media: Video para Baby's / Carrusel para otras sedes */}
           <div className="lg:col-span-6 flex">
-            <motion.div 
-              whileHover={{ rotate: 0 }}
-              initial={{ rotate: 1 }}
-              className="relative w-full aspect-square lg:aspect-auto rounded-[4rem] overflow-hidden shadow-2xl border-[12px] border-white group bg-slate-100 transition-transform duration-500"
-            >
-              <AnimatePresence initial={false} custom={direccion} mode="popLayout">
-                <motion.div
-                  key={fotoActual}
-                  custom={direccion}
-                  variants={{
-                    enter: (d: number) => ({ x: d > 0 ? 800 : -800, opacity: 0 }),
-                    center: { x: 0, opacity: 1 },
-                    exit: (d: number) => ({ x: d < 0 ? 800 : -800, opacity: 0 })
-                  }}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  transition={{ type: "spring", stiffness: 200, damping: 25 }}
-                  className="absolute inset-0 w-full h-full"
-                >
-                  {isVideo(sede.fotos[fotoActual]) ? (
-                    <video
-                      src={sede.fotos[fotoActual]}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
-                  ) : (
-                    <Image 
-                      src={sede.fotos[fotoActual]} 
-                      alt="Instalaciones" 
-                      fill
-                      className="object-cover"
-                      priority
-                    />
-                  )}
-                </motion.div>
-              </AnimatePresence>
-              
-              <button onClick={fotoAnterior} className="absolute left-6 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-md p-4 rounded-3xl shadow-2xl z-20 hover:scale-110 transition-all text-slate-800">
-                <ChevronLeft size={32} strokeWidth={3} />
-              </button>
-              <button onClick={proximaFoto} className="absolute right-6 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-md p-4 rounded-3xl shadow-2xl z-20 hover:scale-110 transition-all text-slate-800">
-                <ChevronRight size={32} strokeWidth={3} />
-              </button>
-
-              <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-3 z-20 bg-black/20 backdrop-blur-xl p-3 rounded-full">
-                {sede.fotos.map((_, i) => (
-                  <button 
-                    key={i} 
-                    onClick={() => setFotoActual(i)}
-                    className={`h-3 rounded-full transition-all duration-500 ${fotoActual === i ? "w-10 bg-white" : "w-3 bg-white/50"}`} 
-                  />
-                ))}
+            {slug === "babys" ? (
+              <div className="w-full flex items-center justify-center">
+                <BabysVideoPlayer src={sede.fotos[0]} />
               </div>
-            </motion.div>
+            ) : (
+              <motion.div 
+                whileHover={{ rotate: 0 }}
+                initial={{ rotate: 1 }}
+                className="relative w-full aspect-square lg:aspect-auto rounded-[4rem] overflow-hidden shadow-2xl border-[12px] border-white group bg-slate-100 transition-transform duration-500"
+              >
+                <AnimatePresence initial={false} custom={direccion} mode="popLayout">
+                  <motion.div
+                    key={fotoActual}
+                    custom={direccion}
+                    variants={{
+                      enter: (d: number) => ({ x: d > 0 ? 800 : -800, opacity: 0 }),
+                      center: { x: 0, opacity: 1 },
+                      exit: (d: number) => ({ x: d < 0 ? 800 : -800, opacity: 0 })
+                    }}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ type: "spring", stiffness: 200, damping: 25 }}
+                    className="absolute inset-0 w-full h-full"
+                  >
+                    {isVideo(sede.fotos[fotoActual]) ? (
+                      <video
+                        src={sede.fotos[fotoActual]}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
+                    ) : (
+                      <Image 
+                        src={sede.fotos[fotoActual]} 
+                        alt="Instalaciones" 
+                        fill
+                        className="object-cover"
+                        priority
+                      />
+                    )}
+                  </motion.div>
+                </AnimatePresence>
+                
+                <button onClick={fotoAnterior} className="absolute left-6 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-md p-4 rounded-3xl shadow-2xl z-20 hover:scale-110 transition-all text-slate-800">
+                  <ChevronLeft size={32} strokeWidth={3} />
+                </button>
+                <button onClick={proximaFoto} className="absolute right-6 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-md p-4 rounded-3xl shadow-2xl z-20 hover:scale-110 transition-all text-slate-800">
+                  <ChevronRight size={32} strokeWidth={3} />
+                </button>
+
+                <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-3 z-20 bg-black/20 backdrop-blur-xl p-3 rounded-full">
+                  {sede.fotos.map((_, i) => (
+                    <button 
+                      key={i} 
+                      onClick={() => setFotoActual(i)}
+                      className={`h-3 rounded-full transition-all duration-500 ${fotoActual === i ? "w-10 bg-white" : "w-3 bg-white/50"}`} 
+                    />
+                  ))}
+                </div>
+              </motion.div>
+            )}
           </div>
 
           {/* 3. Mapa con Neon Gradient */}

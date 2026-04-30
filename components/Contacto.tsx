@@ -43,10 +43,10 @@ const InstagramIcon = () => (
 );
 
 const contactos = [
-  { icon: Phone, label: "WhatsApp", valor: "311 605 53 32", href: "https://wa.me/573116055332", color: "#4FF084", bg: "#4FF08422" },
-  { icon: Mail, label: "Correo", valor: "wpjardininfantil@hotmail.com", href: "mailto:wpjardininfantil@hotmail.com", color: "#7AC0FF", bg: "#7AC0FF22" },
-  { icon: InstagramIcon, label: "Instagram", valor: "@wpjardininfantil", href: "https://instagram.com/wpjardininfantil", color: "#FF7893", bg: "#FF789322" },
-  { icon: Star, label: "Reseñas Google", valor: "Déjanos tu opinión ⭐", href: "https://maps.google.com", color: "#FFFC01", bg: "#FFFC0122" },
+  { icon: Phone, label: "WhatsApp", valor: "311 605 53 32", href: "https://wa.me/573116055332", color: "#4FF084", bg: "#4FF08422", tint: "rgba(79,240,132,0.06)" },
+  { icon: Mail, label: "Correo", valor: "wpjardininfantil@hotmail.com", href: "mailto:wpjardininfantil@hotmail.com", color: "#7AC0FF", bg: "#7AC0FF22", tint: "rgba(122,192,255,0.06)" },
+  { icon: InstagramIcon, label: "Instagram", valor: "@wpjardininfantil", href: "https://instagram.com/wpjardininfantil", color: "#FF7893", bg: "#FF789322", tint: "rgba(255,120,147,0.06)" },
+  { icon: Star, label: "Reseñas Google", valor: "Déjanos tu opinión ⭐", href: "https://maps.google.com", color: "#FFFC01", bg: "#FFFC0122", tint: "rgba(255,252,1,0.06)" },
 ];
 
 // Nombres de calles y carreras corregidos
@@ -154,7 +154,7 @@ export default function Contacto() {
                     display: "flex",
                     alignItems: "center",
                     gap: "1.2rem",
-                    background: "rgba(255, 255, 255, 0.95)",
+                    background: c.tint,
                     backdropFilter: "blur(10px)",
                     border: `2px solid ${c.color}22`,
                     borderRadius: "1.5rem",
@@ -181,7 +181,7 @@ export default function Contacto() {
                     <c.icon size={26} />
                   </div>
                   <div>
-                    <div style={{ fontFamily: "var(--font-nunito)", fontSize: "0.85rem", color: "#94a3b8", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                    <div style={{ fontFamily: "var(--font-nunito)", fontSize: "0.85rem", color: "#1e293b", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.05em" }}>
                       {c.label}
                     </div>
                     <div style={{ fontFamily: "var(--font-nunito)", fontSize: "1.2rem", fontWeight: 800, color: "#1e293b" }}>

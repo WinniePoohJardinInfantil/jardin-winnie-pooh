@@ -1,10 +1,12 @@
 "use client";
 
-import React from "react";
 import { Mail, MapPin, Heart } from "lucide-react";
 import { Marquee } from "@/components/ui/marquee";
 import { Dock, DockIcon } from "@/components/ui/dock";
 import Image from "next/image";
+import { AuroraText } from "@/components/ui/aurora-text";
+
+const Site_Palette = ["#FF7893", "#7AC0FF", "#7E3AF2", "#FFFC01", "#4FF084", "#EB8100"];
 
 const navLinks = [
   { label: "Inicio", href: "#inicio", color: "#FFFC01" },
@@ -110,7 +112,7 @@ export default function Footer() {
       color: "#1e293b",
       lineHeight: 1
     }}>
-      Winnie Pooh
+      <AuroraText colors={Site_Palette}>Winnie Pooh</AuroraText>
     </span>
   </div>
   
@@ -118,7 +120,8 @@ export default function Footer() {
     fontFamily: "var(--font-nunito)", 
     fontSize: "1rem", 
     lineHeight: 1.6, 
-    color: "#64748b",
+    color: "#1e293b",
+    fontWeight: 700,
     maxWidth: "320px" 
   }}>
     Más de 30 años formando niños felices con amor y dedicación en Medellín.
@@ -161,18 +164,18 @@ export default function Footer() {
               fontFamily: "var(--font-fredoka)", fontSize: "1.1rem", 
               fontWeight: 800, color: "#1e293b", marginBottom: "1.5rem" 
             }}>
-              Explorar
+              <AuroraText colors={Site_Palette}>Explorar</AuroraText>
             </h4>
             <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "0.8rem" }}>
               {navLinks.map((link) => (
                 <li key={link.label}>
                   <a href={link.href} style={{ 
                     fontFamily: "var(--font-nunito)", fontSize: "1rem", 
-                    color: "#64748b", textDecoration: "none", fontWeight: 700,
+                    color: link.color, textDecoration: "none", fontWeight: 700,
                     transition: "color 0.2s"
                   }}
                   onMouseEnter={(e) => e.currentTarget.style.color = link.color}
-                  onMouseLeave={(e) => e.currentTarget.style.color = "#64748b"}
+                  onMouseLeave={(e) => e.currentTarget.style.color = link.color}
                   >
                     {link.label}
                   </a>
@@ -187,7 +190,7 @@ export default function Footer() {
               fontFamily: "var(--font-fredoka)", fontSize: "1.1rem", 
               fontWeight: 800, color: "#1e293b", marginBottom: "1.5rem" 
             }}>
-              Ubicaciones
+              <AuroraText colors={Site_Palette}>Ubicaciones</AuroraText>
             </h4>
             <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
               {sedes.map((sede) => (
@@ -207,7 +210,7 @@ export default function Footer() {
                       {sede.nombre}
                     </div>
                     <div style={{ 
-                      fontFamily: "var(--font-nunito)", fontSize: "0.85rem", color: "#94a3b8" 
+                      fontFamily: "var(--font-nunito)", fontSize: "0.85rem", color: "#1e293b", fontWeight: 700
                     }}>
                       {sede.dir}
                     </div>

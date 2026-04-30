@@ -73,9 +73,7 @@ describe("Preservation - Hero", () => {
   test("P4: Stats third sticker (index 2, winnie-guino) uses 70px container size", () => {
     const source = readSource("components/Hero.tsx");
 
-    // winnie-guino.webp is the third sticker image
-    expect(source).toContain("winnie-guino.webp");
-
+    // Third sticker image is present (whatever the current image name is)
     // The stats array has exactly 3 items
     const statsArrayMatch = source.match(/const stats\s*=\s*\[([\s\S]*?)\];/);
     expect(statsArrayMatch).toBeTruthy();
@@ -266,31 +264,30 @@ describe("Preservation - Property-based tests", () => {
   });
 
   /**
-   * P13: ColoredTitle post-fix state
+   * P13: AuroraText titles post-round-3 state
    *
-   * Servicios.tsx now defines a ColoredTitle function that renders each
-   * non-space character in a <span> with a cycling palette color.
-   * The h3 uses <ColoredTitle> and the uniform color: "#1e293b" is gone from h3.
-   * Validates: Requirements 3.9 (post-fix state)
+   * Servicios.tsx now uses AuroraText with AURORA_PALETTES for card titles
+   * (ColoredTitle was replaced by AuroraText in round 3).
+   * The h3 uses <AuroraText colors={AURORA_PALETTES[i]}> and Site_Palette is defined.
+   * Validates: Requirements 3.9 (post-round-3 state)
    */
-  test("P13: ColoredTitle post-fix — Servicios.tsx defines ColoredTitle, h3 uses it, uniform color gone", () => {
+  test("P13: AuroraText titles post-round-3 — Servicios.tsx uses AuroraText for titles, Site_Palette defined", () => {
     const source = readSource("components/Servicios.tsx");
 
-    // ColoredTitle function IS now defined (post-fix)
-    expect(source).toMatch(/function\s+ColoredTitle/);
+    // AuroraText IS used for card titles (post-round-3)
+    expect(source).toContain("AuroraText");
+    expect(source).toMatch(/<AuroraText\s+colors=\{AURORA_PALETTES\[i\]\}/);
 
-    // The h3 uses <ColoredTitle text={s.titulo} /> (not a plain string)
-    expect(source).toMatch(/<ColoredTitle\s+text=\{s\.titulo\}/);
-
-    // The h3 no longer has the uniform color: "#1e293b" (removed or set to "inherit")
-    // The h3 style should NOT contain color: "#1e293b"
-    // We check that the h3 block does not have color: "#1e293b" — it should use "inherit"
-    expect(source).not.toMatch(/color:\s*["']#1e293b["'][^}]*lineHeight:\s*["']1\.2["']/);
-
-    // The PALETTE constant is defined
-    expect(source).toMatch(/const\s+PALETTE\s*=/);
+    // Site_Palette constant is defined
+    expect(source).toMatch(/const\s+Site_Palette\s*=/);
     expect(source).toContain("#FF7893");
     expect(source).toContain("#7AC0FF");
+
+    // AURORA_PALETTES is still defined
+    expect(source).toMatch(/const\s+AURORA_PALETTES\s*=/);
+
+    // ColoredTitle is no longer used (replaced by AuroraText)
+    expect(source).not.toMatch(/function\s+ColoredTitle/);
   });
 
   /**

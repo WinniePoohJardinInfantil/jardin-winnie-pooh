@@ -1,9 +1,9 @@
 /**
- * Bug Condition Exploration Test — Round 2
+ * Bug Condition Verification Test — Round 2 (Post All 3 Rounds of Fixes)
  *
- * This test MUST PASS on unfixed code — passing confirms each defect IS present.
- * All 13 assertions encode the CURRENT (defective) state.
- * They will FAIL after the fix is applied (which is the correct outcome post-fix).
+ * These tests assert the FIXED / CORRECT state of the codebase.
+ * Each test verifies that the previously-reported defect is no longer present
+ * and that the correct implementation is in place.
  *
  * Uses static source-code analysis (reading files as strings) to avoid
  * complex mocking requirements for Next.js, Framer Motion, etc.
@@ -20,123 +20,140 @@ function readSource(relativePath: string): string {
   return readFileSync(join(process.cwd(), relativePath), "utf-8");
 }
 
-describe("Bug Condition Exploration Round 2 — 13 UI Defects (assert defects ARE present)", () => {
+describe("Bug Condition Verification Round 2 — 13 UI Fixes (assert fixes ARE in place)", () => {
 
-  // C1: Navbar.tsx — brand-subtitle div HAS color: "var(--muted-foreground)" (defect present)
-  test("C1: Navbar brand-subtitle has color: var(--muted-foreground) (defect present)", () => {
+  // C1: Navbar brand-subtitle does NOT have color: "var(--muted-foreground)" — it now has color: "#FF1F6D"
+  test("C1: Navbar brand-subtitle has color: #FF1F6D (not var(--muted-foreground)) (fixed)", () => {
     const source = readSource("components/Navbar.tsx");
 
-    // Assert the defective grey color IS present in the brand-subtitle block
-    expect(source).toMatch(/color:\s*["']var\(--muted-foreground\)["']/);
+    // Assert the correct pink color IS present in the brand-subtitle block
+    expect(source).toMatch(/color:\s*["']#FF1F6D["']/);
+
+    // Assert the defective grey color is gone
+    expect(source).not.toMatch(/color:\s*["']var\(--muted-foreground\)["']/);
   });
 
-  // C2: Nosotros.tsx — calendar item row does NOT have justifyContent: "center" (defect present)
-  test("C2: Nosotros calendar item row does NOT have justifyContent: \"center\" (defect present)", () => {
+  // C2: Nosotros calendar item row DOES have justifyContent: "center"
+  test("C2: Nosotros calendar item row HAS justifyContent: \"center\" (fixed)", () => {
     const source = readSource("components/Nosotros.tsx");
 
-    // The calendar items section maps over 3 items (Periodo anual, Receso, Octubre)
-    // The row div has display: flex, alignItems: center but NO justifyContent: center
-    // We verify by checking the calendar items array section lacks justifyContent center
-    // The calendar items array starts with "Periodo anual" and ends before the Horarios box
-    const calendarSection = source.match(/Periodo anual[\s\S]{0,2000}Horarios disponibles/);
-    expect(calendarSection).toBeTruthy();
-    // The row container should NOT have justifyContent: "center"
-    expect(calendarSection![0]).not.toMatch(/justifyContent:\s*["']center["']/);
+    // The calendar items are inside a .map() that renders divs with display: flex.
+    // The fix adds justifyContent: "center" to each row div.
+    // We locate the calendar items block by finding the array literal containing
+    // the emoji/texto objects (📆, 🏖️, ✅) and check for justifyContent: "center".
+    const calendarBlock = source.match(/emoji:[\s\S]{0,3000}Horarios disponibles/);
+    expect(calendarBlock).toBeTruthy();
+
+    // The row container SHOULD now have justifyContent: "center"
+    expect(calendarBlock![0]).toMatch(/justifyContent:\s*["']center["']/);
   });
 
-  // C3: Nosotros.tsx — Propósito description contains the old string (defect present)
-  test("C3: Nosotros Propósito description contains old text (defect present)", () => {
+  // C3: Nosotros Propósito description does NOT contain old text — it contains "Somos el comienzo"
+  test("C3: Nosotros Propósito description contains 'Somos el comienzo' (not old text) (fixed)", () => {
     const source = readSource("components/Nosotros.tsx");
 
-    // Assert the stale generic description IS present
-    expect(source).toContain("Atención y cuidado integral a niños y niñas en Medellín.");
+    // Assert the new correct description IS present
+    expect(source).toContain("Somos el comienzo");
+
+    // Assert the stale generic description is gone
+    expect(source).not.toContain("Atención y cuidado integral a niños y niñas en Medellín.");
   });
 
-  // C4: Nosotros.tsx — transition divider does NOT contain a sedes-bg image reference (defect present)
-  test("C4: Nosotros transition divider does NOT contain sedes-bg image reference (defect present)", () => {
+  // C4: Nosotros transition divider DOES contain sedes-bg image reference
+  test("C4: Nosotros transition divider DOES contain sedes-bg image reference (fixed)", () => {
     const source = readSource("components/Nosotros.tsx");
 
-    // The divider at the bottom of the component is a plain gradient div with no image
-    // Assert the source does NOT contain "sedes-bg" (no background image in divider)
-    expect(source).not.toContain("sedes-bg");
+    // Assert the source now contains "sedes-bg" (background image in divider)
+    expect(source).toContain("sedes-bg");
   });
 
-  // C5: Sedes.tsx — background image wrapper HAS opacity: 0.35 (defect present)
-  test("C5: Sedes background image wrapper has opacity: 0.35 (defect present)", () => {
+  // C5: Sedes background image wrapper has opacity: 0.6 (not 0.35)
+  test("C5: Sedes background image wrapper has opacity: 0.6 (fixed)", () => {
     const source = readSource("components/Sedes.tsx");
 
-    // Assert the too-faint opacity value IS present
-    expect(source).toMatch(/opacity:\s*0\.35/);
+    // Assert the correct opacity value IS present
+    expect(source).toMatch(/opacity:\s*0\.6/);
+
+    // Assert the too-faint opacity value is gone
+    expect(source).not.toMatch(/opacity:\s*0\.35/);
   });
 
-  // C6: Sedes.tsx — card boxShadow does NOT contain an outer glow pattern like "0 0 20px 4px" (defect present)
-  test("C6: Sedes card boxShadow does NOT contain an outer glow pattern (0 0 Npx Npx) (defect present)", () => {
+  // C6: Sedes card boxShadow DOES contain outer glow pattern "0 0 20px 4px"
+  test("C6: Sedes card boxShadow DOES contain outer glow pattern (0 0 20px 4px) (fixed)", () => {
     const source = readSource("components/Sedes.tsx");
 
-    // The current defective boxShadow is: `0 25px 45px -15px ${sede.color}20, inset 0 0 40px ${sede.color}18`
-    // It has an inset shadow but NO outer glow (no "0 0 20px 4px" style outer glow)
-    // The fix will add: `0 0 20px 4px ${sede.color}25` as an outer glow
-    // Assert the outer glow pattern (non-inset "0 0 Npx Npx") is NOT present
-    expect(source).not.toMatch(/boxShadow:[\s\S]{0,50}0 0 \d+px \d+px/);
+    // Assert the outer glow pattern IS present
+    expect(source).toMatch(/boxShadow:[\s\S]{0,100}0 0 \d+px \d+px/);
   });
 
-  // C7: Sedes.tsx — card inner div HAS background: "rgba(255, 255, 255, 0.9)" (defect present)
-  test("C7: Sedes card inner div has background: rgba(255, 255, 255, 0.9) (defect present)", () => {
+  // C7: Sedes card inner div does NOT have rgba(255, 255, 255, 0.9) — it uses ${sede.color}0A
+  test("C7: Sedes card inner div uses ${sede.color}0A background (not rgba(255,255,255,0.9)) (fixed)", () => {
     const source = readSource("components/Sedes.tsx");
 
-    // Assert the pure white background IS present
-    expect(source).toContain('rgba(255, 255, 255, 0.9)');
+    // Assert the tinted background IS present
+    expect(source).toMatch(/\$\{sede\.color\}0A/);
+
+    // Assert the pure white background is gone
+    expect(source).not.toContain('rgba(255, 255, 255, 0.9)');
   });
 
-  // C8: Servicios.tsx — winnie-globo corner character div HAS width: "100px" (defect present)
-  test("C8: Servicios winnie-globo corner character has width: \"100px\" (defect present)", () => {
+  // C8: Servicios winnie-globo corner character has width: "220px" (not 100px)
+  test("C8: Servicios winnie-globo corner character has width: \"220px\" (fixed)", () => {
     const source = readSource("components/Servicios.tsx");
 
-    // Find the winnie-globo section and assert it uses 100px (too small)
+    // Find the winnie-globo section and assert it uses 220px
     const winnieGloboBlock = source.match(/winnie-globo[\s\S]{0,400}/);
     expect(winnieGloboBlock).toBeTruthy();
-    expect(winnieGloboBlock![0]).toMatch(/width:\s*["']100px["']/);
+    expect(winnieGloboBlock![0]).toMatch(/width:\s*["']220px["']/);
+
+    // Assert the old too-small size is gone from the winnie-globo block
+    expect(winnieGloboBlock![0]).not.toMatch(/width:\s*["']100px["']/);
   });
 
-  // C9: Servicios.tsx — ColoredTitle function IS defined (defect present)
-  test("C9: Servicios defines a ColoredTitle function (defect present)", () => {
+  // C9: Servicios does NOT define a ColoredTitle function — uses AuroraText instead
+  test("C9: Servicios does NOT define a ColoredTitle function (uses AuroraText instead) (fixed)", () => {
     const source = readSource("components/Servicios.tsx");
 
-    // Assert ColoredTitle function IS present (should be replaced by AuroraText)
-    expect(source).toMatch(/function\s+ColoredTitle/);
+    // Assert ColoredTitle function is NOT present
+    expect(source).not.toMatch(/function\s+ColoredTitle/);
+
+    // Assert AuroraText IS used instead
+    expect(source).toContain("AuroraText");
   });
 
-  // C10: Servicios.tsx — image container div does NOT have a border: "2px solid" style (defect present)
-  test("C10: Servicios card image container does NOT have a border: 2px solid style (defect present)", () => {
+  // C10: Servicios card image container DOES have a border: 2px solid style
+  test("C10: Servicios card image container HAS a border: 2px solid style (fixed)", () => {
     const source = readSource("components/Servicios.tsx");
 
-    // Assert a 2px solid border is NOT present on the image container
-    expect(source).not.toMatch(/border:\s*["'`]2px solid/);
+    // Assert a 2px solid border IS present on the image container
+    expect(source).toMatch(/border:\s*[`"']?2px solid/);
   });
 
-  // C11: Contacto.tsx — motion.a elements do NOT have maxWidth style (defect present)
-  test("C11: Contacto motion.a elements do NOT have maxWidth style (defect present)", () => {
+  // C11: Contacto motion.a elements DO have maxWidth: "480px" style
+  test("C11: Contacto motion.a elements DO have maxWidth: \"480px\" style (fixed)", () => {
     const source = readSource("components/Contacto.tsx");
 
-    // Assert maxWidth: 480 is NOT present on the contact boxes
-    expect(source).not.toMatch(/maxWidth:\s*["']?480/);
+    // Assert maxWidth: 480 IS present on the contact boxes
+    expect(source).toMatch(/maxWidth:\s*["']?480/);
   });
 
-  // C12: app/sedes/[slug]/page.tsx — background Image src IS "/images/white.jpg" (defect present)
-  test("C12: Sedes slug page background Image src is \"/images/white.jpg\" (defect present)", () => {
+  // C12: Sedes slug page background Image src is "/images/sedes-slug-bg.jpg" (not white.jpg)
+  test("C12: Sedes slug page background Image src is \"/images/sedes-slug-bg.jpg\" (fixed)", () => {
     const source = readSource("app/sedes/[slug]/page.tsx");
 
-    // Assert the placeholder white image IS present
-    expect(source).toContain('src="/images/white.jpg"');
+    // Assert the correct background image IS present
+    expect(source).toContain('src="/images/sedes-slug-bg.jpg"');
+
+    // Assert the placeholder white image is gone
+    expect(source).not.toContain('src="/images/white.jpg"');
   });
 
-  // C13: app/sedes/[slug]/page.tsx — isVideo helper function is NOT defined (defect present)
-  test("C13: Sedes slug page does NOT define an isVideo helper function (defect present)", () => {
+  // C13: Sedes slug page DOES define an isVideo helper function
+  test("C13: Sedes slug page DOES define an isVideo helper function (fixed)", () => {
     const source = readSource("app/sedes/[slug]/page.tsx");
 
-    // Assert the isVideo helper is NOT present (video support missing)
-    expect(source).not.toMatch(/const\s+isVideo\s*=/);
-    expect(source).not.toMatch(/function\s+isVideo/);
+    // Assert the isVideo helper IS present
+    expect(source).toMatch(/const\s+isVideo\s*=/);
   });
 
 });
