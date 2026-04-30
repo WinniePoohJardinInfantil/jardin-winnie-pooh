@@ -20,7 +20,7 @@ const sedes = [
 ];
 
 const marqueeItems = [
-  "🐻 Winnie Pooh", "🍼 Baby's", "📚 After Class", "🌍 7 Idiomas", "🎵 Música", "🏊 Natación", "🤸 Gimnasia", "❤️ Amor"
+  "🐻 Winnie Pooh", "🍼 Baby's", "📚 After Class", "🌍 Método Poliglotas", "🎵 Música", "🏊 Natación", "🤸 Gimnasia", "❤️ Amor"
 ];
 
 // SVGs personalizados para evitar fallos de Lucide

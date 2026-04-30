@@ -13,7 +13,7 @@ const sedes = [
   {
     titulo: "Winnie Pooh",
     subtitulo: "Jardín Infantil",
-    imagen: "/logos/logo-nuevo.png", 
+    imagen: "/logos/jardin-infantil.png", 
     color: "#FFB400",
     slug: "jardin",
     niveles: ["Pre-Jardín (3 años)", "Jardín (4 años)"],
@@ -62,7 +62,7 @@ export default function Sedes() {
           <BlurFade delay={0.1} inView>
             <h2 className="font-fredoka font-black leading-[1.1] mb-6 text-black" style={{ fontSize: "clamp(3.2rem, 6vw, 4.5rem)" }}>
               <SparklesText sparklesCount={6} className="inline">
-                <AuroraText colors={["#FF1F6D", "#FFB400", "#7E3AF2", "#00C2FF", "#22C55E"]}>
+                <AuroraText colors={["#ff1f6d", "#FFB400", "#7E3AF2", "#00C2FF", "#22C55E"]}>
                   Tres sedes para
                 </AuroraText>
               </SparklesText>

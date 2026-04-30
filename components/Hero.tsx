@@ -157,7 +157,7 @@ export default function Hero() {
           alignItems: "center",
           gap: "10px"
         }}>
-          ¡Matricula a tu Hijo! 🎉
+          ¡Matricula a tu Hijo!
         </button>
       </a>
     </motion.div>

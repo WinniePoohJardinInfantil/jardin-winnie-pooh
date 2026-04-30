@@ -85,7 +85,7 @@ export default function Navbar() {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/images/logo.webp"
+              src="/logos/jardin-infantil.png"
               alt="Logo Winnie Pooh"
               style={{
                 width: "100%",
