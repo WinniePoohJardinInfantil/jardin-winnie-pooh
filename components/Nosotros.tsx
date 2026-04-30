@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { NeonGradientCard } from "@/components/ui/neon-gradient-card";
 import { SparklesText } from "@/components/ui/sparkles-text";
@@ -148,7 +149,7 @@ export default function Nosotros() {
                     marginBottom: "2rem",
                     textAlign: "center",
                   }}>
-                    Atención y cuidado integral a niños y niñas en Medellín.
+                    Somos el comienzo de una vida plena para sus hijos. +30 años de amor y dedicación a nuestros pequeños
                   </p>
 
                   {/* Contenedor de ítems compactos */}
@@ -250,6 +251,7 @@ export default function Nosotros() {
                       <div key={i} style={{
                         display: "flex",
                         alignItems: "center",
+                        justifyContent: "center",
                         gap: "1.2rem",
                         paddingBottom: "1rem",
                         borderBottom: "1px solid #f1f5f9",
@@ -261,6 +263,7 @@ export default function Nosotros() {
                           color: "var(--foreground)",
                           fontWeight: 700,
                           lineHeight: "1.3",
+                          textAlign: "center",
                         }}>
                           {item.texto}
                         </span>
@@ -312,13 +315,30 @@ export default function Nosotros() {
         </div>
       </section>
 
-      {/* --- DIVISOR SUTIL HACIA SEDES --- */}
+      {/* --- TRANSICIÓN HACIA SEDES --- */}
 <div style={{
-  height: "120px",
-  background: "linear-gradient(to bottom, #ffffff, #f8fafc)",
+  position: "relative",
+  height: "200px",
   width: "100%",
+  overflow: "hidden",
+  pointerEvents: "none",
   marginBottom: "-2px",
-}} />
+}}>
+  <div style={{
+    position: "absolute",
+    inset: 0,
+    maskImage: "linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%)",
+    WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%)",
+    opacity: 0.4,
+  }}>
+    <Image src="/images/sedes-bg.jpg" alt="" fill style={{ objectFit: "cover" }} />
+  </div>
+  <div style={{
+    position: "absolute",
+    inset: 0,
+    background: "radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.0) 100%)",
+  }} />
+</div>
     </>
   );
 }

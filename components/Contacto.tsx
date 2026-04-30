@@ -139,7 +139,7 @@ export default function Contacto() {
             
             {/* COLUMNA IZQUIERDA: Tarjetas de contacto */}
             {/* height 100% y space-between distribuye los botones para que el primero y el último toquen los bordes superior e inferior */}
-            <div style={{ display: "flex", flexDirection: "column", height: "100%", justifyContent: "space-between", gap: "1rem" }}>
+            <div style={{ display: "flex", flexDirection: "column", height: "100%", justifyContent: "space-between", gap: "1rem", alignItems: "center" }}>
               {contactos.map((c, i) => (
                 <motion.a
                   key={c.label}
@@ -163,6 +163,8 @@ export default function Contacto() {
                     color: "var(--foreground)",
                     transition: "all 0.3s ease",
                     boxShadow: "0 10px 25px rgba(0,0,0,0.03)",
+                    width: "100%",
+                    maxWidth: "480px",
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.borderColor = c.color;

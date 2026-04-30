@@ -61,7 +61,7 @@ export default function Sedes() {
           style={{
             maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
             WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
-            opacity: 0.35,
+            opacity: 0.6,
           }}
         >
           <Image src="/images/sedes-bg.jpg" alt="Sedes background" fill className="object-cover" />
@@ -69,7 +69,7 @@ export default function Sedes() {
         <div
           className="absolute inset-0"
           style={{
-            background: "radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.0) 100%)",
+            background: "radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.0) 100%)",
           }}
         />
       </div>
@@ -104,11 +104,11 @@ export default function Sedes() {
                 <div
                   className="flex flex-col h-full p-10 pt-12 text-center relative"
                   style={{ 
-                    background: "rgba(255, 255, 255, 0.9)", 
+                    background: `${sede.color}0A`,
                     backdropFilter: "blur(12px)",
                     borderRadius: "3.5rem",
-                    border: `3px solid ${sede.color}20`,
-                    boxShadow: `0 25px 45px -15px ${sede.color}20, inset 0 0 40px ${sede.color}18`,
+                    border: `3px solid ${sede.color}60`,
+                    boxShadow: `0 25px 45px -15px ${sede.color}20, 0 0 20px 4px ${sede.color}25, inset 0 0 40px ${sede.color}18`,
                   }}
                 >
                   {/* Contenedor de Logo: Altura fija mayor (h-40) y logo más grande (w-48) */}

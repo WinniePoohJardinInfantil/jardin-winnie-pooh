@@ -113,8 +113,9 @@ export default function Navbar() {
               className="brand-subtitle"
               style={{
                 fontFamily: "var(--font-nunito)",
-                fontSize: "0.65rem",
-                color: "var(--muted-foreground)",
+                fontSize: "0.7rem",
+                color: "#FF1F6D",
+                fontWeight: 700,
                 letterSpacing: "0.08em",
                 marginTop: "2px",
                 whiteSpace: "nowrap",

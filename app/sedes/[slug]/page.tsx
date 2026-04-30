@@ -86,6 +86,8 @@ const sedesData: Record<string, SedeDetalle> = {
   },
 };
 
+const isVideo = (src: string) => /\.(mp4|webm)$/i.test(src);
+
 export default function SedePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
   const sede = sedesData[slug];
@@ -113,12 +115,12 @@ export default function SedePage({ params }: { params: Promise<{ slug: string }>
 
       {/* --- FONDO CON MÁSCARA (Estilo Hero) --- */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="relative w-full h-full opacity-40" style={{
+        <div className="relative w-full h-full opacity-60" style={{
           maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
           WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
         }}>
           <Image
-            src="/images/white.jpg" 
+            src="/images/sedes-slug-bg.jpg" 
             alt="Background"
             fill
             className="object-cover"
@@ -289,13 +291,24 @@ export default function SedePage({ params }: { params: Promise<{ slug: string }>
                   transition={{ type: "spring", stiffness: 200, damping: 25 }}
                   className="absolute inset-0 w-full h-full"
                 >
-                  <Image 
-                    src={sede.fotos[fotoActual]} 
-                    alt="Instalaciones" 
-                    fill
-                    className="object-cover"
-                    priority
-                  />
+                  {isVideo(sede.fotos[fotoActual]) ? (
+                    <video
+                      src={sede.fotos[fotoActual]}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  ) : (
+                    <Image 
+                      src={sede.fotos[fotoActual]} 
+                      alt="Instalaciones" 
+                      fill
+                      className="object-cover"
+                      priority
+                    />
+                  )}
                 </motion.div>
               </AnimatePresence>
               
