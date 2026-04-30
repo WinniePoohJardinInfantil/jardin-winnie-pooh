@@ -95,7 +95,7 @@ export default function Footer() {
       flexShrink: 0 
     }}>
       <Image
-        src="/images/logo.webp"
+        src="/logos/jardin-infantil.png"
         alt="Logo Winnie Pooh"
         fill
         style={{ objectFit: "contain" }}

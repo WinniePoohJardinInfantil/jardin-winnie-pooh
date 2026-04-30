@@ -35,7 +35,7 @@ const HighLight = ({ children, color = "#FFB40033", type = "box" }: HighLightPro
 const stats = [
   { value: 30, label: "Años de experiencia", src: "/images/winnie-estrellas.webp", color: "#FF1F6D" },
   { value: 3, label: "Sedes en Medellín", src: "/images/tigger-cafe.webp", color: "#FFB400" },
-  { value: 7, label: "Idiomas", src: "/images/winnie-guino.webp", color: "#00C2FF" },
+  { value: 7, label: "Idiomas", src: "/images/piggy-sticker.webp", color: "#00C2FF" },
 ];
 
 export default function Hero() {
@@ -128,7 +128,7 @@ export default function Hero() {
             textShadow: "0 0 10px rgba(255,255,255,0.8)" 
           }}>
             Guardería y Jardín infantil con atención integral, programas en{" "}
-            <HighLight color="#00c3ff56">7 idiomas</HighLight>, enfocados en el{" "}
+            <HighLight type="underline" color="#00c3ff56">7 idiomas</HighLight>, enfocados en el{" "}
             <HighLight color="#22c55e56" type="underline">aprendizaje</HighLight> y la{" "}
             <HighLight color="#ff1f6d52" type="underline">felicidad de tu hijo</HighLight>!
           </p>
@@ -208,7 +208,7 @@ export default function Hero() {
         <motion.div
           animate={{ y: [0, -8, 0] }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: index * 0.2 }}
-          style={{ width: "70px", height: "70px", position: "relative", marginBottom: "10px" }}
+          style={{ width: index < 2 ? "90px" : "70px", height: index < 2 ? "90px" : "70px", position: "relative", marginBottom: "10px" }}
         >
           <Image src={stat.src} alt={stat.label} fill style={{ objectFit: "contain" }} />
         </motion.div>

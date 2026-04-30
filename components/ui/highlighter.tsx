@@ -29,7 +29,7 @@ interface HighlighterProps {
 
 export function Highlighter({
   children,
-  action = "highlight",
+  action = "underline",
   color = "#ffd1dc",
   strokeWidth = 1.5,
   animationDuration = 600,

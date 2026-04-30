@@ -8,6 +8,25 @@ import { BlurFade } from "@/components/ui/blur-fade";
 import { SparklesText } from "@/components/ui/sparkles-text";
 import { Lens } from "@/components/ui/lens";
 
+const PALETTE = ["#FF7893", "#7AC0FF", "#7E3AF2", "#FFFC01", "#4FF084", "#EB8100"];
+
+function ColoredTitle({ text }: { text: string }) {
+  let colorIdx = 0;
+  return (
+    <>
+      {text.split("").map((char, i) =>
+        char === " " ? (
+          <span key={i}>&nbsp;</span>
+        ) : (
+          <span key={i} style={{ color: PALETTE[colorIdx++ % PALETTE.length] }}>
+            {char}
+          </span>
+        )
+      )}
+    </>
+  );
+}
+
 const servicios = [
   { img: "/icons/programa.png", titulo: "Programa M.E.N", desc: "Educación según el Ministerio de Educación Nacional.", color1: "#FFC28F", color2: "#FFE6D2" },
   { img: "/icons/proyectos.png", titulo: "Proyectos Mensuales", desc: "Adaptación escolar, Vocales, Cuerpo Humano y mucho más.", color1: "#FFD97A", color2: "#FFF2C4" },
@@ -29,32 +48,25 @@ export default function Servicios() {
       
       {/* --- ELEMENTOS DECORATIVOS LATERALES --- */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-        {/* Abejita Izquierda */}
-        <motion.div 
-          animate={{ y: [0, -15, 0], x: [0, 10, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute left-[2%] top-[20%] hidden xl:block"
-        >
-          <Image src="/images/winnie-piggy.webp" alt="winnie pooh y piggy" width={80} height={80} className="opacity-60" />
-        </motion.div>
+        {/* Top-left: winnie-globo */}
+        <div className="absolute top-[5%] left-[1%] hidden xl:block" style={{ width: "100px" }}>
+          <Image src="/images/winnie-globo.png" alt="Winnie Pooh" width={100} height={430} style={{ objectFit: "contain" }} />
+        </div>
 
-        {/* Tarro de Miel o Nube Derecha */}
-        <motion.div 
-          animate={{ y: [0, 20, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="absolute right-[2%] top-[40%] hidden xl:block"
-        >
-          <Image src="/images/winnie-feliz.webp" alt="sticker de winnie pooh" width={100} height={100} className="opacity-50" />
-        </motion.div>
+        {/* Bottom-left: elefante-globo */}
+        <div className="absolute bottom-[5%] left-[1%] hidden xl:block" style={{ width: "110px" }}>
+          <Image src="/images/elefante-globo.png" alt="Elefante" width={110} height={145} style={{ objectFit: "contain" }} />
+        </div>
 
-        {/* Otra Abejita más abajo */}
-        <motion.div 
-          animate={{ x: [0, -20, 0] }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute left-[3%] top-[60%] hidden xl:block"
-        >
-          <Image src="/images/winnie-estrellas.webp" alt="winnie pooh coqueto" width={70} height={70} className="opacity-40 grayscale-[0.5]" />
-        </motion.div>
+        {/* Top-right: tigger-globo */}
+        <div className="absolute top-[5%] right-[1%] hidden xl:block" style={{ width: "110px" }}>
+          <Image src="/images/tigger-globo.png" alt="Tigger" width={110} height={160} style={{ objectFit: "contain" }} />
+        </div>
+
+        {/* Bottom-right: piggy-globo */}
+        <div className="absolute bottom-[5%] right-[1%] hidden xl:block" style={{ width: "110px" }}>
+          <Image src="/images/piggy-globo.png" alt="Piggy" width={110} height={160} style={{ objectFit: "contain" }} />
+        </div>
       </div>
 
       <div className="container relative z-10 mx-auto px-4">
@@ -116,7 +128,7 @@ export default function Servicios() {
                 borderRadius={22}
                 neonColors={{ firstColor: s.color1, secondColor: s.color2 }}
               >
-                <div className="flex h-full flex-col items-center justify-start rounded-[20px] bg-white/95 p-6 text-center">
+                <div className="flex h-full flex-col items-center justify-start rounded-[20px] p-6 text-center" style={{ background: s.color2 + "99" }}>
                   
                   <div className="relative mb-6 w-full overflow-hidden rounded-xl">
                     <div 
@@ -142,11 +154,11 @@ export default function Servicios() {
                         fontFamily: "var(--font-fredoka)",
                         fontSize: "1.4rem", // Un poco más grande el título
                         fontWeight: 700,
-                        color: "#1e293b",
+                        color: "inherit",
                         lineHeight: "1.2",
                       }}
                     >
-                      {s.titulo}
+                      <ColoredTitle text={s.titulo} />
                     </h3>
                   </div>
                   

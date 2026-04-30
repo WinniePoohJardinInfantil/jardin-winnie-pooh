@@ -152,8 +152,8 @@ export default function Navbar() {
                   href={link.href}
                   style={{
                     fontFamily: "var(--font-nunito)",
-                    fontWeight: 600,
-                    fontSize: "0.9rem",
+                    fontWeight: 700,
+                    fontSize: "1.05rem",
                     color: "var(--foreground)",
                     textDecoration: "none",
                     padding: "0.4rem 0.85rem",

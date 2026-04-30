@@ -55,6 +55,24 @@ const sedes = [
 export default function Sedes() {
   return (
     <section id="sedes" className="relative bg-white pb-16 overflow-visible">
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div
+          className="relative w-full h-full"
+          style={{
+            maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
+            WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
+            opacity: 0.35,
+          }}
+        >
+          <Image src="/images/sedes-bg.jpg" alt="Sedes background" fill className="object-cover" />
+        </div>
+        <div
+          className="absolute inset-0"
+          style={{
+            background: "radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.0) 100%)",
+          }}
+        />
+      </div>
       <div className="container mx-auto px-4 relative z-20 pt-16">
         
         {/* Cabecera con texto un poco más grande */}
@@ -90,7 +108,7 @@ export default function Sedes() {
                     backdropFilter: "blur(12px)",
                     borderRadius: "3.5rem",
                     border: `3px solid ${sede.color}20`,
-                    boxShadow: `0 25px 45px -15px ${sede.color}20`,
+                    boxShadow: `0 25px 45px -15px ${sede.color}20, inset 0 0 40px ${sede.color}18`,
                   }}
                 >
                   {/* Contenedor de Logo: Altura fija mayor (h-40) y logo más grande (w-48) */}
@@ -142,7 +160,7 @@ export default function Sedes() {
                   {/* Footer de la Card */}
                   <div className="mt-auto pt-8 border-t-2 border-slate-100">
                     <p 
-                      className="font-nunito text-[0.95rem] font-black mb-6 tracking-tight flex items-center justify-center gap-2 uppercase"
+                      className="font-nunito text-[1.1rem] font-black mb-6 tracking-tight flex items-center justify-center gap-2 uppercase"
                       style={{ color: sede.color }}
                     >
                       <span className="text-xl">📍</span> {sede.direccion}

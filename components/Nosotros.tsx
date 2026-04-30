@@ -106,8 +106,8 @@ export default function Nosotros() {
                 margin: "0 auto",
                 textShadow: "0 0 10px rgba(255,255,255,0.8)" 
               }}>
-                Más de <HighLight color="#ff1f6d52">30 años</HighLight> de experiencia formando niños y niñas 
-                con <HighLight color="#00c3ff56">amor</HighLight>, dedicación y una visión integral del ser humano 
+                Más de <HighLight color="#ff1f6d52" type="underline">30 años</HighLight> de experiencia formando niños y niñas 
+                con <HighLight color="#00c3ff56" type="underline">amor</HighLight>, dedicación y una visión integral del ser humano 
                 enfocados en la <HighLight color="#22c55e56" type="underline">felicidad</HighLight> en Medellín.
               </p>
             </div>
@@ -125,19 +125,11 @@ export default function Nosotros() {
             <BlurFade delay={0.2} inView style={{ display: 'flex' }}>
               <NeonGradientCard
                 className="w-full"
+                borderSize={4}
                 neonColors={{ firstColor: "#FF7893", secondColor: "#7AC0FF" }}
               >
                 <div style={{ padding: "2.5rem", height: "100%", display: "flex", flexDirection: "column" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "2rem" }}>
-                    <div style={{
-                      width: "60px", height: "60px",
-                      borderRadius: "1.2rem",
-                      background: "#FF789322",
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      fontSize: "2rem",
-                    }}>
-                      🎯
-                    </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "2rem", justifyContent: "center" }}>
                     <h3 style={{
                       fontFamily: "var(--font-fredoka)",
                       fontSize: "2rem",
@@ -154,6 +146,7 @@ export default function Nosotros() {
                     color: "var(--muted-foreground)",
                     lineHeight: 1.7,
                     marginBottom: "2rem",
+                    textAlign: "center",
                   }}>
                     Atención y cuidado integral a niños y niñas en Medellín.
                   </p>
@@ -227,6 +220,7 @@ export default function Nosotros() {
             <BlurFade delay={0.3} inView style={{ display: 'flex' }}>
               <NeonGradientCard
                 className="w-full"
+                borderSize={4}
                 neonColors={{ firstColor: "#FFD166", secondColor: "#4FF084" }}
               >
                 <div style={{ 
@@ -235,16 +229,7 @@ export default function Nosotros() {
                   display: "flex", 
                   flexDirection: "column",
                 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "2rem" }}>
-                    <div style={{
-                      width: "60px", height: "60px",
-                      borderRadius: "1.2rem",
-                      background: "#FFD16622",
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      fontSize: "2rem",
-                    }}>
-                      📅
-                    </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "2rem", justifyContent: "center" }}>
                     <h3 style={{
                       fontFamily: "var(--font-fredoka)",
                       fontSize: "2rem",
@@ -296,9 +281,9 @@ export default function Nosotros() {
                     }}>
                       <p style={{
                         fontFamily: "var(--font-fredoka)",
-                        fontSize: "1.2rem",
+                        fontSize: "1.5rem",
                         fontWeight: 700,
-                        color: "#EB8100",
+                        color: "#00C2FF",
                         marginBottom: "1.2rem",
                       }}>
                         🕐 Horarios disponibles

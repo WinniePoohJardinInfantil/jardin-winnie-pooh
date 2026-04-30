@@ -1,0 +1,215 @@
+# Implementation Plan
+
+- [x] 1. Write bug condition exploration test
+  - **Property 1: Bug Condition** - All 14 UI Defects Present on Unfixed Code
+  - **CRITICAL**: This test MUST FAIL on unfixed code — failure confirms each defect exists
+  - **DO NOT attempt to fix the test or the code when it fails**
+  - **NOTE**: This test encodes the expected behavior — it will validate the fix when it passes after implementation
+  - **GOAL**: Surface counterexamples that demonstrate all 14 defects exist simultaneously
+  - **Scoped PBT Approach**: Each defect is deterministic (fixed render inputs), so scope each assertion to the concrete failing case confirmed in the source files
+  - Assert C1: Navbar desktop `<a>` link has `fontWeight: 600` and `fontSize: "0.9rem"` (not 700 / ≥1rem)
+  - Assert C2: Hero "7 idiomas" HighLight renders with `type="box"` (inner span height = "100%", not "8px")
+  - Assert C3: Stats sticker containers at index 0 and 1 have `width: "70px"` (not 90px)
+  - Assert C4: `<Highlighter>` with no `action` prop uses annotation type `"highlight"` (not "underline")
+  - Assert C5: Nosotros DOM contains elements with text content "🎯" and "📅"
+  - Assert C6: Nosotros card header flex row does NOT have `justifyContent: "center"`
+  - Assert C7: "Horarios disponibles" `<p>` has `fontSize: "1.2rem"` and `color: "#EB8100"`
+  - Assert C8: Both Nosotros NeonGradientCard instances use `borderSize` default of 2 (no explicit prop)
+  - Assert C9: Sedes address `<p>` has `fontSize: "0.95rem"` (Tailwind class `text-[0.95rem]`)
+  - Assert C10: Sedes `<section>` contains no `<Image>` with `src` containing `"sedes-bg"`
+  - Assert C11: Sedes card inner `div` `boxShadow` does NOT contain `"inset"`
+  - Assert C12: `sedesData` from slug page does NOT contain key `"jardin-infantil"` (verify — expected to pass already, confirming no stray key)
+  - Assert C13: First Servicios card `<h3>` contains a single text node, not multiple `<span>` children
+  - Assert C14a: First Servicios card inner `div` className contains `"bg-white/95"`
+  - Assert C14b: Servicios decorative overlay `<div>` contains `.webp` image sources (not `.png` character files)
+  - Run test on UNFIXED code
+  - **EXPECTED OUTCOME**: Assertions C1–C11, C13–C14b FAIL (confirms defects exist); C12 PASSES (confirms no stray slug key)
+  - Document counterexamples found (e.g., "Navbar fontWeight is 600", "Hero 7-idiomas type is box", etc.)
+  - Mark task complete when test is written, run, and failures are documented
+  - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 1.10, 1.11, 1.12, 1.13, 1.14_
+
+- [x] 2. Write preservation property tests (BEFORE implementing fix)
+  - **Property 2: Preservation** - Non-Buggy Inputs Produce Identical Output
+  - **IMPORTANT**: Follow observation-first methodology — observe UNFIXED code behavior for non-buggy inputs first
+  - Observe: Navbar mobile hamburger button renders and toggles the mobile dropdown correctly
+  - Observe: Navbar brand logo (`/logos/jardin-infantil.png`) and "Winnie Pooh / JARDIN INFANTIL" text render at current sizes
+  - Observe: Hero "aprendizaje" HighLight has `type="underline"` and `color="#22c55e56"`; "felicidad de tu hijo" has `type="underline"` and `color="#ff1f6d52"`
+  - Observe: Stats sticker at index 2 (winnie-guino) has container `width: "70px", height: "70px"`
+  - Observe: Nosotros accordion items (misionPuntos) expand/collapse with AnimatePresence animation
+  - Observe: Nosotros calendar items and schedule rows render all content and colors correctly
+  - Observe: Sedes card content (logo, title, description, niveles list, button) renders with no layout changes
+  - Observe: `sedesData` keys are exactly `["babys", "jardin", "after-class"]`
+  - Observe: Servicios section header AuroraText titles and subtitle render unchanged
+  - Observe: Servicios Lens hover/zoom component is present on all 12 service card image containers
+  - Write property-based test: for any string of length N, `ColoredTitle` (post-fix helper) assigns `color[i] === PALETTE[nonSpaceIndex % PALETTE.length]` for every non-space character — observe that on UNFIXED code this helper does NOT exist yet, so baseline is single-color `#1e293b`
+  - Write property-based test: for any `color` hex value in the sedes data, the card `boxShadow` string contains an outer shadow component (baseline: no inset on unfixed code)
+  - Write property-based test: for any slug string not in `["babys", "jardin", "after-class"]`, `sedesData[slug]` returns `undefined`
+  - Verify all preservation tests PASS on UNFIXED code (confirms baseline behavior to preserve)
+  - Mark task complete when tests are written, run, and passing on unfixed code
+  - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 3.10, 3.11, 3.12_
+
+- [x] 3. Fix: Navbar font weight and size (components/Navbar.tsx)
+  - [x] 3.1 Implement the fix
+    - In the desktop `<a>` style object, change `fontWeight: 600` → `fontWeight: 700`
+    - In the desktop `<a>` style object, change `fontSize: "0.9rem"` → `fontSize: "1.05rem"`
+    - No changes to `padding`, `borderRadius`, `transition`, hover handlers, mobile menu, or brand
+    - _Bug_Condition: isBugCondition("Navbar") where desktop link fontWeight = 600 AND fontSize = "0.9rem"_
+    - _Expected_Behavior: fontWeight === 700 AND fontSize >= "1rem"_
+    - _Preservation: Mobile hamburger, dropdown, responsive breakpoints, and brand remain unchanged_
+    - _Requirements: 2.1, 3.1, 3.2_
+  - [x] 3.2 Verify bug condition exploration test now passes for C1
+    - **Property 1: Expected Behavior** - Navbar Font Weight and Size
+    - **IMPORTANT**: Re-run the SAME test from task 1 — do NOT write a new test
+    - Assert `fontWeight === "700"` AND `fontSize >= "1rem"` on desktop link `<a>`
+    - **EXPECTED OUTCOME**: C1 assertion PASSES
+    - _Requirements: 2.1_
+  - [x] 3.3 Verify preservation tests still pass
+    - **Property 2: Preservation** - Navbar Non-Buggy Inputs
+    - Re-run preservation tests from task 2 covering Navbar mobile menu and brand
+    - **EXPECTED OUTCOME**: All Navbar preservation assertions PASS
+
+- [x] 4. Fix: Hero "7 idiomas" highlight type and stats sticker sizes (components/Hero.tsx)
+  - [x] 4.1 Implement the fix
+    - On `<HighLight color="#00c3ff56">7 idiomas</HighLight>`, add `type="underline"`
+    - In the `stats.map` render, conditionally set the `motion.div` container size: `index < 2` → `width: "90px", height: "90px"`; `index === 2` → keep `width: "70px", height: "70px"`
+    - No changes to the other two HighLight instances ("aprendizaje", "felicidad de tu hijo")
+    - No changes to stat card container dimensions, NumberTicker, or label
+    - _Bug_Condition: isBugCondition("Hero") where highlight("7 idiomas").type = "box" OR sticker.index IN [0,1] AND containerSize = 70px_
+    - _Expected_Behavior: "7 idiomas" inner span height = "8px" (underline); sticker containers 0 and 1 at 90×90px_
+    - _Preservation: "aprendizaje" and "felicidad de tu hijo" highlights unchanged; index-2 sticker stays at 70px_
+    - _Requirements: 2.2, 2.3, 3.3, 3.4_
+  - [x] 4.2 Verify bug condition exploration test now passes for C2 and C3
+    - **Property 1: Expected Behavior** - Hero Highlight Type and Sticker Sizes
+    - Re-run the SAME test from task 1
+    - Assert "7 idiomas" HighLight inner span height is "8px" (underline mode)
+    - Assert sticker containers at index 0 and 1 have `width: "90px"`
+    - **EXPECTED OUTCOME**: C2 and C3 assertions PASS
+    - _Requirements: 2.2, 2.3_
+  - [x] 4.3 Verify preservation tests still pass
+    - **Property 2: Preservation** - Hero Non-Buggy Inputs
+    - Re-run preservation tests from task 2 covering Hero highlights and third sticker
+    - **EXPECTED OUTCOME**: All Hero preservation assertions PASS
+
+- [x] 5. Fix: Highlighter default action (components/ui/highlighter.tsx)
+  - [x] 5.1 Implement the fix
+    - Change the default parameter from `action = "highlight"` → `action = "underline"`
+    - No other changes to the component
+    - _Bug_Condition: isBugCondition("Highlighter") where action = "highlight" (default)_
+    - _Expected_Behavior: annotation type is "underline" when no action prop is passed_
+    - _Preservation: All explicit action prop usages remain unaffected; component API unchanged_
+    - _Requirements: 2.4_
+  - [x] 5.2 Verify bug condition exploration test now passes for C4
+    - **Property 1: Expected Behavior** - Highlighter Default Action
+    - Re-run the SAME test from task 1
+    - Assert `<Highlighter>` with no `action` prop uses annotation type `"underline"`
+    - **EXPECTED OUTCOME**: C4 assertion PASSES
+    - _Requirements: 2.4_
+  - [x] 5.3 Verify preservation tests still pass
+    - **Property 2: Preservation** - Highlighter Non-Buggy Inputs
+    - Re-run preservation tests from task 2 covering Highlighter explicit usages
+    - **EXPECTED OUTCOME**: All Highlighter preservation assertions PASS
+
+- [x] 6. Fix: Nosotros emojis, text alignment, Horarios label, and card borders (components/Nosotros.tsx)
+  - [x] 6.1 Implement the fix
+    - Remove the entire 60×60px `<div>` containing the 🎯 emoji from the Propósito card header
+    - Remove the entire 60×60px `<div>` containing the 📅 emoji from the Calendario card header
+    - On the Propósito card header flex row, add `justifyContent: "center"`
+    - On the Propósito card body `<p>`, add `textAlign: "center"`
+    - On the Calendario card header flex row, add `justifyContent: "center"`
+    - On each calendar item `<span>` text, add `textAlign: "center"` (or center the parent flex row)
+    - On the "🕐 Horarios disponibles" `<p>`, change `fontSize: "1.2rem"` → `fontSize: "1.5rem"` and `color: "#EB8100"` → `color: "#00C2FF"`
+    - On the Propósito `<NeonGradientCard>`, add `borderSize={4}`
+    - On the Calendario `<NeonGradientCard>`, add `borderSize={4}`
+    - Keep `<h3>` title elements, accordion animation, calendar content, and schedule rows intact
+    - _Bug_Condition: isBugCondition("Nosotros") where emojiDiv is rendered OR textAlign != "center" OR horariosLabel.fontSize < 1.5rem OR NeonGradientCard.borderSize = 2_
+    - _Expected_Behavior: no 🎯/📅 in DOM; card headers centered; Horarios label >= 1.5rem in blue; both cards borderSize >= 4_
+    - _Preservation: Accordion expand/collapse animation, calendar items, schedule rows, and all other colors unchanged_
+    - _Requirements: 2.5, 2.6, 2.7, 3.5, 3.6_
+  - [x] 6.2 Verify bug condition exploration test now passes for C5, C6, C7, C8
+    - **Property 1: Expected Behavior** - Nosotros Emojis, Alignment, Horarios, Borders
+    - Re-run the SAME test from task 1
+    - Assert no 🎯 or 📅 in DOM; card header has `justifyContent: "center"`; Horarios label `fontSize >= "1.5rem"` and color is blue; both NeonGradientCard instances have `borderSize >= 4`
+    - **EXPECTED OUTCOME**: C5, C6, C7, C8 assertions PASS
+    - _Requirements: 2.5, 2.6, 2.7_
+  - [x] 6.3 Verify preservation tests still pass
+    - **Property 2: Preservation** - Nosotros Non-Buggy Inputs
+    - Re-run preservation tests from task 2 covering accordion and calendar content
+    - **EXPECTED OUTCOME**: All Nosotros preservation assertions PASS
+
+- [x] 7. Fix: Sedes address size, background image, and card inner glow (components/Sedes.tsx)
+  - [x] 7.1 Implement the fix
+    - On the address `<p>` element, change `text-[0.95rem]` → `text-[1.1rem]`
+    - Inside the `<section>` element, add an absolutely-positioned background `<div>` as the first child containing a masked `<Image src="/images/sedes-bg.jpg">` plus a radial gradient overlay (matching the Hero/slug page pattern: `maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)"`, `opacity: 0.35`, radial gradient `rgba(255,255,255,0.6)` center)
+    - On each card inner `div`'s `boxShadow`, append the inset glow: `"0 25px 45px -15px {color}20, inset 0 0 40px {color}18"`
+    - Ensure the existing content `<div className="container mx-auto ...">` retains `relative z-20`
+    - No changes to card logo, title, description, niveles list, button, or any other card content
+    - _Bug_Condition: isBugCondition("Sedes") where addressText.fontSize = "0.95rem" OR backgroundImage absent OR card.boxShadow has no inset_
+    - _Expected_Behavior: address fontSize >= "1.1rem"; section contains Image with src "sedes-bg.jpg"; card boxShadow contains "inset"_
+    - _Preservation: Card content (logo, title, description, niveles, button) unchanged; background image does not obscure card content_
+    - _Requirements: 2.8, 2.9, 2.10, 3.7_
+  - [x] 7.2 Verify bug condition exploration test now passes for C9, C10, C11
+    - **Property 1: Expected Behavior** - Sedes Address, Background, Glow
+    - Re-run the SAME test from task 1
+    - Assert address `<p>` fontSize >= "1.1rem"; section contains `<Image>` with src containing "sedes-bg"; card `boxShadow` contains "inset"
+    - **EXPECTED OUTCOME**: C9, C10, C11 assertions PASS
+    - _Requirements: 2.8, 2.9, 2.10_
+  - [x] 7.3 Verify preservation tests still pass
+    - **Property 2: Preservation** - Sedes Non-Buggy Inputs
+    - Re-run preservation tests from task 2 covering Sedes card content
+    - **EXPECTED OUTCOME**: All Sedes preservation assertions PASS
+
+- [x] 8. Fix: Slug routing cleanup (app/sedes/[slug]/page.tsx)
+  - [x] 8.1 Implement the fix
+    - Verify `sedesData` contains exactly three keys: `"babys"`, `"jardin"`, `"after-class"`
+    - Confirm no key `"jardin-infantil"` exists in `sedesData` or anywhere in the file
+    - The `subtitulo` display values (`"Baby's"`, `"Jardín Infantil"`, `"After Class"`) are display text only — acceptable as-is
+    - If any stray `"jardin-infantil"` key or route reference is found, remove it
+    - No other changes to the file
+    - _Bug_Condition: isBugCondition("SedePage") where sedesData contains key "jardin-infantil"_
+    - _Expected_Behavior: Object.keys(sedesData) equals ["babys", "jardin", "after-class"] (any order); no "jardin-infantil" key or route_
+    - _Preservation: /sedes/jardin, /sedes/babys, /sedes/after-class all continue to resolve and render correctly_
+    - _Requirements: 2.11, 3.8_
+  - [x] 8.2 Verify bug condition exploration test now passes for C12
+    - **Property 1: Expected Behavior** - Slug Routing Keys
+    - Re-run the SAME test from task 1
+    - Assert `Object.keys(sedesData)` does not include `"jardin-infantil"` and equals exactly `["babys", "jardin", "after-class"]` (any order)
+    - **EXPECTED OUTCOME**: C12 assertion PASSES (was already passing on unfixed code — confirms no regression)
+    - _Requirements: 2.11_
+  - [x] 8.3 Verify preservation tests still pass
+    - **Property 2: Preservation** - Slug Routing Non-Buggy Inputs
+    - Re-run preservation tests from task 2 covering slug key exclusion property
+    - **EXPECTED OUTCOME**: All slug routing preservation assertions PASS
+
+- [x] 9. Fix: Servicios per-letter multicolor titles, card backgrounds, and corner character PNGs (components/Servicios.tsx)
+  - [x] 9.1 Implement the fix
+    - Add `const PALETTE = ["#FF7893", "#7AC0FF", "#7E3AF2", "#FFFC01", "#4FF084", "#EB8100"]` (Resenas palette) at the top of the component file
+    - Create a `ColoredTitle` helper function that splits the title string into characters, renders each non-space character in a `<span>` with `color: PALETTE[colorIdx++ % PALETTE.length]`, and renders spaces as `<span>&nbsp;</span>` without consuming a palette index
+    - Replace `{s.titulo}` inside the `<h3>` with `<ColoredTitle text={s.titulo} />`; remove `color: "#1e293b"` from the `<h3>` style (set to `"inherit"`)
+    - On the inner card `div`, remove `bg-white/95` from className and add inline `style={{ background: s.color2 + "99" }}` for a visible tinted background per card
+    - Remove the three existing `<motion.div>` decorative elements (winnie-piggy.webp, winnie-feliz.webp, winnie-estrellas.webp) from the pointer-events-none overlay `<div>`
+    - Replace with four absolutely-positioned `<Image>` elements at the four corners of the section (all `hidden xl:block`): top-left `winnie-globo.png` (~100px wide, `top-[5%] left-[1%]`), bottom-left `elefante-globo.png` (~110px wide, `bottom-[5%] left-[1%]`), top-right `tigger-globo.png` (~110px wide, `top-[5%] right-[1%]`), bottom-right `piggy-globo.png` (~110px wide, `bottom-[5%] right-[1%]`)
+    - Keep the Lens hover/zoom component fully functional on all 12 service card icon images
+    - Keep the section header (AuroraText titles and subtitle) unchanged
+    - _Bug_Condition: isBugCondition("Servicios") where cardTitle.color = "#1e293b" OR cardInner.className = "bg-white/95" OR cornerDecorations use .webp stickers_
+    - _Expected_Behavior: each letter in title has a distinct palette color cycling by non-space index; card background uses color2 tint; four character .png files at four corners_
+    - _Preservation: Section header, Lens effect on all 12 cards, and all card content unchanged_
+    - _Requirements: 2.12, 2.13, 2.14, 3.9, 3.10_
+  - [x] 9.2 Verify bug condition exploration test now passes for C13, C14a, C14b
+    - **Property 1: Expected Behavior** - Servicios Title Colors, Card Backgrounds, Corner PNGs
+    - Re-run the SAME test from task 1
+    - Assert first card `<h3>` contains multiple `<span>` children each with a distinct palette color; first card inner `div` does not have `bg-white/95` and has a `background` style using `color2`; decorative overlay contains four `<Image>` elements with `.png` character filenames
+    - **EXPECTED OUTCOME**: C13, C14a, C14b assertions PASS
+    - _Requirements: 2.12, 2.13, 2.14_
+  - [x] 9.3 Verify preservation tests still pass
+    - **Property 2: Preservation** - Servicios Non-Buggy Inputs
+    - Re-run preservation tests from task 2 covering Servicios header and Lens effect
+    - Run property-based test: for any string of length N, `ColoredTitle` assigns `color[i] === PALETTE[nonSpaceIndex % PALETTE.length]` for every non-space character
+    - **EXPECTED OUTCOME**: All Servicios preservation assertions PASS including palette cycling property
+
+- [x] 10. Checkpoint — Ensure all tests pass
+  - Re-run the full exploration test suite from task 1 — all 15 assertions must PASS
+  - Re-run the full preservation test suite from task 2 — all preservation assertions must PASS
+  - Visually verify the homepage renders correctly: Navbar links bold, Hero "7 idiomas" underlined, stats stickers enlarged, Nosotros cards centered with thicker borders, Sedes section with background image and card glows, Servicios cards with multicolor titles and tinted backgrounds and four corner character PNGs
+  - Verify `/sedes/jardin`, `/sedes/babys`, `/sedes/after-class` all load without errors
+  - Verify `/sedes/jardin-infantil` returns a 404
+  - Ensure all tests pass; ask the user if questions arise

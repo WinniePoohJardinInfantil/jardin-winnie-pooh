@@ -52,36 +52,36 @@ const sedesData: Record<string, SedeDetalle> = {
     nombre: "Winnie Pooh",
     subtitulo: "Baby's",
     color: "#FF7893",
-    descripcion: "Atención especializada para los más pequeños con mucho amor. Nuestro enfoque se basa en la ",
-    resaltado: "estimulación temprana",
+    descripcion: "Servicio especializado para el cuidado y la estimulación a bebes, en un ambiente confiable y feliz para su ",
+    resaltado: "adecuado desarrollo",
     direccion: "Carrera 81 #52 - 58, Medellín",
     mapaUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.023243171329!2d-75.601!3d6.26!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTUnMzYuMCJOIDc1wrAzNicwMy42Ilc!5e0!3m2!1ses!2sco!4v1640000000000", 
     edades: ["3 meses a 12 meses", "1 año (Maternal)", "2 años (Párvulos)"],
-    servicios: ["Estimulación temprana", "Sala de lactancia", "Personal especializado", "Nutrición guiada"],
+    servicios: ["Estimulación temprana", "Personal Especializado", "Metodo Bebe Poliglotas", "Horarios Flexibles"],
     fotos: ["/images/diadepayasos.jpg", "/images/papelitos.webp", "/images/clases.webp"],
   },
   "jardin": {
     nombre: "Winnie Pooh",
     subtitulo: "Jardín Infantil",
     color: "#FFFC01", 
-    descripcion: "Un espacio de crecimiento y aprendizaje donde fomentamos la ",
-    resaltado: "curiosidad y socialización",
+    descripcion: "Somos el comienzo de una vida plena para sus hijos, con ",
+    resaltado: "+30 años de amor y dedicación a nuestros pequeños",
     direccion: "Calle 51 #81a-25, Medellín",  
     mapaUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.995347919616!2d-75.5985903!3d6.264340799999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e44296ca4709197%3A0xc6ecd1171e549337!2sCl.%2051%20%23%2081A-25%2C%20Calasanz%20Parte%20Alta%2C%20Medell%C3%ADn%2C%20La%20Am%C3%A9rica%2C%20Medell%C3%ADn%2C%20Antioquia!5e0!3m2!1ses-419!2sco!4v1777045128704!5m2!1ses-419!2sco",    
-    edades: ["3 años (Pre-jardín)", "4 años (Jardín)", "5 años (Transición)"],
-    servicios: ["Iniciación al inglés", "Huerta escolar", "Expresión corporal", "Psicomotricidad"],
+    edades: ["3 años (Pre-jardín)", "4 años (Jardín)"],
+    servicios: ["Iniciación al inglés", "Estimulación Musical", "Gimnasia Infantil", "Metodo de Políglotas (7 idiomas)"],
     fotos: ["/images/winnie-baile.webp", "/images/winnie-feliz.webp"],
   },
   "after-class": {
     nombre: "Winnie Pooh",
     subtitulo: "After Class",
     color: "#4ADE80", 
-    descripcion: "El complemento perfecto para la jornada con ",
-    resaltado: "refuerzo académico y diversión",
+    descripcion: "Servicio de acompañamiento de tareas y aprovechamiento del tiempo libre en actividades extracurriculares: ",
+    resaltado: "Pintura, Musica, Baile, Ingles y manualidades",
     direccion: "Calle 51 #81a-25, Medellín",  
     mapaUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.995347919616!2d-75.5985903!3d6.264340799999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e44296ca4709197%3A0xc6ecd1171e549337!2sCl.%2051%20%23%2081A-25%2C%20Calasanz%20Parte%20Alta%2C%20Medell%C3%ADn%2C%20La%20Am%C3%A9rica%2C%20Medell%C3%ADn%2C%20Antioquia!5e0!3m2!1ses-419!2sco!4v1777045128704!5m2!1ses-419!2sco",    
     edades: ["6 a 10 años"],
-    servicios: ["Tareas dirigidas", "Taller de artes", "Clases de música", "Recreación"],
+    servicios: ["Tareas dirigidas", "Taller de artes", "Clases de música", "Recreación", "Almuerzo"],
     fotos: ["/images/salidadecampo.jpg", "/images/juegos-de-pelotas.webp"],
   },
 };
@@ -151,8 +151,7 @@ export default function SedePage({ params }: { params: Promise<{ slug: string }>
             </h1>
             <p className="text-xl md:text-2xl text-slate-500 max-w-4xl mx-auto mt-8 font-extrabold leading-relaxed">
               {sede.descripcion}
-              <HighLight color={`${sede.color}33`}>{sede.resaltado}</HighLight>.
-              ¡En el corazón de Medellín!
+              <HighLight color="#00c3ff56" type="underline"> {sede.resaltado}</HighLight>
             </p>
           </div>
         </BlurFade>

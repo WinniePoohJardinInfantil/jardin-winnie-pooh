@@ -128,7 +128,7 @@ export default function Contacto() {
               lineHeight: 1.6,
               textShadow: "0 0 10px rgba(255,255,255,0.8)" 
             }}>
-              Comuníquese con nosotros, con gusto le contamos todo sobre nuestros <HighLight color="#00c3ff56" type="box">programas</HighLight> y le ayudamos a iniciar esta <HighLight color="#ff1f6d52" type="underline">hermosa etapa</HighLight>.
+              Comuníquese con nosotros, con gusto le contamos todo sobre nuestros <HighLight color="#00c3ff56" type="underline">programas</HighLight> y le ayudamos a iniciar esta <HighLight color="#ff1f6d52" type="underline">hermosa etapa</HighLight>.
             </p>
           </BlurFade>
         </div>
