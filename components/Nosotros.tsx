@@ -327,8 +327,8 @@ export default function Nosotros() {
   <div style={{
     position: "absolute",
     inset: 0,
-    maskImage: "linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%)",
-    WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%)",
+    maskImage: "linear-gradient(to top, black 0%, transparent 100%)",
+    WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 100%)",
     opacity: 0.4,
   }}>
     <Image src="/images/sedes-bg.jpg" alt="" fill style={{ objectFit: "cover" }} />

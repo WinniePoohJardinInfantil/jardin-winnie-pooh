@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useState, useRef } from "react";
+import { use, useState } from "react";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -12,6 +12,9 @@ import { SparklesText } from "@/components/ui/sparkles-text";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import Lightbox from "yet-another-react-lightbox";
+import Video from "yet-another-react-lightbox/plugins/video";
+import "yet-another-react-lightbox/styles.css";
 
 // --- COMPONENTE HIGHLIGHT (Inspirado en tu Hero) ---
 const HighLight = ({ children, color = "#FFB40033", type = "box" }: { 
@@ -88,132 +91,12 @@ const sedesData: Record<string, SedeDetalle> = {
 
 const isVideo = (src: string) => /\.(mp4|webm)$/i.test(src);
 
-// --- COMPONENTE VIDEO PLAYER PARA BABY'S ---
-function PlayIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-      <polygon points="5,3 19,12 5,21" />
-    </svg>
-  );
-}
-
-function PauseIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-      <rect x="6" y="4" width="4" height="16" />
-      <rect x="14" y="4" width="4" height="16" />
-    </svg>
-  );
-}
-
-function VolumeIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <polygon points="11,5 6,9 2,9 2,15 6,15 11,19" />
-      <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-    </svg>
-  );
-}
-
-function BabysVideoPlayer({ src }: { src: string }) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [playing, setPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(1);
-
-  const togglePlay = () => {
-    const v = videoRef.current;
-    if (!v) return;
-    if (playing) {
-      v.pause();
-    } else {
-      v.play();
-    }
-    setPlaying(!playing);
-  };
-
-  const handleTimeUpdate = () => {
-    setCurrentTime(videoRef.current?.currentTime ?? 0);
-  };
-
-  const handleLoadedMetadata = () => {
-    setDuration(videoRef.current?.duration ?? 0);
-  };
-
-  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const t = Number(e.target.value);
-    if (videoRef.current) videoRef.current.currentTime = t;
-    setCurrentTime(t);
-  };
-
-  const handleVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const v = Number(e.target.value);
-    if (videoRef.current) videoRef.current.volume = v;
-    setVolume(v);
-  };
-
-  const fmt = (s: number) => {
-    const m = Math.floor(s / 60);
-    const sec = Math.floor(s % 60);
-    return `${m}:${sec.toString().padStart(2, "0")}`;
-  };
-
-  return (
-    <div className="flex flex-col items-center w-full">
-      <video
-        ref={videoRef}
-        src={src}
-        onTimeUpdate={handleTimeUpdate}
-        onLoadedMetadata={handleLoadedMetadata}
-        onEnded={() => setPlaying(false)}
-        playsInline
-        className="w-full rounded-[3rem] shadow-2xl border-[12px] border-white"
-        style={{ maxHeight: "70vh" }}
-      />
-      <div className="mt-4 w-full max-w-sm flex flex-col gap-3 bg-white/80 backdrop-blur-md rounded-2xl p-4 shadow-lg">
-        <div className="flex items-center gap-3">
-          <button
-            onClick={togglePlay}
-            className="bg-slate-100 hover:bg-slate-200 p-3 rounded-xl transition-all"
-          >
-            {playing ? <PauseIcon /> : <PlayIcon />}
-          </button>
-          <span className="text-sm font-bold text-slate-600 tabular-nums">
-            {fmt(currentTime)} / {fmt(duration)}
-          </span>
-        </div>
-        <input
-          type="range"
-          min={0}
-          max={duration || 0}
-          step={0.1}
-          value={currentTime}
-          onChange={handleSeek}
-          className="w-full accent-pink-400"
-        />
-        <div className="flex items-center gap-2">
-          <VolumeIcon />
-          <input
-            type="range"
-            min={0}
-            max={1}
-            step={0.05}
-            value={volume}
-            onChange={handleVolume}
-            className="w-full accent-pink-400"
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function SedePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
   const sede = sedesData[slug];
   const [fotoActual, setFotoActual] = useState(0);
   const [direccion, setDireccion] = useState(1);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   if (!sede) notFound();
 
@@ -229,6 +112,12 @@ export default function SedePage({ params }: { params: Promise<{ slug: string }>
 
   const sedeColorBrand = sede.color === "#FFFC01" ? "#D4C500" : sede.color;
   const whatsappLink = `https://wa.me/573116055332?text=Hola!%20Info%20de%20la%20sede%20${encodeURIComponent(sede.subtitulo)}`;
+
+  const slides = sede.fotos.map((src) =>
+    isVideo(src)
+      ? { type: "video" as const, sources: [{ src, type: "video/mp4" as const }] }
+      : { src }
+  );
 
   return (
     <main className="min-h-screen bg-white font-nunito overflow-x-hidden relative">
@@ -272,9 +161,9 @@ export default function SedePage({ params }: { params: Promise<{ slug: string }>
                 </SparklesText>
               </div>
             </h1>
-            <p className="text-xl md:text-2xl text-slate-500 max-w-4xl mx-auto mt-8 font-extrabold leading-relaxed">
+            <p className="text-xl md:text-2xl max-w-4xl mx-auto mt-8 font-bold leading-relaxed" style={{ color: "#1e293b" }}>
               {sede.descripcion}
-              <HighLight color="#00c3ff56" type="underline"> {sede.resaltado}</HighLight>
+              <HighLight color={`${sede.color}CC`} type="underline"> {sede.resaltado}</HighLight>
             </p>
           </div>
         </BlurFade>
@@ -390,72 +279,66 @@ export default function SedePage({ params }: { params: Promise<{ slug: string }>
               </div>
             </div>
           </div>
-          {/* 2. Media: Video para Baby's / Carrusel para otras sedes */}
-          <div className="lg:col-span-6 flex">
-            {slug === "babys" ? (
-              <div className="w-full flex items-center justify-center">
-                <BabysVideoPlayer src={sede.fotos[0]} />
-              </div>
-            ) : (
-              <motion.div 
-                whileHover={{ rotate: 0 }}
-                initial={{ rotate: 1 }}
-                className="relative w-full aspect-square lg:aspect-auto rounded-[4rem] overflow-hidden shadow-2xl border-[12px] border-white group bg-slate-100 transition-transform duration-500"
-              >
-                <AnimatePresence initial={false} custom={direccion} mode="popLayout">
-                  <motion.div
-                    key={fotoActual}
-                    custom={direccion}
-                    variants={{
-                      enter: (d: number) => ({ x: d > 0 ? 800 : -800, opacity: 0 }),
-                      center: { x: 0, opacity: 1 },
-                      exit: (d: number) => ({ x: d < 0 ? 800 : -800, opacity: 0 })
-                    }}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{ type: "spring", stiffness: 200, damping: 25 }}
-                    className="absolute inset-0 w-full h-full"
-                  >
-                    {isVideo(sede.fotos[fotoActual]) ? (
-                      <video
-                        src={sede.fotos[fotoActual]}
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        className="absolute inset-0 w-full h-full object-cover"
-                      />
-                    ) : (
-                      <Image 
-                        src={sede.fotos[fotoActual]} 
-                        alt="Instalaciones" 
-                        fill
-                        className="object-cover"
-                        priority
-                      />
-                    )}
-                  </motion.div>
-                </AnimatePresence>
-                
-                <button onClick={fotoAnterior} className="absolute left-6 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-md p-4 rounded-3xl shadow-2xl z-20 hover:scale-110 transition-all text-slate-800">
-                  <ChevronLeft size={32} strokeWidth={3} />
-                </button>
-                <button onClick={proximaFoto} className="absolute right-6 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-md p-4 rounded-3xl shadow-2xl z-20 hover:scale-110 transition-all text-slate-800">
-                  <ChevronRight size={32} strokeWidth={3} />
-                </button>
 
-                <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-3 z-20 bg-black/20 backdrop-blur-xl p-3 rounded-full">
-                  {sede.fotos.map((_, i) => (
-                    <button 
-                      key={i} 
-                      onClick={() => setFotoActual(i)}
-                      className={`h-3 rounded-full transition-all duration-500 ${fotoActual === i ? "w-10 bg-white" : "w-3 bg-white/50"}`} 
+          {/* 2. Carrusel unificado */}
+          <div className="lg:col-span-6 flex">
+            <motion.div 
+              whileHover={{ rotate: 0 }}
+              initial={{ rotate: 1 }}
+              className="relative w-full aspect-square rounded-[4rem] overflow-hidden shadow-2xl border-[12px] border-white group bg-slate-100 transition-transform duration-500"
+            >
+              <AnimatePresence initial={false} custom={direccion} mode="popLayout">
+                <motion.div
+                  key={fotoActual}
+                  custom={direccion}
+                  variants={{
+                    enter: (d: number) => ({ x: d > 0 ? 800 : -800, opacity: 0 }),
+                    center: { x: 0, opacity: 1 },
+                    exit: (d: number) => ({ x: d < 0 ? 800 : -800, opacity: 0 })
+                  }}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ type: "spring", stiffness: 200, damping: 25 }}
+                  className="absolute inset-0 w-full h-full"
+                  onClick={() => setLightboxOpen(true)}
+                  style={{ cursor: "pointer" }}
+                >
+                  {isVideo(sede.fotos[fotoActual]) ? (
+                    <video
+                      src={sede.fotos[fotoActual]}
+                      controls
+                      className="w-full h-full object-contain"
                     />
-                  ))}
-                </div>
-              </motion.div>
-            )}
+                  ) : (
+                    <Image 
+                      src={sede.fotos[fotoActual]} 
+                      alt="Instalaciones" 
+                      fill
+                      className="object-cover"
+                      priority
+                    />
+                  )}
+                </motion.div>
+              </AnimatePresence>
+              
+              <button onClick={fotoAnterior} className="absolute left-6 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-md p-4 rounded-3xl shadow-2xl z-20 hover:scale-110 transition-all text-slate-800">
+                <ChevronLeft size={32} strokeWidth={3} />
+              </button>
+              <button onClick={proximaFoto} className="absolute right-6 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-md p-4 rounded-3xl shadow-2xl z-20 hover:scale-110 transition-all text-slate-800">
+                <ChevronRight size={32} strokeWidth={3} />
+              </button>
+
+              <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-3 z-20 bg-black/20 backdrop-blur-xl p-3 rounded-full">
+                {sede.fotos.map((_, i) => (
+                  <button 
+                    key={i} 
+                    onClick={() => setFotoActual(i)}
+                    className={`h-3 rounded-full transition-all duration-500 ${fotoActual === i ? "w-10 bg-white" : "w-3 bg-white/50"}`} 
+                  />
+                ))}
+              </div>
+            </motion.div>
           </div>
 
           {/* 3. Mapa con Neon Gradient */}
@@ -485,12 +368,21 @@ export default function SedePage({ params }: { params: Promise<{ slug: string }>
           </div>
         </div>
       </div>
+
 {/* --- FOOTER (Capa 20 - Tapa todo) --- */}
       <div className="relative z-20 bg-white shadow-[0_-20px_50px_-15px_rgba(0,0,0,0.05)]">
         <Footer />
       </div>
 
       <WhatsAppButton />
+
+      <Lightbox
+        open={lightboxOpen}
+        close={() => setLightboxOpen(false)}
+        slides={slides}
+        index={fotoActual}
+        plugins={[Video]}
+      />
     </main>
   );
 }
