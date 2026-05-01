@@ -6,7 +6,7 @@ import { Dock, DockIcon } from "@/components/ui/dock";
 import Image from "next/image";
 import { AuroraText } from "@/components/ui/aurora-text";
 
-const Site_Palette = ["#FF7893", "#7AC0FF", "#7E3AF2", "#FFFC01", "#4FF084", "#EB8100"];
+const Site_Palette = ["#FF7893", "#7AC0FF", "#7E3AF2", "#3b87ddff", "#4FF084", "#EB8100"];
 
 const navLinks = [
   { label: "Inicio", href: "#inicio", color: "#FFFC01" },
@@ -25,7 +25,6 @@ const marqueeItems = [
   "🐻 Winnie Pooh", "🍼 Baby's", "📚 After Class", "🌍 Método Poliglotas", "🎵 Música", "🏊 Natación", "🤸 Gimnasia", "❤️ Amor"
 ];
 
-// SVGs personalizados para evitar fallos de Lucide
 const InstagramIcon = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
@@ -55,7 +54,7 @@ export default function Footer() {
       overflow: "hidden" 
     }}>
       
-      {/* MARQUEE SUTIL */}
+      {/* MARQUEE — letras en color ciclando la paleta */}
       <div style={{ background: "#f8fafc", padding: "1rem 0", borderBottom: "1px solid #f1f5f9" }}>
         <Marquee pauseOnHover className="[--duration:30s]">
           {marqueeItems.map((item, i) => (
@@ -65,7 +64,7 @@ export default function Footer() {
                 fontFamily: "var(--font-fredoka)",
                 fontSize: "0.9rem",
                 fontWeight: 700,
-                color: "#94a3b8",
+                color: Site_Palette[i % Site_Palette.length],
                 marginRight: "4rem",
                 textTransform: "uppercase",
                 letterSpacing: "0.1em"
@@ -87,69 +86,25 @@ export default function Footer() {
         }}>
           
           {/* BRAND SECTION + DOCK */}
-<div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-  <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-    {/* Contenedor del Logo */}
-    <div style={{ 
-      position: "relative",
-      width: "55px", // Ajusté un poco el tamaño para que luzca mejor el logo
-      height: "55px",
-      flexShrink: 0 
-    }}>
-      <Image
-        src="/logos/jardin-infantil.png"
-        alt="Logo Winnie Pooh"
-        fill
-        style={{ objectFit: "contain" }}
-        priority
-      />
-    </div>
-    
-    <span style={{ 
-      fontFamily: "var(--font-fredoka)", 
-      fontSize: "1.6rem", 
-      fontWeight: 900, 
-      color: "#1e293b",
-      lineHeight: 1
-    }}>
-      <AuroraText colors={Site_Palette}>Winnie Pooh</AuroraText>
-    </span>
-  </div>
-  
-  <p style={{ 
-    fontFamily: "var(--font-nunito)", 
-    fontSize: "1rem", 
-    lineHeight: 1.6, 
-    color: "#1e293b",
-    fontWeight: 700,
-    maxWidth: "320px" 
-  }}>
-    Más de 30 años formando niños felices con amor y dedicación en Medellín.
-  </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+              <div style={{ position: "relative", width: "55px", height: "55px", flexShrink: 0 }}>
+                <Image src="/logos/jardin-infantil.png" alt="Logo Winnie Pooh" fill style={{ objectFit: "contain" }} priority />
+              </div>
+              <span style={{ fontFamily: "var(--font-fredoka)", fontSize: "1.6rem", fontWeight: 900, color: "#1e293b", lineHeight: 1 }}>
+                <AuroraText colors={Site_Palette}>Winnie Pooh</AuroraText>
+              </span>
+            </div>
             
-            {/* DOCK INTEGRADO - Versión Minimalista Light */}
+            <p style={{ fontFamily: "var(--font-nunito)", fontSize: "1rem", lineHeight: 1.6, color: "#1e293b", fontWeight: 700, maxWidth: "320px" }}>
+              Más de 30 años formando niños felices con amor y dedicación en Medellín.
+            </p>
+              
             <div style={{ marginTop: "0.5rem" }}>
-              <Dock
-                direction="middle"
-                iconMagnification={52}
-                iconDistance={80}
-                className="!bg-slate-50 !border-slate-100 !justify-start !w-fit !p-2"
-              >
+              <Dock direction="middle" iconMagnification={52} iconDistance={80} className="!bg-slate-50 !border-slate-100 !justify-start !w-fit !p-2">
                 {socialLinks.map((link) => (
                   <DockIcon key={link.label}>
-                    <a
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        display: "flex", width: "100%", height: "100%",
-                        alignItems: "center", justifyContent: "center",
-                        borderRadius: "12px",
-                        background: `${link.color}15`,
-                        color: link.color,
-                        transition: "all 0.2s",
-                      }}
-                    >
+                    <a href={link.href} target="_blank" rel="noopener noreferrer" style={{ display: "flex", width: "100%", height: "100%", alignItems: "center", justifyContent: "center", borderRadius: "12px", background: `${link.color}15`, color: link.color, transition: "all 0.2s" }}>
                       <link.icon />
                     </a>
                   </DockIcon>
@@ -160,22 +115,15 @@ export default function Footer() {
 
           {/* QUICK LINKS */}
           <div>
-            <h4 style={{ 
-              fontFamily: "var(--font-fredoka)", fontSize: "1.1rem", 
-              fontWeight: 800, color: "#1e293b", marginBottom: "1.5rem" 
-            }}>
+            <h4 style={{ fontFamily: "var(--font-fredoka)", fontSize: "1.1rem", fontWeight: 800, color: "#1e293b", marginBottom: "1.5rem" }}>
               <AuroraText colors={Site_Palette}>Explorar</AuroraText>
             </h4>
             <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "0.8rem" }}>
               {navLinks.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} style={{ 
-                    fontFamily: "var(--font-nunito)", fontSize: "1rem", 
-                    color: link.color, textDecoration: "none", fontWeight: 700,
-                    transition: "color 0.2s"
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = link.color}
-                  onMouseLeave={(e) => e.currentTarget.style.color = link.color}
+                  <a href={link.href} style={{ fontFamily: "var(--font-nunito)", fontSize: "1rem", color: link.color, textDecoration: "none", fontWeight: 700, transition: "color 0.2s" }}
+                    onMouseEnter={(e) => e.currentTarget.style.color = link.color}
+                    onMouseLeave={(e) => e.currentTarget.style.color = link.color}
                   >
                     {link.label}
                   </a>
@@ -186,32 +134,20 @@ export default function Footer() {
 
           {/* SEDES */}
           <div>
-            <h4 style={{ 
-              fontFamily: "var(--font-fredoka)", fontSize: "1.1rem", 
-              fontWeight: 800, color: "#1e293b", marginBottom: "1.5rem" 
-            }}>
+            <h4 style={{ fontFamily: "var(--font-fredoka)", fontSize: "1.1rem", fontWeight: 800, color: "#1e293b", marginBottom: "1.5rem" }}>
               <AuroraText colors={Site_Palette}>Ubicaciones</AuroraText>
             </h4>
             <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
               {sedes.map((sede) => (
                 <div key={sede.nombre} style={{ display: "flex", gap: "0.8rem" }}>
-                  <div style={{ 
-                    width: "36px", height: "36px", borderRadius: "10px", 
-                    background: `${sede.color}10`, display: "flex", 
-                    alignItems: "center", justifyContent: "center", flexShrink: 0 
-                  }}>
+                  <div style={{ width: "36px", height: "36px", borderRadius: "10px", background: `${sede.color}10`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                     <MapPin size={18} color={sede.color} />
                   </div>
                   <div>
-                    <div style={{ 
-                      fontFamily: "var(--font-nunito)", fontWeight: 800, 
-                      fontSize: "0.95rem", color: "#334155" 
-                    }}>
+                    <div style={{ fontFamily: "var(--font-nunito)", fontWeight: 800, fontSize: "0.95rem", color: "#334155" }}>
                       {sede.nombre}
                     </div>
-                    <div style={{ 
-                      fontFamily: "var(--font-nunito)", fontSize: "0.85rem", color: "#1e293b", fontWeight: 700
-                    }}>
+                    <div style={{ fontFamily: "var(--font-nunito)", fontSize: "0.85rem", color: "#1e293b", fontWeight: 700 }}>
                       {sede.dir}
                     </div>
                   </div>
@@ -222,25 +158,12 @@ export default function Footer() {
 
         </div>
 
-        {/* COPYRIGHT AREA */}
-        <div style={{ 
-          paddingTop: "2rem", 
-          borderTop: "1px solid #f1f5f9",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexWrap: "wrap",
-          gap: "1rem"
-        }}>
-          <p style={{ 
-            fontFamily: "var(--font-nunito)", fontSize: "0.9rem", color: "#94a3b8", fontWeight: 600 
-          }}>
+        {/* COPYRIGHT */}
+        <div style={{ paddingTop: "2rem", borderTop: "1px solid #f1f5f9", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
+          <p style={{ fontFamily: "var(--font-nunito)", fontSize: "0.9rem", color: "#94a3b8", fontWeight: 600 }}>
             © 2026 Winnie Pooh Medellín.
           </p>
-          <div style={{ 
-            display: "flex", alignItems: "center", gap: "0.4rem",
-            fontFamily: "var(--font-nunito)", fontSize: "0.9rem", color: "#94a3b8", fontWeight: 600
-          }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontFamily: "var(--font-nunito)", fontSize: "0.9rem", color: "#94a3b8", fontWeight: 600 }}>
             Hecho con <Heart size={14} fill="#FF7893" stroke="#FF7893" /> por 
             <a href="https://serstack-es.vercel.app" target="_blank" style={{ color: "#1e293b", textDecoration: "none", fontWeight: 800 }}>
               SerStack

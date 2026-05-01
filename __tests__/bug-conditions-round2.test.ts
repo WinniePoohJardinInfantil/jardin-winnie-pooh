@@ -121,12 +121,17 @@ describe("Bug Condition Verification Round 2 — 13 UI Fixes (assert fixes ARE i
     expect(source).toContain("AuroraText");
   });
 
-  // C10: Servicios card image container DOES have a border: 2px solid style
-  test("C10: Servicios card image container HAS a border: 2px solid style (fixed)", () => {
+  // C10: Servicios card image container border removed in round 4 (Bug 6 fix)
+  // Updated in round 4: border: 2px solid was removed; container now has borderRadius: 8px + overflow: hidden
+  test("C10: Servicios card image container has NO border (border removed in round 4) (fixed)", () => {
     const source = readSource("components/Servicios.tsx");
 
-    // Assert a 2px solid border IS present on the image container
-    expect(source).toMatch(/border:\s*[`"']?2px solid/);
+    // Assert the 2px solid border is NO LONGER present (removed in round 4)
+    expect(source).not.toMatch(/border:\s*[`"']?2px solid/);
+
+    // Assert the replacement style IS present (borderRadius: 8px, overflow: hidden)
+    expect(source).toMatch(/borderRadius:\s*["']8px["']/);
+    expect(source).toMatch(/overflow:\s*["']hidden["']/);
   });
 
   // C11: Contacto motion.a elements DO have maxWidth: "480px" style

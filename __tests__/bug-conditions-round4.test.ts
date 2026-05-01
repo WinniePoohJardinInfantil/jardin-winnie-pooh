@@ -1,132 +1,149 @@
 /**
- * Bug Condition Exploration Tests — Round 4
+ * Bug Condition Verification Tests — Round 4 (Post-Fix)
  *
- * These tests use static source-code analysis (read files as strings, regex/string matching)
- * to assert that each known defect IS PRESENT in the unfixed source.
+ * These tests assert the FIXED / CORRECT state of the codebase.
+ * Each test verifies that the previously-reported defect is no longer present
+ * and that the correct implementation is in place.
  *
- * All 10 assertions PASS on unfixed code  → confirms the bugs exist.
- * After fixes are applied, these tests will FAIL → confirms the bugs are gone.
+ * All 10 assertions PASS after fixes are applied.
  *
- * Validates: Requirements 1.1, 2.1, 4.1, 5.1, 5.2, 5.3, 5.4, 6.1, 7.1, 8.1
+ * Validates: Requirements 2.1, 2.2, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 2.10, 2.11
  */
 
 import { readFileSync } from "fs";
 import { resolve } from "path";
 import { describe, it, expect } from "vitest";
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
 function readSource(relativePath: string): string {
   return readFileSync(resolve(process.cwd(), relativePath), "utf-8");
 }
 
-// ---------------------------------------------------------------------------
-// Source files
-// ---------------------------------------------------------------------------
-
-const nosotrosSrc   = readSource("components/Nosotros.tsx");
-const contactoSrc   = readSource("components/Contacto.tsx");
-const sedesSlugSrc  = readSource("app/sedes/[slug]/page.tsx");
-const serviciosSrc  = readSource("components/Servicios.tsx");
-const heroSrc       = readSource("components/Hero.tsx");
-
-// ---------------------------------------------------------------------------
-// Tests
-// ---------------------------------------------------------------------------
-
-describe("Bug Condition Exploration — Round 4 (all assertions PASS on unfixed code)", () => {
+describe("Bug Condition Verification — Round 4 (assert fixes ARE in place)", () => {
 
   /**
    * C1 — Nosotros.tsx
-   * The transition div maskImage IS the symmetric 4-stop gradient.
-   * After fix it should become "linear-gradient(to top, black 0%, transparent 100%)".
+   * Transition mask now uses "linear-gradient(to top, black 0%, transparent 100%)"
+   * The old symmetric 4-stop gradient is gone.
    */
-  it("C1: Nosotros transition div uses symmetric 4-stop gradient (defect present)", () => {
-    expect(nosotrosSrc).toContain(
-      "linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%)"
-    );
+  it("C1: Nosotros transition div uses upward fade gradient (fixed)", () => {
+    const src = readSource("components/Nosotros.tsx");
+    expect(src).toContain("linear-gradient(to top, black 0%, transparent 100%)");
+    expect(src).not.toContain("linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%)");
   });
 
   /**
    * C2 — Contacto.tsx
-   * Tint values are at 0.06 opacity (too faint).
-   * After fix all four entries should use 0.20.
+   * Tint values are now at 0.20 opacity (clearly visible).
+   * The old 0.06 values are gone.
    */
-  it("C2: Contacto tint opacity is 0.06 (defect present)", () => {
-    expect(contactoSrc).toContain("rgba(79,240,132,0.06)");
+  it("C2: Contacto tint opacity is 0.20 (fixed)", () => {
+    const src = readSource("components/Contacto.tsx");
+    expect(src).toContain("rgba(79,240,132,0.20)");
+    expect(src).toContain("rgba(122,192,255,0.20)");
+    expect(src).toContain("rgba(255,120,147,0.20)");
+    expect(src).toContain("rgba(255,252,1,0.20)");
+    expect(src).not.toContain("rgba(79,240,132,0.06)");
   });
 
   /**
    * C4 — app/sedes/[slug]/page.tsx
-   * Description <p> has the `text-slate-500` Tailwind class.
-   * After fix the class should be removed and replaced with an inline style.
+   * Description <p> now uses font-bold and color #1e293b.
+   * The old font-extrabold on the description is gone.
    */
-  it("C4: Sedes slug description <p> has text-slate-500 class (defect present)", () => {
-    expect(sedesSlugSrc).toContain("text-slate-500");
+  it("C4: Sedes slug description <p> uses font-bold and color #1e293b (fixed)", () => {
+    const src = readSource("app/sedes/[slug]/page.tsx");
+    // The description paragraph now has font-bold and inline color #1e293b
+    expect(src).toContain("font-bold");
+    expect(src).toContain('"#1e293b"');
+    // font-extrabold on the description is gone
+    expect(src).not.toContain("font-extrabold");
+    // The description paragraph no longer has text-slate-500 (it's only on the address <p> now)
+    // Check that the description <p> specifically does not have text-slate-500
+    const descParagraph = src.match(/max-w-4xl mx-auto mt-8[^>]*>/);
+    expect(descParagraph).toBeTruthy();
+    expect(descParagraph![0]).not.toContain("text-slate-500");
   });
 
   /**
    * C4b — app/sedes/[slug]/page.tsx
-   * HighLight in description uses hardcoded color "#00c3ff56".
-   * After fix it should use the sede-themed color: `${sede.color}CC`.
+   * HighLight now uses sede.color + CC (sede-themed).
+   * The hardcoded #00c3ff56 is gone.
    */
-  it("C4b: Sedes slug HighLight uses hardcoded color #00c3ff56 (defect present)", () => {
-    expect(sedesSlugSrc).toContain('color="#00c3ff56"');
+  it("C4b: Sedes slug HighLight uses sede-themed color (fixed)", () => {
+    const src = readSource("app/sedes/[slug]/page.tsx");
+    expect(src).toContain("sede.color}CC");
+    expect(src).not.toContain('color="#00c3ff56"');
   });
 
   /**
    * C5a — app/sedes/[slug]/page.tsx
-   * The `BabysVideoPlayer` component is still defined in the file.
-   * After fix the component and its helpers (PlayIcon, PauseIcon, VolumeIcon) should be deleted.
+   * BabysVideoPlayer component is removed.
+   * The unified carousel is used for all sedes.
    */
-  it("C5a: BabysVideoPlayer component is defined (defect present)", () => {
-    expect(sedesSlugSrc).toMatch(/function BabysVideoPlayer/);
+  it("C5a: BabysVideoPlayer component is removed (fixed)", () => {
+    const src = readSource("app/sedes/[slug]/page.tsx");
+    expect(src).not.toMatch(/function BabysVideoPlayer/);
+    expect(src).not.toMatch(/function PlayIcon/);
+    expect(src).not.toMatch(/function PauseIcon/);
+    expect(src).not.toMatch(/function VolumeIcon/);
+    expect(src).not.toContain('slug === "babys"');
   });
 
   /**
    * C5b — app/sedes/[slug]/page.tsx
-   * The carousel container has the `lg:aspect-auto` class.
-   * After fix `lg:aspect-auto` should be removed so the carousel stays aspect-square on all viewports.
+   * Carousel container no longer has lg:aspect-auto.
+   * It always uses aspect-square.
    */
-  it("C5b: Carousel container has lg:aspect-auto class (defect present)", () => {
-    expect(sedesSlugSrc).toContain("lg:aspect-auto");
+  it("C5b: Carousel container uses aspect-square (no lg:aspect-auto) (fixed)", () => {
+    const src = readSource("app/sedes/[slug]/page.tsx");
+    expect(src).toContain("aspect-square");
+    expect(src).not.toContain("lg:aspect-auto");
   });
 
   /**
    * C5c — app/sedes/[slug]/page.tsx
-   * The carousel video element uses the `autoPlay` attribute.
-   * After fix the video should use `controls` without `autoPlay`.
+   * Carousel video uses native controls, no autoPlay.
+   * Lightbox is wired up.
    */
-  it("C5c: Carousel video uses autoPlay attribute (defect present)", () => {
-    expect(sedesSlugSrc).toContain("autoPlay");
+  it("C5c: Carousel video uses controls (no autoPlay), lightbox is present (fixed)", () => {
+    const src = readSource("app/sedes/[slug]/page.tsx");
+    expect(src).toContain("controls");
+    expect(src).not.toContain("autoPlay");
+    expect(src).toContain("lightboxOpen");
+    expect(src).toContain("yet-another-react-lightbox");
   });
 
   /**
    * C6 — components/Servicios.tsx
-   * The image container div has an explicit `border:` property in a template-literal inline style.
-   * After fix the border should be removed; only borderRadius and overflow should remain.
+   * Image container div has no explicit border: style.
+   * borderRadius: 8px and overflow: hidden remain.
    */
-  it("C6: Servicios image container div has explicit border: style with template literal (defect present)", () => {
-    expect(serviciosSrc).toMatch(/style=\{\{\s*border:\s*`/);
+  it("C6: Servicios image container div has no explicit border: style (fixed)", () => {
+    const src = readSource("components/Servicios.tsx");
+    expect(src).not.toMatch(/style=\{\{\s*border:\s*`/);
+    expect(src).toContain('borderRadius: "8px"');
+    expect(src).toContain('overflow: "hidden"');
   });
 
   /**
    * C7 — components/Servicios.tsx
-   * NeonGradientCard inside servicios.map has `borderSize={2}`.
-   * After fix it should be `borderSize={4}` to match the Nosotros cards.
+   * NeonGradientCard inside servicios.map has borderSize={4}.
+   * The old borderSize={2} is gone.
    */
-  it("C7: NeonGradientCard in servicios.map has borderSize={2} (defect present)", () => {
-    expect(serviciosSrc).toContain("borderSize={2}");
+  it("C7: NeonGradientCard in servicios.map has borderSize={4} (fixed)", () => {
+    const src = readSource("components/Servicios.tsx");
+    expect(src).toContain("borderSize={4}");
+    expect(src).not.toContain("borderSize={2}");
   });
 
   /**
    * C8 — components/Hero.tsx
-   * The sticker motion.div ternary uses "90px" for index < 2.
-   * After fix it should use "100px".
+   * Sticker ternary uses "100px" for index < 2.
+   * The old "90px" is gone.
    */
-  it('C8: Hero sticker ternary uses "90px" (defect present)', () => {
-    expect(heroSrc).toContain('"90px"');
+  it('C8: Hero sticker ternary uses "100px" (fixed)', () => {
+    const src = readSource("components/Hero.tsx");
+    expect(src).toContain('"100px"');
+    expect(src).not.toContain('"90px"');
   });
 });

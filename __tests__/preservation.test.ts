@@ -82,12 +82,12 @@ describe("Preservation - Hero", () => {
     expect(statItems).toBeTruthy();
     expect(statItems!.length).toBe(3);
 
-    // After the fix, conditional sizing is used: index < 2 ? "90px" : "70px"
+    // After the fix, conditional sizing is used: index < 2 ? "100px" : "70px"
     // The third sticker (index 2) must still resolve to 70px (the else branch)
     expect(source).toMatch(/index\s*<\s*2/);
     expect(source).toMatch(/"70px"/);
     // Specifically, the ternary must use "70px" as the fallback (else) value
-    expect(source).toMatch(/index\s*<\s*2\s*\?\s*["']90px["']\s*:\s*["']70px["']/);
+    expect(source).toMatch(/index\s*<\s*2\s*\?\s*["']100px["']\s*:\s*["']70px["']/);
   });
 });
 

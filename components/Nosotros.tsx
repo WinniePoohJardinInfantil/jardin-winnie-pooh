@@ -32,49 +32,20 @@ const HighLight = ({ children, color = "#FFB40033", type = "box" }: HighLightPro
 );
 
 const misionPuntos = [
-  { 
-    emoji: "🤝", 
-    texto: "Desarrollo Social", 
-    descripcion: "Fomentamos la empatía y el compañerismo a través del juego dirigido.",
-    color: "#4FF084" 
-  },
-  { 
-    emoji: "❤️", 
-    texto: "Desarrollo Afectivo", 
-    descripcion: "Ambiente seguro para el manejo saludable de emociones.",
-    color: "#FF7893" 
-  },
-  { 
-    emoji: "🏃", 
-    texto: "Desarrollo Motriz", 
-    descripcion: "Coordinación y expresión corporal con actividades lúdicas.",
-    color: "#FFD166" 
-  },
-  { 
-    emoji: "🧠", 
-    texto: "Desarrollo Intelectual", 
-    descripcion: "Estimulamos curiosidad con exploración constante.",
-    color: "#7AC0FF" 
-  },
-  { 
-    emoji: "✨", 
-    texto: "Desarrollo Espiritual y Ético", 
-    descripcion: "Valores universales de respeto y amor.",
-    color: "#EB8100" 
-  },
-  { 
-    emoji: "⭐", 
-    texto: "Autoestima y Personalidad", 
-    descripcion: "Reconocimiento de identidad y valía.",
-    color: "#FF7893" 
-  },
+  { emoji: "🤝", texto: "Desarrollo Social", descripcion: "Fomentamos la empatía y el compañerismo a través del juego dirigido.", color: "#4FF084" },
+  { emoji: "❤️", texto: "Desarrollo Afectivo", descripcion: "Ambiente seguro para el manejo saludable de emociones.", color: "#FF7893" },
+  { emoji: "🏃", texto: "Desarrollo Motriz", descripcion: "Coordinación y expresión corporal con actividades lúdicas.", color: "#FFD166" },
+  { emoji: "🧠", texto: "Desarrollo Intelectual", descripcion: "Estimulamos curiosidad con exploración constante.", color: "#7AC0FF" },
+  { emoji: "✨", texto: "Desarrollo Espiritual y Ético", descripcion: "Valores universales de respeto y amor.", color: "#EB8100" },
+  { emoji: "⭐", texto: "Autoestima y Personalidad", descripcion: "Reconocimiento de identidad y valía.", color: "#FF7893" },
 ];
 
 export default function Nosotros() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
   return (
-    <>
+    // Wrapper relativo para poder poner el fade absoluto al fondo
+    <div style={{ position: "relative" }}>
       <section id="nosotros" style={{ padding: "120px 20px 60px", backgroundColor: "#fff" }}>
         <div className="container" style={{ maxWidth: "1200px", margin: "0 auto" }}>
           
@@ -119,7 +90,7 @@ export default function Nosotros() {
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(380px, 1fr))", 
             gap: "3rem",
-            alignItems: "stretch", // Obliga a ambas tarjetas a tener la misma altura
+            alignItems: "stretch",
           }}>
 
             {/* Tarjeta 1: Misión */}
@@ -131,12 +102,7 @@ export default function Nosotros() {
               >
                 <div style={{ padding: "2.5rem", height: "100%", display: "flex", flexDirection: "column" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "2rem", justifyContent: "center" }}>
-                    <h3 style={{
-                      fontFamily: "var(--font-fredoka)",
-                      fontSize: "2rem",
-                      fontWeight: 700,
-                      color: "#FF7893",
-                    }}>
+                    <h3 style={{ fontFamily: "var(--font-fredoka)", fontSize: "2rem", fontWeight: 700, color: "#FF7893" }}>
                       Propósito
                     </h3>
                   </div>
@@ -152,7 +118,6 @@ export default function Nosotros() {
                     Somos el comienzo de una vida plena para sus hijos. +30 años de amor y dedicación a nuestros pequeños
                   </p>
 
-                  {/* Contenedor de ítems compactos */}
                   <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                     {misionPuntos.map((punto, i) => {
                       const isOpen = expandedIndex === i;
@@ -173,18 +138,10 @@ export default function Nosotros() {
                         >
                           <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
                             <span style={{ fontSize: "1.4rem", flexShrink: 0 }}>{punto.emoji}</span>
-                            <span style={{
-                              fontFamily: "var(--font-nunito)",
-                              fontSize: "1.1rem",
-                              fontWeight: 700,
-                              color: "var(--foreground)",
-                            }}>
+                            <span style={{ fontFamily: "var(--font-nunito)", fontSize: "1.1rem", fontWeight: 700, color: "var(--foreground)" }}>
                               {punto.texto}
                             </span>
-                            <motion.div 
-                              animate={{ rotate: isOpen ? 180 : 0 }}
-                              style={{ marginLeft: "auto", fontSize: "0.8rem", color: punto.color }}
-                            >
+                            <motion.div animate={{ rotate: isOpen ? 180 : 0 }} style={{ marginLeft: "auto", fontSize: "0.8rem", color: punto.color }}>
                               ▼
                             </motion.div>
                           </div>
@@ -198,12 +155,7 @@ export default function Nosotros() {
                                 transition={{ duration: 0.25, ease: "easeInOut" }}
                                 style={{ overflow: "hidden" }}
                               >
-                                <p style={{
-                                  fontFamily: "var(--font-nunito)",
-                                  fontSize: "1rem",
-                                  color: "#475569",
-                                  lineHeight: 1.5,
-                                }}>
+                                <p style={{ fontFamily: "var(--font-nunito)", fontSize: "1rem", color: "#475569", lineHeight: 1.5 }}>
                                   {punto.descripcion}
                                 </p>
                               </motion.div>
@@ -224,24 +176,13 @@ export default function Nosotros() {
                 borderSize={4}
                 neonColors={{ firstColor: "#FFD166", secondColor: "#4FF084" }}
               >
-                <div style={{ 
-                  padding: "2.5rem", 
-                  height: "100%", 
-                  display: "flex", 
-                  flexDirection: "column",
-                }}>
+                <div style={{ padding: "2.5rem", height: "100%", display: "flex", flexDirection: "column" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "2rem", justifyContent: "center" }}>
-                    <h3 style={{
-                      fontFamily: "var(--font-fredoka)",
-                      fontSize: "2rem",
-                      fontWeight: 700,
-                      color: "#EB8100",
-                    }}>
+                    <h3 style={{ fontFamily: "var(--font-fredoka)", fontSize: "2rem", fontWeight: 700, color: "#EB8100" }}>
                       Calendario
                     </h3>
                   </div>
 
-                  {/* Ítems con saltos de línea para ocupar 2 renglones */}
                   <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
                     {[
                       { emoji: "📆", texto: <>Periodo anual de 11 meses:<br />15 Enero al 15 Diciembre</> },
@@ -257,38 +198,21 @@ export default function Nosotros() {
                         borderBottom: "1px solid #f1f5f9",
                       }}>
                         <span style={{ fontSize: "1.6rem", flexShrink: 0 }}>{item.emoji}</span>
-                        <span style={{
-                          fontFamily: "var(--font-nunito)",
-                          fontSize: "1.1rem",
-                          color: "var(--foreground)",
-                          fontWeight: 700,
-                          lineHeight: "1.3",
-                          textAlign: "center",
-                        }}>
+                        <span style={{ fontFamily: "var(--font-nunito)", fontSize: "1.1rem", color: "var(--foreground)", fontWeight: 700, lineHeight: "1.3", textAlign: "center" }}>
                           {item.texto}
                         </span>
                       </div>
                     ))}
                   </div>
 
-                  {/* Horarios (Empuja hacia abajo) */}
-                  <div style={{
-                    marginTop: "auto", 
-                    paddingTop: "3rem" 
-                  }}>
+                  <div style={{ marginTop: "auto", paddingTop: "3rem" }}>
                     <div style={{
                       background: "linear-gradient(135deg, #FFD16615, #EB810015)",
                       borderRadius: "1.5rem",
                       padding: "1.5rem",
                       border: "2px solid #FFD16644",
                     }}>
-                      <p style={{
-                        fontFamily: "var(--font-fredoka)",
-                        fontSize: "1.5rem",
-                        fontWeight: 700,
-                        color: "#00C2FF",
-                        marginBottom: "1.2rem",
-                      }}>
+                      <p style={{ fontFamily: "var(--font-fredoka)", fontSize: "1.5rem", fontWeight: 700, color: "#00C2FF", marginBottom: "1.2rem" }}>
                         🕐 Horarios disponibles
                       </p>
                       <div style={{ display: "flex", flexDirection: "column", gap: "0.7rem" }}>
@@ -297,10 +221,7 @@ export default function Nosotros() {
                           { j: "Tarde", h: "1pm–5pm", c: "#4FF084" },
                           { j: "Completo", h: "7am–5pm", c: "#FF7893" },
                         ].map((h, i) => (
-                          <div key={i} style={{
-                            display: "flex", justifyContent: "space-between",
-                            background: "#fff", borderRadius: "1rem", padding: "0.8rem 1.2rem",
-                          }}>
+                          <div key={i} style={{ display: "flex", justifyContent: "space-between", background: "#fff", borderRadius: "1rem", padding: "0.8rem 1.2rem" }}>
                             <span style={{ fontFamily: "var(--font-nunito)", fontWeight: 800, fontSize: "1rem" }}>{h.j}</span>
                             <span style={{ fontFamily: "var(--font-nunito)", fontWeight: 900, fontSize: "1rem", color: h.c }}>{h.h}</span>
                           </div>
@@ -315,30 +236,21 @@ export default function Nosotros() {
         </div>
       </section>
 
-      {/* --- TRANSICIÓN HACIA SEDES --- */}
-<div style={{
-  position: "relative",
-  height: "200px",
-  width: "100%",
-  overflow: "hidden",
-  pointerEvents: "none",
-  marginBottom: "-2px",
-}}>
-  <div style={{
-    position: "absolute",
-    inset: 0,
-    maskImage: "linear-gradient(to top, black 0%, transparent 100%)",
-    WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 100%)",
-    opacity: 0.4,
-  }}>
-    <Image src="/images/sedes-bg.jpg" alt="" fill style={{ objectFit: "cover" }} />
-  </div>
-  <div style={{
-    position: "absolute",
-    inset: 0,
-    background: "radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.0) 100%)",
-  }} />
-</div>
-    </>
+      {/* ── FADE HACIA ABAJO: blanco transparente → blanco sólido ── */}
+      {/* Cubre el fondo de la sección y se funde con Sedes */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: "180px",
+          background: "linear-gradient(to bottom, transparent 0%, #ffffff 100%)",
+          pointerEvents: "none",
+          zIndex: 10,
+        }}
+      />
+    </div>
   );
 }

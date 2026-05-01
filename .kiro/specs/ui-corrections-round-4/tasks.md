@@ -75,9 +75,9 @@
     - _Preservation: text, icons, hrefs, layout, hover effects, border colors, bg values, and right column all unchanged_
     - _Requirements: 2.2, 3.3, 3.9_
 
-- [ ] 5. Fix Sedes slug description styling and carousel (Bugs 4 & 5) — app/sedes/[slug]/page.tsx
+- [x] 5. Fix Sedes slug description styling and carousel (Bugs 4 & 5) — app/sedes/[slug]/page.tsx
 
-  - [ ] 5.1 Fix description paragraph styling (Bug 4)
+  - [x] 5.1 Fix description paragraph styling (Bug 4)
     - Change the `<p>` className from:
       `"text-xl md:text-2xl text-slate-500 max-w-4xl mx-auto mt-8 font-extrabold leading-relaxed"`
       to:
@@ -90,7 +90,7 @@
     - _Preservation: title block, info card, map, carousel navigation, Navbar, Footer, WhatsAppButton all unchanged_
     - _Requirements: 2.4, 3.4, 3.5_
 
-  - [~] 5.2 Remove BabysVideoPlayer and unify carousel (Bug 5a, 5d)
+  - [x] 5.2 Remove BabysVideoPlayer and unify carousel (Bug 5a, 5d)
     - Delete the `BabysVideoPlayer` function component entirely from the file
     - Delete the `PlayIcon`, `PauseIcon`, and `VolumeIcon` helper components entirely
     - Remove the `useRef` import if it is no longer used anywhere else in the file
@@ -104,7 +104,7 @@
     - _Preservation: carousel navigation arrows, dot indicators, AnimatePresence, fotoActual state all unchanged_
     - _Requirements: 2.5, 2.7, 2.8, 3.6_
 
-  - [~] 5.3 Fix carousel aspect ratio and add lightbox (Bug 5b, 5c)
+  - [x] 5.3 Fix carousel aspect ratio and add lightbox (Bug 5b, 5c)
     - Change the carousel container's className from:
       `"relative w-full aspect-square lg:aspect-auto rounded-[4rem] overflow-hidden ..."`
       to:
@@ -126,9 +126,9 @@
     - _Preservation: carousel navigation arrows, dot indicators, info card, map, Navbar, Footer all unchanged_
     - _Requirements: 2.5, 2.6, 3.5, 3.6_
 
-- [ ] 6. Fix Servicios image border and NeonGradientCard borderSize (Bugs 6 & 7) — components/Servicios.tsx
+- [x] 6. Fix Servicios image border and NeonGradientCard borderSize (Bugs 6 & 7) — components/Servicios.tsx
 
-  - [~] 6.1 Remove image container border (Bug 6)
+  - [x] 6.1 Remove image container border (Bug 6)
     - On the `<div>` wrapping the glow div and `<Lens>` (currently has `style={{ border: \`2px solid ${Site_Palette[i % 6]}\`, borderRadius: "12px" }}`), change the inline style to:
       `style={{ borderRadius: "8px", overflow: "hidden" }}`
     - Remove the `border` property entirely; keep `borderRadius` and add `overflow: "hidden"` to ensure the Lens zoom effect is still clipped cleanly
@@ -138,7 +138,7 @@
     - _Preservation: Lens hover/zoom effect fully functional; AuroraText titles, description highlights, card layout unchanged_
     - _Requirements: 2.9, 3.7_
 
-  - [~] 6.2 Increase NeonGradientCard borderSize (Bug 7)
+  - [x] 6.2 Increase NeonGradientCard borderSize (Bug 7)
     - In the `servicios.map()` render, change `borderSize={2}` to `borderSize={4}` on every `NeonGradientCard`
     - Leave all other `NeonGradientCard` props (`className`, `borderRadius`, `neonColors`) unchanged
     - _Bug_Condition: NeonGradientCard in servicios.map has borderSize={2} (thinner than Nosotros cards)_
@@ -146,9 +146,9 @@
     - _Preservation: all other NeonGradientCard props, card content, Lens effect, and section layout unchanged_
     - _Requirements: 2.10, 3.7_
 
-- [ ] 7. Fix Hero sticker sizes (Bug 8) — components/Hero.tsx
+- [x] 7. Fix Hero sticker sizes (Bug 8) — components/Hero.tsx
 
-  - [~] 7.1 Implement the fix
+  - [x] 7.1 Implement the fix
     - In the sticker `motion.div` style object, change the ternary from:
       `width: index < 2 ? "90px" : "70px", height: index < 2 ? "90px" : "70px"`
       to:
@@ -159,9 +159,9 @@
     - _Preservation: stat card container (220×200px), number tickers, labels, borders, and index 2 sticker all unchanged_
     - _Requirements: 2.11, 3.8_
 
-- [ ] 8. Verify bug condition exploration test now passes
+- [x] 8. Verify bug condition exploration test now passes
 
-  - [~] 8.1 Re-run the SAME test from task 1
+  - [x] 8.1 Re-run the SAME test from task 1
     - **Property 1: Expected Behavior** - 8 UI Rendering Defects (Round 4)
     - **IMPORTANT**: Re-run `__tests__/bug-conditions-round4.test.ts` — do NOT write a new test
     - The test from task 1 encodes the expected behavior for all 8 fixes
@@ -169,14 +169,14 @@
     - **EXPECTED OUTCOME**: All assertions PASS (confirms all bugs are fixed)
     - _Requirements: 2.1, 2.2, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 2.10, 2.11_
 
-  - [ ] 8.2 Verify preservation tests still pass
+  - [x] 8.2 Verify preservation tests still pass
     - **Property 2: Preservation** - All Non-Buggy Rendering States Unchanged
     - **IMPORTANT**: Re-run `__tests__/preservation-round4.test.ts` — do NOT write new tests
     - Run: `npx vitest run __tests__/preservation-round4.test.ts`
     - **EXPECTED OUTCOME**: All preservation assertions PASS (confirms no regressions)
     - Confirm all tests still pass after fixes (no regressions)
 
-- [ ] 9. Checkpoint — Ensure all tests pass
+- [x] 9. Checkpoint — Ensure all tests pass
   - Run the full test suite: `npx vitest run`
   - Ensure both `bug-conditions-round4.test.ts` and `preservation-round4.test.ts` pass
   - Ensure prior round tests (`bug-conditions-round2.test.ts`, `preservation-round2.test.ts`, `bug-conditions.test.ts`, `preservation.test.ts`) still pass

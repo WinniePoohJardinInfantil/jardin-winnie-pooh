@@ -112,8 +112,17 @@ function SortableCard({
               src={item.url}
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
               muted playsInline
-              onMouseEnter={(e) => e.currentTarget.play()}
-              onMouseLeave={(e) => { e.currentTarget.pause(); e.currentTarget.currentTime = 0; }}
+              onMouseEnter={(e) => {
+                const video = e.currentTarget;
+                video.play().catch(() => {
+                  // Silently handle play interruption
+                });
+              }}
+              onMouseLeave={(e) => {
+                const video = e.currentTarget;
+                video.pause();
+                video.currentTime = 0;
+              }}
             />
           ) : (
             // eslint-disable-next-line @next/next/no-img-element
@@ -289,24 +298,48 @@ export default function AdminPanel() {
       {/* Navbar */}
       <nav style={{
         position: "sticky", top: 0, zIndex: 50,
-        background: "rgba(255,255,255,0.92)", backdropFilter: "blur(16px)",
-        borderBottom: "1px solid var(--border)",
-        padding: "0.875rem 2rem",
+        background: "rgba(255,255,255,0.96)", backdropFilter: "blur(10px)",
+        borderBottom: "1px solid rgba(0,0,0,0.04)",
+        padding: "0.85rem 2rem",
         display: "flex", alignItems: "center", justifyContent: "space-between",
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-          <div style={{ width: "36px", height: "36px", borderRadius: "50%", background: "linear-gradient(135deg, #FFFC01, #EB8100)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.1rem" }}>🐻</div>
+          <div style={{ 
+            width: "42px", 
+            height: "42px", 
+            borderRadius: "50%", 
+            background: "#ffffff", 
+            display: "flex", 
+            alignItems: "center", 
+            justifyContent: "center", 
+            boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+            overflow: "hidden",
+            position: "relative",
+            border: "1px solid #f0f0f0"
+          }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logos/jardin-infantil.png"
+              alt="Logo Winnie Pooh"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "contain",
+                padding: "2px",
+              }}
+            />
+          </div>
           <div>
-            <div style={{ fontFamily: "var(--font-fredoka)", fontSize: "1.1rem", fontWeight: 700, color: "var(--foreground)", lineHeight: 1 }}>Panel de Control</div>
-            <div style={{ fontFamily: "var(--font-nunito)", fontSize: "0.65rem", color: "var(--muted-foreground)", letterSpacing: "0.06em" }}>JARDÍN WINNIE POOH</div>
+            <div style={{ fontFamily: "var(--font-fredoka)", fontSize: "1.25rem", fontWeight: 700, color: "var(--foreground)", lineHeight: 1 }}>Panel de Control</div>
+            <div style={{ fontFamily: "var(--font-nunito)", fontSize: "0.7rem", color: "#FF1F6D", fontWeight: 700, letterSpacing: "0.08em", marginTop: "2px" }}>JARDÍN INFANTIL</div>
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
           {saving && <span style={{ fontFamily: "var(--font-nunito)", fontSize: "0.8rem", color: "var(--muted-foreground)" }}>Guardando...</span>}
-          <a href="/#inicio" target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: "0.4rem", background: "#4FF084", color: "#1a1a1a", fontFamily: "var(--font-nunito)", fontWeight: 700, fontSize: "0.85rem", padding: "0.5rem 1.1rem", borderRadius: "999px", textDecoration: "none", boxShadow: "0 4px 12px #4FF08444" }}>
+          <a href="/#galeria" target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: "0.4rem", background: "#4FF084", color: "#1a1a1a", fontFamily: "var(--font-nunito)", fontWeight: 700, fontSize: "0.875rem", padding: "0.6rem 1rem", borderRadius: "999px", textDecoration: "none", boxShadow: "0 4px 14px #4FF08444", transition: "all 0.2s" }}>
             <ExternalLink size={14} /> Ver página en vivo
           </a>
-          <button onClick={handleLogout} style={{ display: "flex", alignItems: "center", gap: "0.4rem", background: "#111", color: "#fff", fontFamily: "var(--font-nunito)", fontWeight: 700, fontSize: "0.85rem", padding: "0.5rem 1.1rem", borderRadius: "999px", border: "none", cursor: "pointer" }}>
+          <button onClick={handleLogout} style={{ display: "flex", alignItems: "center", gap: "0.4rem", background: "#1e293b", color: "#fff", fontFamily: "var(--font-nunito)", fontWeight: 700, fontSize: "0.875rem", padding: "0.6rem 1rem", borderRadius: "999px", border: "none", cursor: "pointer", transition: "all 0.2s" }}>
             <LogOut size={14} /> Salir
           </button>
         </div>
@@ -439,6 +472,27 @@ export default function AdminPanel() {
       </AnimatePresence>
 
       <Lightbox open={openLightbox} close={() => setOpenLightbox(false)} slides={slides} index={photoIndex} plugins={[Video]} animation={{ fade: 300 }} />
+
+      {/* Footer */}
+      <footer style={{ 
+        background: "#fff", 
+        color: "#334155", 
+        borderTop: "1px solid #f1f5f9",
+        padding: "2rem 2rem 1.5rem",
+        marginTop: "4rem"
+      }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
+          <p style={{ fontFamily: "var(--font-nunito)", fontSize: "0.9rem", color: "#94a3b8", fontWeight: 600 }}>
+            © 2026 Winnie Pooh Medellín.
+          </p>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontFamily: "var(--font-nunito)", fontSize: "0.9rem", color: "#94a3b8", fontWeight: 600 }}>
+            Hecho con <span style={{ color: "#FF7893" }}>❤️</span> por 
+            <a href="https://serstack-es.vercel.app" target="_blank" rel="noopener noreferrer" style={{ color: "#1e293b", textDecoration: "none", fontWeight: 800 }}>
+              SerStack
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

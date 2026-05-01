@@ -4,7 +4,7 @@ import { use, useState } from "react";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, MessageCircle, ChevronLeft, ChevronRight, MapPin, Star } from "lucide-react";
+import { Check, MessageCircle, ChevronLeft, ChevronRight, MapPin } from "lucide-react";
 import { NeonGradientCard } from "@/components/ui/neon-gradient-card";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { AuroraText } from "@/components/ui/aurora-text";
@@ -16,7 +16,7 @@ import Lightbox from "yet-another-react-lightbox";
 import Video from "yet-another-react-lightbox/plugins/video";
 import "yet-another-react-lightbox/styles.css";
 
-// --- COMPONENTE HIGHLIGHT (Inspirado en tu Hero) ---
+// --- COMPONENTE HIGHLIGHT ---
 const HighLight = ({ children, color = "#FFB40033", type = "box" }: { 
   children: React.ReactNode; 
   color?: string; 
@@ -53,7 +53,7 @@ interface SedeDetalle {
 const sedesData: Record<string, SedeDetalle> = {
   "babys": {
     nombre: "Winnie Pooh",
-    subtitulo: "Baby's",
+    subtitulo: "Babys",
     color: "#FF7893",
     descripcion: "Servicio especializado para el cuidado y la estimulación a bebes, en un ambiente confiable y feliz para su ",
     resaltado: "adecuado desarrollo",
@@ -85,7 +85,7 @@ const sedesData: Record<string, SedeDetalle> = {
     mapaUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.995347919616!2d-75.5985903!3d6.264340799999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e44296ca4709197%3A0xc6ecd1171e549337!2sCl.%2051%20%23%2081A-25%2C%20Calasanz%20Parte%20Alta%2C%20Medell%C3%ADn%2C%20La%20Am%C3%A9rica%2C%20Medell%C3%ADn%2C%20Antioquia!5e0!3m2!1ses-419!2sco!4v1777045128704!5m2!1ses-419!2sco",    
     edades: ["6 a 10 años"],
     servicios: ["Tareas dirigidas", "Taller de artes", "Clases de música", "Recreación", "Almuerzo"],
-    fotos: ["/images/salidadecampo.jpg", "/images/juegos-de-pelotas.webp"],
+    fotos: Array.from({ length: 42 }, (_, i) => `/sedes/afterclass/fotoafterclass${i + 1}.jpeg`),
   },
 };
 
@@ -142,52 +142,53 @@ export default function SedePage({ params }: { params: Promise<{ slug: string }>
 
       <div className="relative z-10 container mx-auto px-4 pt-32 pb-20">
         
-        {/* --- CABECERA GIGANTE --- */}
+        {/* --- CABECERA — título unificado, sin texto gris separado --- */}
         <BlurFade delay={0.1}>
           <div className="text-center mb-16">
-            <h1 className="font-fredoka tracking-tighter leading-[0.9]">
-              <span className="block text-slate-400 text-2xl md:text-3xl font-black mb-4 uppercase tracking-[0.2em]">
-                {sede.nombre}
-              </span>
-              <div className="text-6xl md:text-8xl font-black py-4">
-                <SparklesText 
-                  sparklesCount={12}
-                  colors={{ first: sede.color, second: "#FFB400" }}
-                  className="inline-block"
+            {/* Una sola línea: "Winnie Pooh · Baby's" todo en AuroraText + Sparkles */}
+            <h1 className="font-fredoka tracking-tighter leading-tight mb-6">
+              <SparklesText
+                sparklesCount={12}
+                colors={{ first: sede.color, second: "#FFB400" }}
+                className="inline-block"
+              >
+                <AuroraText
+                  colors={[sede.color, "#FFB400", "#7E3AF2", "#00C2FF", "#22C55E"]}
+                  className="text-5xl md:text-7xl font-black"
                 >
-                  <AuroraText colors={[sede.color, "#FFB400", "#7E3AF2", "#00C2FF", "#22C55E"]}>
-                    {sede.subtitulo}
-                  </AuroraText>
-                </SparklesText>
-              </div>
+                  {sede.nombre} · {sede.subtitulo}
+                </AuroraText>
+              </SparklesText>
             </h1>
-            <p className="text-xl md:text-2xl max-w-4xl mx-auto mt-8 font-bold leading-relaxed" style={{ color: "#1e293b" }}>
+
+            {/* Descripción: negrita negra con highlight sólido del color de la sede */}
+            <p className="text-xl md:text-2xl max-w-3xl mx-auto font-bold leading-relaxed" style={{ color: "#1e293b" }}>
               {sede.descripcion}
-              <HighLight color={`${sede.color}CC`} type="underline"> {sede.resaltado}</HighLight>
+              <HighLight color={`${sede.color}CC`} type="underline">
+                {sede.resaltado}
+              </HighLight>
             </p>
           </div>
         </BlurFade>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
-          {/* 1. Tarjeta de Información con Glow Dinámico */}
+          {/* 1. Tarjeta de Información */}
           <div className="lg:col-span-3 flex">
             <div 
-              className="bg-white/80 backdrop-blur-xl p-8 rounded-[3.5rem] border-4 border-white w-full flex flex-col justify-between shadow-2xl relative overflow-hidden group"
+              className="bg-white/80 backdrop-blur-xl p-8 rounded-[3.5rem] border-4 border-white w-full flex flex-col justify-between shadow-2xl relative overflow-hidden"
               style={{ boxShadow: `0 30px 60px -15px ${sede.color}25` }}
             >
-              {/* Decoración de resplandor interno */}
               <div 
-                className="absolute -top-24 -right-24 w-48 h-48 blur-[80px] rounded-full opacity-50 transition-colors"
+                className="absolute -top-24 -right-24 w-48 h-48 blur-[80px] rounded-full opacity-50"
                 style={{ backgroundColor: sede.color }}
               />
 
               <div className="space-y-8 relative z-10">
                 <div className="flex items-center gap-3">
-                    <div className="bg-slate-100 p-3 rounded-2xl">
-                        <Star className="text-amber-400 fill-amber-400" size={20} />
-                    </div>
-                    <h3 className="text-2xl font-black font-fredoka text-slate-800 tracking-tight">Detalles</h3>
+                  {/* Espacio reservado para sticker — mismas dimensiones que el ícono anterior (46×46px) */}
+                  <div style={{ width: 46, height: 46, flexShrink: 0 }} />
+                  <h3 className="text-2xl font-black font-fredoka text-slate-800 tracking-tight">Detalles</h3>
                 </div>
 
                 <div className="space-y-6">
@@ -217,11 +218,10 @@ export default function SedePage({ params }: { params: Promise<{ slug: string }>
                 </div>
               </div>
 
-              {/* --- BOTÓN AURORA ANIMADO (CORREGIDO) --- */}
               <div className="mt-8 pt-6 border-t border-slate-100 relative z-10">
                 <div className="flex items-start gap-2 mb-6">
-                    <MapPin size={20} className="mt-1" style={{ color: sedeColorBrand }} />
-                    <p className="text-sm text-slate-500 font-bold leading-tight">{sede.direccion}</p>
+                  <MapPin size={20} className="mt-1" style={{ color: sedeColorBrand }} />
+                  <p className="text-sm text-slate-500 font-bold leading-tight">{sede.direccion}</p>
                 </div>
                 
                 <motion.button
@@ -243,35 +243,17 @@ export default function SedePage({ params }: { params: Promise<{ slug: string }>
                     justifyContent: "center",
                     boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
                   }}
-                  animate={{
-                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                  }}
-                  transition={{
-                    duration: 5,
-                    repeat: Infinity,
-                    ease: "linear",
-                  }}
+                  animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
                 >
-                  {/* Capa de brillo interna para suavizar el color */}
                   <div style={{
-                    position: "absolute",
-                    inset: "2px",
-                    background: "rgba(255, 255, 255, 0.1)",
-                    borderRadius: "999px",
-                    backdropFilter: "blur(4px)",
-                    zIndex: 1
+                    position: "absolute", inset: "2px",
+                    background: "rgba(255,255,255,0.1)",
+                    borderRadius: "999px", backdropFilter: "blur(4px)", zIndex: 1
                   }} />
-
                   <div style={{ position: "relative", zIndex: 2, display: "flex", alignItems: "center", gap: "10px" }}>
                     <MessageCircle size={24} fill="currentColor" color="#ffffff" />
-                    <span style={{ 
-                      fontFamily: "var(--font-fredoka)", 
-                      fontWeight: 700, 
-                      fontSize: "1.1rem", 
-                      color: "#ffffff",
-                      letterSpacing: "0.5px",
-                      textShadow: "0 2px 4px rgba(0,0,0,0.2)"
-                    }}>
+                    <span style={{ fontFamily: "var(--font-fredoka)", fontWeight: 700, fontSize: "1.1rem", color: "#ffffff", letterSpacing: "0.5px", textShadow: "0 2px 4px rgba(0,0,0,0.2)" }}>
                       ¡Preguntar Ahora!
                     </span>
                   </div>
@@ -280,96 +262,126 @@ export default function SedePage({ params }: { params: Promise<{ slug: string }>
             </div>
           </div>
 
-          {/* 2. Carrusel unificado */}
+          {/* 2. Carrusel unificado — cuadrado, lightbox al click, video nativo */}
           <div className="lg:col-span-6 flex">
-            <motion.div 
-              whileHover={{ rotate: 0 }}
-              initial={{ rotate: 1 }}
-              className="relative w-full aspect-square rounded-[4rem] overflow-hidden shadow-2xl border-[12px] border-white group bg-slate-100 transition-transform duration-500"
-            >
-              <AnimatePresence initial={false} custom={direccion} mode="popLayout">
-                <motion.div
-                  key={fotoActual}
-                  custom={direccion}
-                  variants={{
-                    enter: (d: number) => ({ x: d > 0 ? 800 : -800, opacity: 0 }),
-                    center: { x: 0, opacity: 1 },
-                    exit: (d: number) => ({ x: d < 0 ? 800 : -800, opacity: 0 })
-                  }}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  transition={{ type: "spring", stiffness: 200, damping: 25 }}
-                  className="absolute inset-0 w-full h-full"
-                  onClick={() => setLightboxOpen(true)}
-                  style={{ cursor: "pointer" }}
-                >
-                  {isVideo(sede.fotos[fotoActual]) ? (
-                    <video
-                      src={sede.fotos[fotoActual]}
-                      controls
-                      className="w-full h-full object-contain"
-                    />
-                  ) : (
-                    <Image 
-                      src={sede.fotos[fotoActual]} 
-                      alt="Instalaciones" 
-                      fill
-                      className="object-cover"
-                      priority
-                    />
-                  )}
-                </motion.div>
-              </AnimatePresence>
-              
-              <button onClick={fotoAnterior} className="absolute left-6 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-md p-4 rounded-3xl shadow-2xl z-20 hover:scale-110 transition-all text-slate-800">
-                <ChevronLeft size={32} strokeWidth={3} />
-              </button>
-              <button onClick={proximaFoto} className="absolute right-6 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-md p-4 rounded-3xl shadow-2xl z-20 hover:scale-110 transition-all text-slate-800">
-                <ChevronRight size={32} strokeWidth={3} />
-              </button>
+            <div className="relative w-full flex flex-col gap-4">
+              {/* Contenedor cuadrado del carrusel */}
+              <motion.div
+                initial={{ rotate: 1 }}
+                whileHover={{ rotate: 0 }}
+                className="relative w-full rounded-[3rem] overflow-hidden shadow-2xl border-[10px] border-white bg-slate-100 transition-transform duration-500"
+                style={{ aspectRatio: "1 / 1" }}
+              >
+                <AnimatePresence initial={false} custom={direccion} mode="popLayout">
+                  <motion.div
+                    key={fotoActual}
+                    custom={direccion}
+                    variants={{
+                      enter: (d: number) => ({ x: d > 0 ? 800 : -800, opacity: 0 }),
+                      center: { x: 0, opacity: 1 },
+                      exit: (d: number) => ({ x: d < 0 ? 800 : -800, opacity: 0 })
+                    }}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ type: "spring", stiffness: 200, damping: 25 }}
+                    className="absolute inset-0 w-full h-full"
+                    onClick={() => {
+                      // Solo abrir lightbox en imágenes; el video usa sus propios controles
+                      if (!isVideo(sede.fotos[fotoActual])) setLightboxOpen(true);
+                    }}
+                    style={{ cursor: isVideo(sede.fotos[fotoActual]) ? "default" : "zoom-in" }}
+                  >
+                    {isVideo(sede.fotos[fotoActual]) ? (
+                      /* Video nativo — borderRadius heredado del overflow-hidden del contenedor */
+                      <video
+                        src={sede.fotos[fotoActual]}
+                        controls
+                        playsInline
+                        className="w-full h-full object-contain bg-black rounded-[2.5rem]"
+                        style={{ display: "block" }}
+                      />
+                    ) : (
+                      <Image 
+                        src={sede.fotos[fotoActual]} 
+                        alt="Instalaciones" 
+                        fill
+                        className="object-cover"
+                        priority
+                      />
+                    )}
+                  </motion.div>
+                </AnimatePresence>
 
-              <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-3 z-20 bg-black/20 backdrop-blur-xl p-3 rounded-full">
-                {sede.fotos.map((_, i) => (
-                  <button 
-                    key={i} 
-                    onClick={() => setFotoActual(i)}
-                    className={`h-3 rounded-full transition-all duration-500 ${fotoActual === i ? "w-10 bg-white" : "w-3 bg-white/50"}`} 
-                  />
-                ))}
-              </div>
-            </motion.div>
+                {/* Flechas */}
+                <button
+                  onClick={(e) => { e.stopPropagation(); fotoAnterior(); }}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-xl z-20 hover:scale-110 transition-all text-slate-800"
+                >
+                  <ChevronLeft size={28} strokeWidth={3} />
+                </button>
+                <button
+                  onClick={(e) => { e.stopPropagation(); proximaFoto(); }}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-md p-3 rounded-2xl shadow-xl z-20 hover:scale-110 transition-all text-slate-800"
+                >
+                  <ChevronRight size={28} strokeWidth={3} />
+                </button>
+
+                {/* Hint de click para ampliar (solo en imágenes) */}
+                {!isVideo(sede.fotos[fotoActual]) && (
+                  <div className="absolute bottom-4 right-4 bg-black/40 backdrop-blur-sm text-white text-xs font-bold px-3 py-1.5 rounded-full z-20 pointer-events-none">
+                    🔍 Click para ampliar
+                  </div>
+                )}
+              </motion.div>
+
+              {/* Dots de navegación — fuera del carrusel para no tapar */}
+              {sede.fotos.length > 1 && (
+                <div className="flex justify-center gap-2">
+                  {sede.fotos.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => { setDireccion(i > fotoActual ? 1 : -1); setFotoActual(i); }}
+                      className={`h-2.5 rounded-full transition-all duration-300 ${
+                        fotoActual === i
+                          ? "w-8 bg-slate-700"
+                          : "w-2.5 bg-slate-300 hover:bg-slate-400"
+                      }`}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
-          {/* 3. Mapa con Neon Gradient */}
+          {/* 3. Mapa */}
           <div className="lg:col-span-3 flex flex-col">
-              <motion.div 
-                initial={{ rotate: -1 }}
-                whileHover={{ rotate: 0 }}
-                className="flex-1 transition-transform duration-500"
+            <motion.div
+              initial={{ rotate: -1 }}
+              whileHover={{ rotate: 0 }}
+              className="flex-1 transition-transform duration-500"
+            >
+              <NeonGradientCard
+                className="h-full"
+                neonColors={{ firstColor: sede.color, secondColor: "#ffffff" }}
+                borderRadius={56}
               >
-                <NeonGradientCard 
-                    className="h-full"
-                    neonColors={{ firstColor: sede.color, secondColor: "#ffffff" }}
-                    borderRadius={56}
-                >
-                    <div className="w-full h-full min-h-[400px] rounded-[2.5rem] overflow-hidden border-4 border-white bg-slate-50">
-                        <iframe
-                            src={sede.mapaUrl}
-                            width="100%"
-                            height="100%"
-                            style={{ border: 0, filter: "contrast(1.1) brightness(1.05)" }}
-                            allowFullScreen
-                            loading="lazy"
-                        />
-                    </div>
-                </NeonGradientCard>
-              </motion.div>
+                <div className="w-full h-full min-h-[400px] rounded-[2.5rem] overflow-hidden border-4 border-white bg-slate-50">
+                  <iframe
+                    src={sede.mapaUrl}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0, filter: "contrast(1.1) brightness(1.05)" }}
+                    allowFullScreen
+                    loading="lazy"
+                  />
+                </div>
+              </NeonGradientCard>
+            </motion.div>
           </div>
         </div>
       </div>
 
-{/* --- FOOTER (Capa 20 - Tapa todo) --- */}
       <div className="relative z-20 bg-white shadow-[0_-20px_50px_-15px_rgba(0,0,0,0.05)]">
         <Footer />
       </div>

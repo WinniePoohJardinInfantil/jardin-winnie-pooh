@@ -208,7 +208,7 @@ export default function Hero() {
         <motion.div
           animate={{ y: [0, -8, 0] }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: index * 0.2 }}
-          style={{ width: index < 2 ? "90px" : "70px", height: index < 2 ? "90px" : "70px", position: "relative", marginBottom: "10px" }}
+          style={{ width: index < 2 ? "100px" : "70px", height: index < 2 ? "100px" : "70px", position: "relative", marginBottom: "10px" }}
         >
           <Image src={stat.src} alt={stat.label} fill style={{ objectFit: "contain" }} />
         </motion.div>

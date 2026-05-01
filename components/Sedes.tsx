@@ -54,26 +54,42 @@ const sedes = [
 
 export default function Sedes() {
   return (
-    <section id="sedes" className="relative bg-white pb-16 overflow-visible">
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div
-          className="relative w-full h-full"
-          style={{
-            maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
-            WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
-            opacity: 0.6,
-          }}
-        >
-          <Image src="/images/sedes-bg.jpg" alt="Sedes background" fill className="object-cover" />
-        </div>
-        <div
-          className="absolute inset-0"
-          style={{
-            background: "radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.0) 100%)",
-          }}
-        />
-      </div>
-      <div className="container mx-auto px-4 relative z-20 pt-16">
+    <section id="sedes" style={{ 
+          minHeight: "100vh", 
+          position: "relative", 
+          padding: "100px 20px", 
+          overflow: "hidden", 
+          backgroundColor: "#fff",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center"
+        }}>
+          
+          {/* --- FONDO CON MÁSCARA (Sincronizado con Hero) --- */}
+          <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+            <div style={{
+              width: "100%",
+              height: "100%",
+              position: "relative",
+              maskImage: "linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)",
+              WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)",
+            }}>
+              <Image
+                src="/images/sedes-bg.jpg" 
+                alt="Fondo Decorativo"
+                fill
+                style={{ objectFit: "cover", objectPosition: "center", opacity: 0.6 }}
+              />
+            </div>
+            <div style={{
+              position: "absolute",
+              inset: 0,
+              background: "radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.2) 100%)", 
+            }} />
+          </div>
+    
+          <div className="container" style={{ position: "relative", zIndex: 10, maxWidth: "1100px" }}>
+            
         
         {/* Cabecera con texto un poco más grande */}
         <div className="text-center mb-16">

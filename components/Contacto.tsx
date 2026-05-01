@@ -43,10 +43,10 @@ const InstagramIcon = () => (
 );
 
 const contactos = [
-  { icon: Phone, label: "WhatsApp", valor: "311 605 53 32", href: "https://wa.me/573116055332", color: "#4FF084", bg: "#4FF08422", tint: "rgba(79,240,132,0.20)" },
-  { icon: Mail, label: "Correo", valor: "wpjardininfantil@hotmail.com", href: "mailto:wpjardininfantil@hotmail.com", color: "#7AC0FF", bg: "#7AC0FF22", tint: "rgba(122,192,255,0.20)" },
-  { icon: InstagramIcon, label: "Instagram", valor: "@wpjardininfantil", href: "https://instagram.com/wpjardininfantil", color: "#FF7893", bg: "#FF789322", tint: "rgba(255,120,147,0.20)" },
-  { icon: Star, label: "Reseñas Google", valor: "Déjanos tu opinión ⭐", href: "https://maps.google.com", color: "#FFFC01", bg: "#FFFC0122", tint: "rgba(255,252,1,0.20)" },
+  { icon: Phone, label: "WhatsApp", valor: "311 605 53 32", href: "https://wa.me/573116055332", color: "#22c55e", bg: "#bbf7d0", tint: "#dcfce7" },
+  { icon: Mail, label: "Correo", valor: "wpjardininfantil@hotmail.com", href: "mailto:wpjardininfantil@hotmail.com", color: "#3b82f6", bg: "#bfdbfe", tint: "#dbeafe" },
+  { icon: InstagramIcon, label: "Instagram", valor: "@wpjardininfantil", href: "https://instagram.com/wpjardininfantil", color: "#ec4899", bg: "#fbcfe8", tint: "#fce7f3" },
+  { icon: Star, label: "Reseñas Google", valor: "Déjanos tu opinión ⭐", href: "https://maps.google.com", color: "#ca8a04", bg: "#fef08a", tint: "#fefce8" },
 ];
 
 // Nombres de calles y carreras corregidos
@@ -156,25 +156,25 @@ export default function Contacto() {
                     gap: "1.2rem",
                     background: c.tint,
                     backdropFilter: "blur(10px)",
-                    border: `2px solid ${c.color}22`,
+                    border: `2px solid ${c.bg}`,
                     borderRadius: "1.5rem",
                     padding: "1.4rem 1.8rem",
                     textDecoration: "none",
                     color: "var(--foreground)",
                     transition: "all 0.3s ease",
-                    boxShadow: "0 10px 25px rgba(0,0,0,0.03)",
+                    boxShadow: "0 10px 25px rgba(0,0,0,0.06)",
                     width: "100%",
                     maxWidth: "480px",
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.borderColor = c.color;
                     e.currentTarget.style.transform = "scale(1.03) translateX(8px)";
-                    e.currentTarget.style.boxShadow = `0 15px 35px ${c.color}25`;
+                    e.currentTarget.style.boxShadow = `0 15px 35px ${c.bg}`;
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = `${c.color}22`;
+                    e.currentTarget.style.borderColor = c.bg;
                     e.currentTarget.style.transform = "scale(1) translateX(0)";
-                    e.currentTarget.style.boxShadow = "0 10px 25px rgba(0,0,0,0.03)";
+                    e.currentTarget.style.boxShadow = "0 10px 25px rgba(0,0,0,0.06)";
                   }}
                 >
                   <div style={{ background: c.bg, borderRadius: "1rem", padding: "0.8rem", display: "flex", alignItems: "center", justifyContent: "center", color: c.color }}>

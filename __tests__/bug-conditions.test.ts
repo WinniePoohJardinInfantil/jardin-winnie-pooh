@@ -53,14 +53,18 @@ describe("Bug Condition Verification - All 14 UI Fixes (assert fixes ARE in plac
   });
 
   // C3: Stats sticker containers DO have conditional sizing (index < 2)
+  // Updated in round 4: sticker size for index < 2 changed from 90px → 100px
   test("C3: Stats sticker containers have conditional sizing based on index < 2 (fixed)", () => {
     const source = readSource("components/Hero.tsx");
 
     // Assert conditional sizing IS present
     expect(source).toMatch(/index\s*<\s*2/);
 
-    // Assert the larger size (90px) is used for first two stickers
-    expect(source).toMatch(/["']90px["']/);
+    // Assert the larger size (100px) is used for first two stickers (round 4 fix: 90px → 100px)
+    expect(source).toMatch(/["']100px["']/);
+
+    // Assert the old 90px size is gone
+    expect(source).not.toMatch(/["']90px["']/);
   });
 
   // C4: highlighter.tsx default action is now "underline" (not "highlight")

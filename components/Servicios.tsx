@@ -8,7 +8,7 @@ import { BlurFade } from "@/components/ui/blur-fade";
 import { SparklesText } from "@/components/ui/sparkles-text";
 import { Lens } from "@/components/ui/lens";
 
-const Site_Palette = ["#FF7893", "#7AC0FF", "#7E3AF2", "#FFFC01", "#4FF084", "#EB8100"];
+const Site_Palette = ["#FF7893", "#7AC0FF", "#7E3AF2", "#27b9f3ff", "#4FF084", "#EB8100"];
 const BASE_PALETTE = Site_Palette;
 const AURORA_PALETTES = Array.from({ length: 12 }, (_, i) => {
   const shift = i % BASE_PALETTE.length;
@@ -16,18 +16,78 @@ const AURORA_PALETTES = Array.from({ length: 12 }, (_, i) => {
 });
 
 const servicios = [
-  { img: "/icons/programa.png", titulo: "Programa M.E.N", desc: "Educación según el Ministerio de Educación Nacional.", highlight: "Ministerio de Educación Nacional" },
-  { img: "/icons/proyectos.png", titulo: "Proyectos Mensuales", desc: "Adaptación escolar, Vocales, Cuerpo Humano y mucho más.", highlight: "Cuerpo Humano" },
-  { img: "/icons/bebe-poliglota.png", titulo: "Bebé Políglota", desc: "Programación neurolingüística en 7 idiomas.", highlight: "7 idiomas" },
-  { img: "/icons/musica.png", titulo: "Sensibilización Musical", desc: "Desarrollo auditivo y expresión artística desde temprana edad.", highlight: "expresión artística" },
-  { img: "/icons/ingles.png", titulo: "Iniciación al Inglés", desc: "Aprendizaje del idioma de manera lúdica y natural.", highlight: "lúdica y natural" },
-  { img: "/icons/gimnasia.png", titulo: "Gimnasia Infantil", desc: "Desarrollo motor y coordinación con actividades recreativas.", highlight: "actividades recreativas" },
-  { img: "/icons/fonoaudiologia.png", titulo: "Fonoaudiología", desc: "Apoyo especializado en el desarrollo del lenguaje y la comunicación.", highlight: "lenguaje y la comunicación" },
-  { img: "/icons/salidas.png", titulo: "Salidas Pedagógicas", desc: "Experiencias fuera del aula para vivenciar los proyectos del mes.", highlight: "proyectos del mes" },
-  { img: "/icons/natacion.png", titulo: "Natación", desc: "Clases acuáticas para fortalecer el cuerpo y ganar confianza.", highlight: "ganar confianza" },
-  { img: "/icons/pintura.png", titulo: "Pintura", desc: "Aprendizaje del idioma de manera lúdica y natural.", highlight: "lúdica y natural" },
-  { img: "/icons/baile.png", titulo: "Baile", desc: "Aprendizaje del idioma de manera lúdica y natural.", highlight: "lúdica y natural" },
-  { img: "/icons/ahorro.png", titulo: "Ahorro Escolar", desc: "Los niños aprenden el valor del trabajo y la autoestima productiva.", highlight: "autoestima productiva" },
+  { 
+    img: "/icons/programa.png", 
+    titulo: "Programa M.E.N", 
+    desc: "Educación de alta calidad siguiendo los estándares del Ministerio de Educación Nacional.", 
+    highlight: "Ministerio de Educación Nacional" 
+  },
+  { 
+    img: "/icons/proyectos.png", 
+    titulo: "Proyectos Mensuales", 
+    desc: "Exploramos temas fascinantes como el Cuerpo Humano, la Naturaleza y las Vocales.", 
+    highlight: "Cuerpo Humano" 
+  },
+  { 
+    img: "/icons/bebe-poliglota.png", 
+    titulo: "Bebé Políglota", 
+    desc: "Estimulación temprana con programación neurolingüística en 7 idiomas simultáneos.", 
+    highlight: "7 idiomas" 
+  },
+  { 
+    img: "/icons/musica.png", 
+    titulo: "Sensibilización Musical", 
+    desc: "Despertamos la sensibilidad auditiva y la expresión artística a través del ritmo.", 
+    highlight: "expresión artística" 
+  },
+  { 
+    img: "/icons/ingles.png", 
+    titulo: "Iniciación al Inglés", 
+    desc: "Primer acercamiento al idioma extranjero de forma divertida, lúdica y natural.", 
+    highlight: "lúdica y natural" 
+  },
+  { 
+    img: "/icons/gimnasia.png", 
+    titulo: "Gimnasia Infantil", 
+    desc: "Fomentamos el desarrollo motor y la coordinación mediante actividades recreativas.", 
+    highlight: "actividades recreativas" 
+  },
+  { 
+    img: "/icons/fonoaudiologia.png", 
+    titulo: "Fonoaudiología", 
+    desc: "Acompañamiento experto para potenciar las habilidades del lenguaje y la comunicación.", 
+    highlight: "lenguaje y la comunicación" 
+  },
+  { 
+    img: "/icons/salidas.png", 
+    titulo: "Salidas Pedagógicas", 
+    desc: "Aventuras fuera del aula para vivir de cerca los proyectos pedagógicos del mes.", 
+    highlight: "proyectos del mes" 
+  },
+  { 
+    img: "/icons/natacion.png", 
+    titulo: "Natación", 
+    desc: "Ejercicios acuáticos diseñados para fortalecer el cuerpo y ganar confianza en el agua.", 
+    highlight: "ganar confianza" 
+  },
+  { 
+    img: "/icons/pintura.png", 
+    titulo: "Pintura", 
+    desc: "Un espacio para la libre expresión donde los niños exploran texturas, colores y creatividad.", 
+    highlight: "exploran texturas" 
+  },
+  { 
+    img: "/icons/baile.png", 
+    titulo: "Baile", 
+    desc: "Ritmo y movimiento para mejorar la expresión corporal y liberar energía con alegría.", 
+    highlight: "expresión corporal" 
+  },
+  { 
+    img: "/icons/ahorro.png", 
+    titulo: "Ahorro Escolar", 
+    desc: "Aprenden el valor del esfuerzo, el orden y fortalecen su autoestima productiva.", 
+    highlight: "autoestima productiva" 
+  },
 ];
 
 export default function Servicios() {
@@ -112,7 +172,7 @@ export default function Servicios() {
             >
               <NeonGradientCard
                 className="h-full w-full"
-                borderSize={2}
+                borderSize={4}
                 borderRadius={22}
                 neonColors={{
                   firstColor: Site_Palette[i % 6],
@@ -121,7 +181,7 @@ export default function Servicios() {
               >
                 <div className="flex h-full flex-col items-center justify-start rounded-[20px] p-6 text-center" style={{ background: "rgba(255,255,255,0.85)" }}>
                   
-                  <div className="relative mb-6 w-full overflow-hidden rounded-xl" style={{ border: `2px solid ${Site_Palette[i % 6]}`, borderRadius: "12px" }}>
+                  <div className="relative mb-6 w-full overflow-hidden rounded-xl" style={{ borderRadius: "8px", overflow: "hidden" }}>
                     <div 
                       className="absolute inset-0 scale-110 opacity-30 blur-2xl"
                       style={{ backgroundColor: Site_Palette[i % 6] }}
