@@ -26,14 +26,12 @@ import { CSS } from "@dnd-kit/utilities";
 import dynamic from "next/dynamic";
 import "yet-another-react-lightbox/styles.css";
 import { BorderBeam } from "@/components/ui/border-beam";
+import Video from "yet-another-react-lightbox/plugins/video";
 
 // Lazy load Lightbox
 const Lightbox = dynamic(() => import("yet-another-react-lightbox"), {
   ssr: false,
   loading: () => null
-});
-const Video = dynamic(() => import("yet-another-react-lightbox/plugins/video").then(mod => mod.default), {
-  ssr: false
 });
 import { NumberTicker } from "@/components/ui/number-ticker";
 import Link from "next/link";
