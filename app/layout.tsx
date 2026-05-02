@@ -20,20 +20,76 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: "Jardín Infantil Winnie Pooh | Medellín",
+  title: {
+    default: "Jardín Infantil Winnie Pooh | Medellín - 30 Años de Experiencia",
+    template: "%s | Jardín Infantil Winnie Pooh"
+  },
   description:
-    "Somos el comienzo de una vida plena para sus hijos. 29 años formando niños felices en Medellín. Jardín Infantil, Babies y After Class.",
+    "Somos el comienzo de una vida plena para sus hijos. 30 años formando niños felices en Medellín. Jardín Infantil, Babies y After Class. Método Políglota, estimulación temprana y más.",
   keywords: [
     "jardín infantil Medellín",
     "guardería Medellín",
     "Winnie Pooh jardín",
     "after class Medellín",
     "estimulación temprana",
+    "jardín infantil La América",
+    "método políglota",
+    "jardín infantil Calasanz",
+    "baby's Medellín",
+    "cuidado infantil Medellín"
   ],
-  // AÑADE ESTO:
+  authors: [{ name: "SerStack", url: "https://serstack-es.vercel.app" }],
+  creator: "SerStack",
+  publisher: "Jardín Infantil Winnie Pooh",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL("https://winniepoohjardininfantil.com"),
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Jardín Infantil Winnie Pooh | Medellín",
+    description: "30 años formando niños felices en Medellín. Jardín Infantil, Babies y After Class.",
+    url: "https://winniepoohjardininfantil.com",
+    siteName: "Jardín Infantil Winnie Pooh",
+    images: [
+      {
+        url: "/images/logo.webp",
+        width: 1200,
+        height: 630,
+        alt: "Jardín Infantil Winnie Pooh Medellín",
+      },
+    ],
+    locale: "es_CO",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Jardín Infantil Winnie Pooh | Medellín",
+    description: "30 años formando niños felices en Medellín",
+    images: ["/images/logo.webp"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
-    icon: "images/logo.webp", // O "/icon.png" si usas un PNG
-    apple: "images/logo.webp", // Opcional, para cuando guardan la web en iPhone
+    icon: "/images/logo.webp",
+    apple: "/images/logo.webp",
+  },
+  verification: {
+    // Agregar después de configurar Google Search Console
+    // google: "tu-codigo-de-verificacion",
   },
 };
 
