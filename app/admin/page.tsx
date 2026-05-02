@@ -23,10 +23,18 @@ import {
   rectSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import Lightbox from "yet-another-react-lightbox";
-import Video from "yet-another-react-lightbox/plugins/video";
+import dynamic from "next/dynamic";
 import "yet-another-react-lightbox/styles.css";
 import { BorderBeam } from "@/components/ui/border-beam";
+
+// Lazy load Lightbox
+const Lightbox = dynamic(() => import("yet-another-react-lightbox"), {
+  ssr: false,
+  loading: () => null
+});
+const Video = dynamic(() => import("yet-another-react-lightbox/plugins/video"), {
+  ssr: false
+});
 import { NumberTicker } from "@/components/ui/number-ticker";
 import Link from "next/link";
 

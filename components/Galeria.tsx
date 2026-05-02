@@ -12,6 +12,13 @@ import Link from "next/link";
 import Lightbox from "yet-another-react-lightbox";
 import Video from "yet-another-react-lightbox/plugins/video";
 import "yet-another-react-lightbox/styles.css";
+import dynamic from "next/dynamic";
+
+// Lazy load del Lightbox para mejorar performance
+const LightboxDynamic = dynamic(() => import("yet-another-react-lightbox"), {
+  ssr: false,
+  loading: () => null
+});
 
 // Reutilizamos el HighLight del Hero para consistencia visual
 const HighLight = ({ children, color = "#FFB40033", type = "box" }: { children: React.ReactNode, color?: string, type?: "box" | "underline" }) => (
@@ -115,6 +122,8 @@ export default function Galeria() {
             alt="Fondo Decorativo"
             fill
             style={{ objectFit: "cover", objectPosition: "center", opacity: 0.6 }}
+            quality={75}
+            loading="lazy"
           />
         </div>
         <div style={{
@@ -217,7 +226,7 @@ export default function Galeria() {
                           </>
                         ) : (
                           /* eslint-disable-next-line @next/next/no-img-element */
-                          <img src={item.url} alt="Actividad Winnie Pooh" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                          <img src={item.url} alt="Actividad Winnie Pooh" style={{ width: "100%", height: "100%", objectFit: "cover" }} loading="lazy" />
                         )
                       ) : (
                         placeholders[i]?.emoji
@@ -228,7 +237,7 @@ export default function Galeria() {
               </div>
             </div>
 
-            <Lightbox 
+            <LightboxDynamic 
               open={openLightbox} 
               close={() => setOpenLightbox(false)} 
               slides={slides} 

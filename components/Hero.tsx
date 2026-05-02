@@ -69,6 +69,8 @@ export default function Hero() {
             fill
             style={{ objectFit: "cover", objectPosition: "center" }}
             priority
+            quality={85}
+            sizes="100vw"
           />
         </div>
         <div style={{
@@ -210,7 +212,7 @@ export default function Hero() {
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: index * 0.2 }}
           style={{ width: index < 2 ? "100px" : "70px", height: index < 2 ? "100px" : "70px", position: "relative", marginBottom: "10px" }}
         >
-          <Image src={stat.src} alt={stat.label} fill style={{ objectFit: "contain" }} />
+          <Image src={stat.src} alt={stat.label} fill style={{ objectFit: "contain" }} loading="eager" />
         </motion.div>
 
         {/* NÚMERO: Subimos de 2.3rem a 3.2rem */}

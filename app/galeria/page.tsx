@@ -9,6 +9,13 @@ import { Backlight } from "@/components/ui/backlight";
 import Lightbox from "yet-another-react-lightbox";
 import Video from "yet-another-react-lightbox/plugins/video";
 import "yet-another-react-lightbox/styles.css";
+import dynamic from "next/dynamic";
+
+// Lazy load del Lightbox
+const LightboxDynamic = dynamic(() => import("yet-another-react-lightbox"), {
+  ssr: false,
+  loading: () => null
+});
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
@@ -187,7 +194,7 @@ export default function PaginaGaleriaCompleta() {
           )}
         </div>
 
-        <Lightbox
+        <LightboxDynamic
           open={openLightbox}
           close={() => setOpenLightbox(false)}
           slides={slides}
