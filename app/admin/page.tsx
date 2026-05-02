@@ -32,7 +32,7 @@ const Lightbox = dynamic(() => import("yet-another-react-lightbox"), {
   ssr: false,
   loading: () => null
 });
-const Video = dynamic(() => import("yet-another-react-lightbox/plugins/video"), {
+const Video = dynamic(() => import("yet-another-react-lightbox/plugins/video").then(mod => mod.default), {
   ssr: false
 });
 import { NumberTicker } from "@/components/ui/number-ticker";
