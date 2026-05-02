@@ -93,18 +93,20 @@ Para gestionar el contenido del sitio web, es necesario ingresar al panel de adm
    ```
    https://winniepoohjardininfantil.com/admin/login
    ```
+   <img width="451" height="86" alt="image" src="https://github.com/user-attachments/assets/5f509aac-86aa-4a96-8609-0f1ab590baa5" />
 
-**(CAPTURA: Pantalla del navegador con la URL en la barra de direcciones)**
 
 3. Introducir las credenciales de acceso proporcionadas
 
 4. Hacer clic en el botón **"Ingresar al Panel"**
 
-**(CAPTURA: Pantalla de login con los campos de correo y contraseña)**
+<img width="1919" height="909" alt="image" src="https://github.com/user-attachments/assets/bf91c8cc-d8d3-4be1-8321-72a26070f408" />
+
 
 Una vez dentro, se mostrará el panel de administración desde donde se puede gestionar el contenido del sitio.
 
-**(CAPTURA: Vista del panel de administración principal)**
+<img width="1904" height="914" alt="image" src="https://github.com/user-attachments/assets/225f267a-1b2e-4958-a366-ffcf0e29f8b9" />
+
 
 ### ⚙️ Requisitos
 
@@ -151,19 +153,22 @@ Para acceder al sistema:
    https://winniepoohjardininfantil.com/admin/login
    ```
 
-**(CAPTURA: Barra de direcciones con la URL del login)**
+<img width="451" height="86" alt="image" src="https://github.com/user-attachments/assets/5f509aac-86aa-4a96-8609-0f1ab590baa5" />
+
 
 3. Introducir usuario y contraseña
 
-**(CAPTURA: Formulario de login con campos completados)**
+<img width="528" height="687" alt="image" src="https://github.com/user-attachments/assets/58033fed-5d23-4bfe-9673-7634b0b49164" />
+
 
 4. Hacer clic en **"Ingresar al Panel"**
 
-**(CAPTURA: Botón de ingresar resaltado)**
+<img width="496" height="694" alt="image" src="https://github.com/user-attachments/assets/6ce8e977-1816-4b8d-92df-df6ebc0caef0" />
+
 
 Si los datos son correctos, se redirigirá automáticamente al panel de administración.
 
-**(CAPTURA: Panel de administración después del login exitoso)**
+<img width="1904" height="911" alt="image" src="https://github.com/user-attachments/assets/5f3e46e7-204f-43ed-ba8f-846f12c489dd" />
 
 ---
 
@@ -183,24 +188,29 @@ Para agregar contenido a la galería:
 
 1. **Acceder al panel de control**
 
-**(CAPTURA: Vista del panel de control principal)**
+<img width="1904" height="911" alt="image" src="https://github.com/user-attachments/assets/e047e73e-db77-44df-9dae-c7e8bad80da5" />
+
 
 2. **Hacer clic en el área "Sube fotos y videos"** o en el botón de carga
 
-**(CAPTURA: Área de carga de archivos resaltada)**
+<img width="1904" height="563" alt="image" src="https://github.com/user-attachments/assets/c1fb0bf1-b484-476f-9a3e-8803e55ab9b3" />
+
 
 3. **Seleccionar uno o varios archivos desde el dispositivo**
 
-**(CAPTURA: Explorador de archivos del sistema operativo)**
+<img width="1103" height="634" alt="image" src="https://github.com/user-attachments/assets/fba6084d-3e05-4259-bc25-a255a0418315" />
+
 
 4. **Presionar "Abrir"**
 
-**(CAPTURA: Botón "Abrir" en el explorador de archivos)**
+<img width="1102" height="79" alt="image" src="https://github.com/user-attachments/assets/9a030e95-fa35-4862-a683-9ad47bc09ed6" />
+
 
 ✅ **Resultado esperado:**
 Los archivos se mostrarán automáticamente en la galería del sitio web.
 
-**(CAPTURA: Galería con los nuevos archivos subidos)**
+<img width="1903" height="911" alt="image" src="https://github.com/user-attachments/assets/0c55424a-9582-4b9b-a2f2-c415608d085c" />
+
 
 ⚠️ **Recomendaciones:**
 - Usar imágenes en buena calidad (pero optimizadas, es decir, no de mucho peso, para asegurar una carga más rápida)
@@ -216,32 +226,36 @@ El sistema permite reorganizar el orden de las imágenes fácilmente mediante la
 
 1. **Ubicar el archivo que se desea mover**
 
-**(CAPTURA: Tarjeta de imagen en la galería)**
+<img width="1903" height="911" alt="image" src="https://github.com/user-attachments/assets/7972f5be-5894-4d4f-bc85-1eb52c89dcc0" />
 
 2. **Hacer clic sostenido sobre el ícono de agarre (⠿)** del elemento
 
-**(CAPTURA: Cursor sobre el ícono de agarre)**
+<img width="336" height="297" alt="image" src="https://github.com/user-attachments/assets/38859098-788e-429a-917f-063ea145e37c" />
+
 
 3. **Arrastrarlo a la posición deseada**
 
-**(CAPTURA: Imagen siendo arrastrada con efecto visual)**
+<img width="1904" height="912" alt="image" src="https://github.com/user-attachments/assets/4311c3c0-e4dc-403d-82a0-f77fae261de8" />
+
 
 4. **Soltar para confirmar el cambio**
 
-**(CAPTURA: Imagen en su nueva posición)**
+<img width="1905" height="908" alt="image" src="https://github.com/user-attachments/assets/ef825203-8090-4ecb-9ecb-45b92a0d182a" />
+
 
 ✅ **Resultado esperado:**
 El nuevo orden se reflejará automáticamente en la página web.
 
-**(CAPTURA: Galería con el nuevo orden aplicado)**
+<img width="1906" height="1032" alt="image" src="https://github.com/user-attachments/assets/77002d75-dd54-4c44-9e85-2abe126987c3" />
 
-💡 **Nota:** Los cambios se guardan automáticamente. Verás un mensaje "Guardando..." en la parte superior mientras se aplican los cambios.
+💡 **Nota:** Los cambios se guardan automáticamente. Verás un mensaje "Guardando..." en la parte superior del panel mientras se aplican los cambios.
 
 ### 🖼️ Imágenes de portada
 
 Las imágenes de portada son elementos visuales principales de la galería. **Las primeras 6 imágenes** son las que se muestran en la vista previa de la landing page principal.
 
-**(CAPTURA: Sección de galería en la landing page mostrando las 6 primeras imágenes)**
+<img width="1904" height="1079" alt="image" src="https://github.com/user-attachments/assets/af7fe9e7-b440-4311-b215-6c223581de7d" />
+
 
 **Para actualizarlas:**
 
@@ -249,18 +263,18 @@ Las imágenes de portada son elementos visuales principales de la galería. **La
 
 2. **Seleccionar la imagen que se desea poner en la portada**
 
-**(CAPTURA: Imagen seleccionada en el panel)**
 
 3. **Arrastrarla a alguna de las primeras 6 casillas** que están marcadas con la etiqueta **"🏠 Portada #X"**
 
-**(CAPTURA: Tarjetas con etiqueta de portada resaltadas)**
+<img width="1903" height="910" alt="image" src="https://github.com/user-attachments/assets/7b5e68b2-61ec-476f-a1a0-e8d18bed2995" />
+
 
 4. **Los cambios se guardan automáticamente**
 
 ✅ **Resultado esperado:**
 La nueva imagen se visualizará en la sección principal del sitio.
 
-**(CAPTURA: Landing page con la nueva imagen de portada)**
+<img width="1905" height="1079" alt="image" src="https://github.com/user-attachments/assets/df9c4bc9-3451-4097-b410-b26d50c5dc18" />
 
 ### 🗑️ Cómo eliminar archivos
 
@@ -268,15 +282,17 @@ Para eliminar contenido:
 
 1. **Ubicar el archivo dentro del panel**
 
-**(CAPTURA: Galería de archivos en el panel)**
+<img width="1905" height="909" alt="image" src="https://github.com/user-attachments/assets/4662823d-404b-4f8c-b585-c8d80acff265" />
 
 2. **Hacer clic en el ícono de eliminar (🗑️)** en la esquina inferior derecha de la tarjeta
 
-**(CAPTURA: Botón de eliminar resaltado)**
+<img width="1091" height="537" alt="image" src="https://github.com/user-attachments/assets/7d290f71-e928-41b8-9a61-7d4233306db0" />
+
 
 3. **Confirmar la acción** en el modal que aparece
 
-**(CAPTURA: Modal de confirmación de eliminación)**
+<img width="1902" height="910" alt="image" src="https://github.com/user-attachments/assets/e62119c5-0959-4b0b-8173-89f375437657" />
+
 
 ⚠️ **Importante:**
 Esta acción **no se puede deshacer**. Asegúrese de que realmente desea eliminar el archivo antes de confirmar.
@@ -284,7 +300,7 @@ Esta acción **no se puede deshacer**. Asegúrese de que realmente desea elimina
 ✅ **Resultado esperado:**
 El archivo desaparecerá de la galería inmediatamente.
 
-**(CAPTURA: Galería sin el archivo eliminado)**
+<img width="1904" height="909" alt="image" src="https://github.com/user-attachments/assets/9d117f06-f195-45a1-a4af-6a624942931f" />
 
 ---
 
@@ -304,11 +320,13 @@ Esta función permite visualizar el sitio web público con los cambios aplicados
 
 1. **Hacer clic en el botón "Ver página en vivo"** ubicado en la barra superior del panel
 
-**(CAPTURA: Botón "Ver página en vivo" resaltado)**
+<img width="1904" height="545" alt="image" src="https://github.com/user-attachments/assets/106afcad-4a7d-491d-9dbc-309cf5cc5992" />
+
 
 2. **Se abrirá una nueva pestaña** con el sitio actualizado, específicamente en la sección de galería (/#galeria)
 
-**(CAPTURA: Nueva pestaña con la página en vivo)**
+<img width="1906" height="1032" alt="image" src="https://github.com/user-attachments/assets/77002d75-dd54-4c44-9e85-2abe126987c3" />
+
 
 ✅ **Ideal para verificar cambios en vivo en el sitio.**
 
@@ -318,18 +336,19 @@ Para salir del sistema de forma segura:
 
 1. **Ubicar el botón "Salir"** en la esquina superior derecha
 
-**(CAPTURA: Botón "Salir" resaltado)**
+<img width="1903" height="564" alt="image" src="https://github.com/user-attachments/assets/01e7b7bc-105b-4549-b44a-9de10e2de7ec" />
+
 
 2. **Hacer clic sobre él**
 
-**(CAPTURA: Cursor sobre el botón de salir)**
 
 Esto finalizará la sesión actual y evitará accesos no autorizados.
 
 ✅ **Resultado esperado:**
 Serás redirigido a la página de login.
 
-**(CAPTURA: Pantalla de login después de cerrar sesión)**
+<img width="1919" height="1029" alt="image" src="https://github.com/user-attachments/assets/b23e8060-ea57-4991-8652-4c72aef3587f" />
+
 
 ---
 
@@ -343,7 +362,8 @@ A continuación, se describen sus principales secciones:
 
 La barra de navegación superior permite acceder rápidamente a las diferentes secciones del sitio.
 
-**(CAPTURA: Navbar completo en desktop)**
+<img width="1903" height="70" alt="image" src="https://github.com/user-attachments/assets/8bf2d248-c4c8-4a75-91e2-1385e6d00b16" />
+
 
 **Incluye enlaces como:**
 - Inicio
@@ -355,7 +375,8 @@ La barra de navegación superior permite acceder rápidamente a las diferentes s
 - Contacto
 - WhatsApp (botón destacado)
 
-**(CAPTURA: Navbar en móvil con menú hamburguesa)**
+<img width="371" height="461" alt="image" src="https://github.com/user-attachments/assets/f14d34b8-5650-4aa2-89a9-3d38af79ed61" />
+
 
 Se mantiene visible durante la navegación para facilitar el acceso en todo momento.
 
@@ -363,7 +384,8 @@ Se mantiene visible durante la navegación para facilitar el acceso en todo mome
 
 Es la sección principal que aparece al ingresar al sitio.
 
-**(CAPTURA: Sección Hero completa)**
+<img width="1904" height="1012" alt="image" src="https://github.com/user-attachments/assets/fa7a8538-c180-4886-a0b2-db37123fbab1" />
+
 
 **Contiene:**
 - Imágenes destacadas
@@ -372,25 +394,20 @@ Es la sección principal que aparece al ingresar al sitio.
 - Botón de acción ("¡Matricula a tu hijo!")
 - Estadísticas (años de experiencia, sedes, idiomas)
 
-**(CAPTURA: Animaciones de personajes en el Hero)**
-
-Su objetivo es captar la atención del usuario y comunicar la propuesta de valor de forma inmediata.
-
 ### 👨‍👩‍👧‍👦 Nosotros
 
 Presenta información institucional del jardín infantil.
 
-**(CAPTURA: Sección Nosotros completa)**
+<img width="1903" height="1016" alt="image" src="https://github.com/user-attachments/assets/f61469ef-5127-4686-be51-c3f5865b08c6" />
+
 
 **Incluye:**
 - **Misión**: Desarrollo integral de los niños
-- **Filosofía**: Principios educativos
+- **Propósito**: Principios educativos
 - **Calendario Escolar**: Periodo académico y horarios
 - **Horarios Disponibles**: Tiempo completo, mañana, tarde
 
-**(CAPTURA: Tarjetas de Misión y Filosofía)**
-
-**(CAPTURA: Calendario escolar con horarios)**
+<img width="1904" height="1011" alt="image" src="https://github.com/user-attachments/assets/24a4da5a-7a47-41e7-a0d8-0b7abdc4abc9" />
 
 Esta sección busca generar confianza y credibilidad en los visitantes.
 
@@ -398,14 +415,22 @@ Esta sección busca generar confianza y credibilidad en los visitantes.
 
 Muestra las diferentes ubicaciones del jardín infantil.
 
-**(CAPTURA: Sección Sedes completa)**
+<img width="1904" height="1024" alt="image" src="https://github.com/user-attachments/assets/8a56562f-8294-4bec-ad55-eaea324b8e5c" />
+
 
 **Las tres sedes son:**
 - **Jardín Infantil**: Pre-jardín (3 años) y Jardín (4 años)
-- **Winnie Pooh Baby's**: Cuna (1 año), Maternal (2 años), Párvulos (2 años)
-- **After Class**: Cuidado y atención, acompañamiento de tareas, refuerzos y repasos, clases extracurriculares
+  <img width="1904" height="1079" alt="image" src="https://github.com/user-attachments/assets/d63379be-8c95-4804-b046-092f43960012" />
 
-**(CAPTURA: Tarjetas individuales de cada sede)**
+  
+- **Winnie Pooh Baby's**: Cuna (1 año), Maternal (2 años), Párvulos (2 años)
+  <img width="1904" height="1079" alt="image" src="https://github.com/user-attachments/assets/95dca9f5-82a3-40ef-bba3-4ea3d8bc8207" />
+
+
+- **After Class**: Cuidado y atención, acompañamiento de tareas, refuerzos y repasos, clases extracurriculares
+  <img width="1902" height="1009" alt="image" src="https://github.com/user-attachments/assets/6ac5d534-3aeb-409a-a663-bda458285a4f" />
+
+
 
 **Incluye:**
 - Dirección exacta
@@ -413,7 +438,6 @@ Muestra las diferentes ubicaciones del jardín infantil.
 - Botones de acción para más información
 - Integración con Google Maps (al hacer clic en "Ver más información")
 
-**(CAPTURA: Mapa de Google Maps integrado)**
 
 Facilita a los usuarios encontrar la sede más conveniente.
 
@@ -421,14 +445,15 @@ Facilita a los usuarios encontrar la sede más conveniente.
 
 Describe los servicios y programas ofrecidos por el jardín.
 
-**(CAPTURA: Sección Servicios completa)**
+<img width="1903" height="1079" alt="image" src="https://github.com/user-attachments/assets/fe002ea3-5832-4f8b-8fe1-4652c6b1bf30" />
+<img width="1903" height="1079" alt="image" src="https://github.com/user-attachments/assets/506732d2-abcc-4db6-9eb0-f72c75eaa5cb" />
+<img width="1904" height="1079" alt="image" src="https://github.com/user-attachments/assets/a37cc71b-3171-4c56-aa47-141eaac36d0b" />
+
 
 **Puede incluir:**
 - **Programas educativos**: Método Políglota, Música, Natación, Gimnasia, Inglés, Fonoaudiología, Bebé Políglota, Pintura
 - **Actividades**: Salidas pedagógicas, Proyectos especiales, Programa de ahorro escolar, Programa MEN
 - **Beneficios**: Desarrollo integral, estimulación temprana
-
-**(CAPTURA: Tarjetas de servicios individuales con íconos)**
 
 Permite a los usuarios entender qué ofrece el jardín y qué lo diferencia.
 
@@ -436,16 +461,15 @@ Permite a los usuarios entender qué ofrece el jardín y qué lo diferencia.
 
 Sección visual que muestra imágenes y/o videos del jardín.
 
-**(CAPTURA: Sección Galería en la landing page - primeras 6 imágenes)**
+
+<img width="1905" height="1079" alt="image" src="https://github.com/user-attachments/assets/df9c4bc9-3451-4097-b410-b26d50c5dc18" />
 
 El contenido es administrado desde el panel, y se utiliza para:
 - Mostrar instalaciones
 - Actividades
 - Experiencias de los niños
 
-**(CAPTURA: Página de galería completa /galeria)**
-
-**(CAPTURA: Lightbox abierto mostrando una imagen en tamaño completo)**
+<img width="1904" height="1031" alt="image" src="https://github.com/user-attachments/assets/c2d6bb29-49cf-4017-8b34-d0b6d9c70329" />
 
 Es clave para generar confianza a través de evidencia visual.
 
@@ -459,26 +483,26 @@ Es clave para generar confianza a través de evidencia visual.
 
 Contiene opiniones y testimonios de padres de familia.
 
-**(CAPTURA: Sección Reseñas completa)**
+<img width="1904" height="1079" alt="image" src="https://github.com/user-attachments/assets/75fb9dd5-202b-4a36-87ad-f7b656d65626" />
+<img width="1912" height="910" alt="image" src="https://github.com/user-attachments/assets/61c3cc79-af3d-4b5d-a70d-4784741e5fed" />
 
 **Su objetivo es:**
 - Generar confianza
 - Validar la calidad del servicio
 - Influir en la decisión de nuevos usuarios
 
-**(CAPTURA: Tarjetas individuales de reseñas con estrellas)**
 
 Las reseñas incluyen:
 - Nombre del padre/madre
 - Calificación en estrellas
 - Comentario
-- Fecha (opcional)
 
 ### 📞 Contacto
 
 Sección destinada a facilitar la comunicación con el jardín.
 
-**(CAPTURA: Sección Contacto completa)**
+<img width="1902" height="1079" alt="image" src="https://github.com/user-attachments/assets/c1b8edcc-8923-4fec-b75f-c6f8c835707c" />
+
 
 **Incluye:**
 - **Tarjetas de contacto:**
@@ -487,13 +511,9 @@ Sección destinada a facilitar la comunicación con el jardín.
   - Instagram: @wpjardininfantil
   - Reseñas de Google
 
-**(CAPTURA: Tarjetas de contacto con colores pastel)**
-
 - **Ubicaciones:**
   - Jardín Infantil & After Class: Calle 51 #81a-25
   - Winnie Pooh Baby's: Carrera 81 #52-58
-
-**(CAPTURA: Tarjeta de ubicaciones y horarios)**
 
 - **Horarios de Atención:**
   - Tiempo Completo: 7:00am - 5:00pm
@@ -509,7 +529,8 @@ Permite a los usuarios comunicarse de forma directa.
 
 Ubicado en la parte inferior del sitio.
 
-**(CAPTURA: Footer completo)**
+<img width="1902" height="521" alt="image" src="https://github.com/user-attachments/assets/2d8ca746-91b5-4dc6-b6c8-d72faf2665c0" />
+
 
 **Contiene:**
 - Logo de Winnie Pooh
@@ -520,21 +541,19 @@ Ubicado en la parte inferior del sitio.
 - **Copyright**: © 2026 Winnie Pooh Medellín
 - **Créditos**: "Hecho con ❤️ por SerStack"
 
-**(CAPTURA: Dock de redes sociales con efecto hover)**
-
 Funciona como cierre informativo del sitio.
 
 ### 💬 WhatsApp Button
 
 Botón flotante visible durante toda la navegación.
 
-**(CAPTURA: Botón flotante de WhatsApp en la esquina)**
+<img width="1905" height="911" alt="image" src="https://github.com/user-attachments/assets/d1c7e40b-1822-4443-8926-b9ecf335f508" />
+
 
 **Permite:**
 - Iniciar una conversación directa vía WhatsApp
 - Contactar rápidamente al jardín sin necesidad de formularios
 
-**(CAPTURA: Botón con efecto hover/animación)**
 
 Es uno de los principales canales de conversión del sitio.
 
@@ -555,7 +574,7 @@ El código fuente del sitio se encuentra almacenado en **GitHub**.
 
 El acceso al repositorio permite realizar modificaciones técnicas al sitio en caso de ser necesario.
 
-**URL del repositorio:** (Proporcionada al cliente)
+**URL del repositorio: https://github.com/WinniePoohJardinInfantil/jardin-winnie-pooh** (Proporcionada al cliente)
 
 ### 🌐 Dominio
 
